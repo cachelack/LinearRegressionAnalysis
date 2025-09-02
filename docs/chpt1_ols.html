@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>chpt1_ols</title>
+<title>1&nbsp; Ordinary Least Squares – STAT 378: Linear Regression Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,11 +59,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./chpt2_ModAss.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -73,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -134,47 +137,143 @@ window.Quarto = {
 
 </head>
 
-<body class="quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chpt1_ols.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ordinary Least Squares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">STAT 378: Linear Regression Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt1_ols.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ordinary Least Squares</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt2_ModAss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Assumptions and Choices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="chpt1_ols.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions"><span class="header-section-number">1.1.1</span> Definitions</a></li>
+  </ul></li>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">1.2</span> Point Estimation</a>
+  <ul class="collapse">
+  <li><a href="#derivation-of-the-ols-estimator" id="toc-derivation-of-the-ols-estimator" class="nav-link" data-scroll-target="#derivation-of-the-ols-estimator"><span class="header-section-number">1.2.1</span> Derivation of the OLS estimator</a></li>
+  <li><a href="#maximum-likelihood-estimate-under-normality" id="toc-maximum-likelihood-estimate-under-normality" class="nav-link" data-scroll-target="#maximum-likelihood-estimate-under-normality"><span class="header-section-number">1.2.2</span> Maximum likelihood estimate under normality</a></li>
+  <li><a href="#proof-of-the-gauss-markov-theorem" id="toc-proof-of-the-gauss-markov-theorem" class="nav-link" data-scroll-target="#proof-of-the-gauss-markov-theorem"><span class="header-section-number">1.2.3</span> Proof of the Gauss-Markov Theorem</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing"><span class="header-section-number">1.3</span> Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#goodness-of-fit" id="toc-goodness-of-fit" class="nav-link" data-scroll-target="#goodness-of-fit"><span class="header-section-number">1.3.1</span> Goodness of fit</a></li>
+  <li><a href="#regression-coefficients" id="toc-regression-coefficients" class="nav-link" data-scroll-target="#regression-coefficients"><span class="header-section-number">1.3.2</span> Regression coefficients</a></li>
+  <li><a href="#partial-f-test" id="toc-partial-f-test" class="nav-link" data-scroll-target="#partial-f-test"><span class="header-section-number">1.3.3</span> Partial F-test</a></li>
+  </ul></li>
+  <li><a href="#interval-estimators" id="toc-interval-estimators" class="nav-link" data-scroll-target="#interval-estimators"><span class="header-section-number">1.4</span> Interval Estimators</a>
+  <ul class="collapse">
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">1.4.1</span> Confidence Intervals</a></li>
+  <li><a href="#prediction-intervals-for-an-expected-observation" id="toc-prediction-intervals-for-an-expected-observation" class="nav-link" data-scroll-target="#prediction-intervals-for-an-expected-observation"><span class="header-section-number">1.4.2</span> Prediction Intervals for an expected observation</a></li>
+  <li><a href="#prediction-intervals-for-a-new-observation" id="toc-prediction-intervals-for-a-new-observation" class="nav-link" data-scroll-target="#prediction-intervals-for-a-new-observation"><span class="header-section-number">1.4.3</span> Prediction Intervals for a new observation</a></li>
+  </ul></li>
+  <li><a href="#indicator-variables-and-anova" id="toc-indicator-variables-and-anova" class="nav-link" data-scroll-target="#indicator-variables-and-anova"><span class="header-section-number">1.5</span> Indicator Variables and ANOVA</a>
+  <ul class="collapse">
+  <li><a href="#indicator-variables" id="toc-indicator-variables" class="nav-link" data-scroll-target="#indicator-variables"><span class="header-section-number">1.5.1</span> Indicator variables</a></li>
+  <li><a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova"><span class="header-section-number">1.5.2</span> ANOVA</a></li>
+  </ul></li>
+  <li><a href="#data-example-exam-grades" id="toc-data-example-exam-grades" class="nav-link" data-scroll-target="#data-example-exam-grades"><span class="header-section-number">1.6</span> Data Example: Exam Grades</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
 
-
-
-
-<div class="hidden">
-
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ordinary Least Squares</span></h1>
 </div>
-<section id="latex-macros" class="level1">
-<h1>Latex Macros</h1>
-<p>That is all</p>
-</section>
-<section id="ordinary-least-squares" class="level1">
-<h1>Ordinary Least Squares</h1>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Linear regression begins with the simple but profound idea that some observed output or {response} variable, <span class="math inline">\(Y\in\mathbb{R}\)</span>, is a function of <span class="math inline">\(p\)</span> input or <em>regressor</em> variables <span class="math inline">\(x_1,\ldots,x_p\)</span> with the addition of some unknown noise variable <span class="math inline">\(\varepsilon\)</span>. Namely, <span class="math display">\[
-  Y = f(x_1,\ldots,x_p) + \varepsilon
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1.1</span> Introduction</h2>
+<p>Linear regression begins with the simple but profound idea that some observed output or {response} variable, <span class="math inline">\(Y\in\real\)</span>, is a function of <span class="math inline">\(p\)</span> input or <em>regressor</em> variables <span class="math inline">\(x_1,\ldots,x_p\)</span> with the addition of some unknown noise variable <span class="math inline">\(\veps\)</span>. Namely, <span class="math display">\[
+  Y = f(x_1,\ldots,x_p) + \veps
 \]</span> where the noise is generally assumed to have mean zero and finite variance. The function <span class="math inline">\(f\)</span> is unknown and relates the inputs <span class="math inline">\(x_i\)</span> to the output <span class="math inline">\(Y\)</span>. Our goal is to ascertain what <span class="math inline">\(f\)</span> could be.</p>
 <p>In this setting, <span class="math inline">\(Y\)</span> is usually considered to be a random variable while the <span class="math inline">\(x_i\)</span> are considered fixed. Hence, the expected value of <span class="math inline">\(Y\)</span> is in terms of the unknown function <span class="math inline">\(f\)</span> and the regressors: <span class="math display">\[
-  \mathrm{E}\left(Y\middle|x_1,\ldots,x_p\right) = f(x_1,\ldots,x_p).
-\]</span> While <span class="math inline">\(f\)</span> can be considered to be in some very general classes of functions, we begin with the standard linear setting. Let <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\in\mathbb{R}\)</span>. Then, the <em>multiple regression model</em> is <span class="math display">\[
+  \Xval{Y}{x_1,\ldots,x_p} = f(x_1,\ldots,x_p).
+\]</span> While <span class="math inline">\(f\)</span> can be considered to be in some very general classes of functions, we begin with the standard linear setting. Let <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\in\real\)</span>. Then, the <em>multiple regression model</em> is <span class="math display">\[
   Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
-    = {\beta}^\mathrm{T} X
-\]</span> where <span class="math inline">\(\beta = {(\beta_0,\ldots,\beta_p)}^\mathrm{T}\)</span> and <span class="math inline">\(X = {(1,x_1,\ldots,x_p)}^\mathrm{T}\)</span>. The <em>simple regression model</em> is a submodel of the above where <span class="math inline">\(p=1\)</span>, which is <span class="math display">\[
-  Y = \beta_0 + \beta_1 x_1 + \varepsilon,
+    = \TT{\beta} X
+\]</span> where <span class="math inline">\(\beta = \TT{(\beta_0,\ldots,\beta_p)}\)</span> and <span class="math inline">\(X = \TT{(1,x_1,\ldots,x_p)}\)</span>. The <em>simple regression model</em> is a submodel of the above where <span class="math inline">\(p=1\)</span>, which is <span class="math display">\[
+  Y = \beta_0 + \beta_1 x_1 + \veps,
 \]</span> and will be treated concurrently with multiple regression.</p>
-<p>In the statistics setting, the parameter vector <span class="math inline">\(\beta\in\mathbb{R}^p\)</span> is unknown. The analyst observes multiple replications of regressor and response pairs, <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> where <span class="math inline">\(n\)</span> is the <em>sample size</em>, and wishes to choose a ``best’’ estimate for <span class="math inline">\(\beta\)</span> based on these <span class="math inline">\(n\)</span> observations. This setup can be concisely written in a vector-matrix form as <span id="eq-linearRegression"><span class="math display">\[
-  Y = X\beta + \varepsilon
-\tag{1}\]</span></span> where <span class="math display">\[
+<p>In the statistics setting, the parameter vector <span class="math inline">\(\beta\in\real^p\)</span> is unknown. The analyst observes multiple replications of regressor and response pairs, <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> where <span class="math inline">\(n\)</span> is the <em>sample size</em>, and wishes to choose a ``best’’ estimate for <span class="math inline">\(\beta\)</span> based on these <span class="math inline">\(n\)</span> observations. This setup can be concisely written in a vector-matrix form as <span id="eq-linearRegression"><span class="math display">\[
+  Y = X\beta + \veps
+\tag{1.1}\]</span></span> where <span class="math display">\[
   Y =
   \begin{pmatrix}
     Y_1 \\ \vdots \\ Y_n
@@ -190,18 +289,18 @@ window.Quarto = {
   \begin{pmatrix}
     \beta_0 \\ \vdots \\ \beta_p
   \end{pmatrix},~~~~
-  \varepsilon=
+  \veps =
   \begin{pmatrix}
-    \varepsilon_1 \\ \vdots \\ \varepsilon_n
+    \veps_1 \\ \vdots \\ \veps_n
   \end{pmatrix}.
-\]</span> Note that <span class="math inline">\(Y,\varepsilon\in\mathbb{R}^n\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(X\in\mathbb{R}^{n\times {p+1}}\)</span>.</p>
+\]</span> Note that <span class="math inline">\(Y,\veps\in\real^n\)</span>, <span class="math inline">\(\beta\in\real^{p+1}\)</span>, and <span class="math inline">\(X\in\real^{n\times {p+1}}\)</span>.</p>
 <p>As <span class="math inline">\(Y\)</span> is a random variable, we can compute its mean vector and covariance matrix as follows: <span class="math display">\[
-  \mathrm{E}Y = \mathrm{E}\left( X\beta +\varepsilon\right) = X\beta
+  \xv Y = \xval{ X\beta +\veps } = X\beta
 \]</span> and <span class="math display">\[
-  \mathrm{Var}\left(Y\right)
-  = \mathrm{E}\left( (Y-X\beta){(Y-X\beta)}^\mathrm{T} \right)
-  = \mathrm{E}\left( \varepsilon{\varepsilon}^\mathrm{T} \right)
-  = \mathrm{Var}\left( \varepsilon\right)
+  \var{Y}
+  = \xval{ (Y-X\beta)\TT{(Y-X\beta)} }
+  = \xval{ \veps\TT{\veps} }
+  = \var{ \veps }
   = \sigma^2I_n.
 \]</span></p>
 <p>An example of a linear regression is this following study from the New England Journal of Medicine<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can be found in the code below. This study highlights the correlation between chocolate consumption and Nobel prizes received in 16 different countries.</p>
@@ -238,14 +337,14 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="definitions" class="level3">
-<h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
+<section id="definitions" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="definitions"><span class="header-section-number">1.1.1</span> Definitions</h3>
 <p>Before continuing, we require the following collection of terminology.</p>
-<p>The <em>response</em> <span class="math inline">\(Y\)</span> and the <em>regressors</em> <span class="math inline">\(X\)</span> were already introduced above. These elements comprise the <em>observed data</em> in our regression. The <em>noise</em> or <em>error</em> variable is <span class="math inline">\(\varepsilon\)</span>. The entries in this vector are usually considered to be independent and identically distributed (iid) random variables with mean zero and finite variance <span class="math inline">\(\sigma^2 &lt; \infty\)</span>. Very often, this vector will be assumed to have a multivariate normal distribution: <span class="math inline">\(\varepsilon\sim\mathcal{N}\left({ 0},\sigma^2 I_n\right)\)</span> where <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix. The variance <span class="math inline">\(\sigma^2\)</span> is also generally considered to be unknown to the analyst.</p>
+<p>The <em>response</em> <span class="math inline">\(Y\)</span> and the <em>regressors</em> <span class="math inline">\(X\)</span> were already introduced above. These elements comprise the <em>observed data</em> in our regression. The <em>noise</em> or <em>error</em> variable is <span class="math inline">\(\veps\)</span>. The entries in this vector are usually considered to be independent and identically distributed (iid) random variables with mean zero and finite variance <span class="math inline">\(\sigma^2 &lt; \infty\)</span>. Very often, this vector will be assumed to have a multivariate normal distribution: <span class="math inline">\(\veps \dist \distNormal{{ 0}}{\sigma^2 I_n}\)</span> where <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix. The variance <span class="math inline">\(\sigma^2\)</span> is also generally considered to be unknown to the analyst.</p>
 <p>The unknown vector <span class="math inline">\(\beta\)</span> is our <em>parameter</em> vector. Eventually, we will construct an <em>estimator</em> <span class="math inline">\(\hat{\beta}\)</span> from the observed data. Given such an estimator, the <em>fitted values</em> are <span class="math inline">\(\hat{Y} := X\hat{\beta}\)</span>. These values are what the model believes are the expected values at each regressor.</p>
 <p>Given the fitted values, the <em>residuals</em> are <span class="math inline">\(r = Y-\hat{Y}\)</span> which is a vector with entries <span class="math inline">\(r_i = Y_i - \hat{Y}_i\)</span>. This is the difference between the observed response and the expected response of our model. The residuals are of critical importance to testing how good our model is and will reappear in most subsequent sections.</p>
 <table class="caption-top table">
-<caption>The four variables in the linear regression model of <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;1</a> split between whether they are fixed or random variables and between whether or not the analyst knows their value.</caption>
+<caption>The four variables in the linear regression model of <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> split between whether they are fixed or random variables and between whether or not the analyst knows their value.</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -262,7 +361,7 @@ window.Quarto = {
 <tr class="even">
 <td>Random</td>
 <td><span class="math inline">\(Y\)</span></td>
-<td><span class="math inline">\(\varepsilon\)</span></td>
+<td><span class="math inline">\(\veps\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -273,25 +372,25 @@ window.Quarto = {
 \]</span> The explained sum of squares can be thought of as the amount of variation explained by the model while the residual sum of squares can be thought of as a measure of the variation that is not yet contained in the model. The sum of squares gives us an expression for the so called <em>coefficient of determination</em>, <span class="math inline">\(R^2 = SS_\text{exp}/SS_\text{tot} = 1-SS_\text{res}/SS_\text{tot}\in[0,1]\)</span>, which is treated as a measure of what percentage of the variation is explained by the given model.</p>
 </section>
 </section>
-<section id="point-estimation" class="level2">
-<h2 class="anchored" data-anchor-id="point-estimation">Point Estimation</h2>
+<section id="point-estimation" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">1.2</span> Point Estimation</h2>
 <p>In the ordinary least squares setting, the our choice of estimator is <span id="eq-leastSquares"><span class="math display">\[
-  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^p}{\arg\min}
+  \hat{\beta} = \argmin{\tilde{\beta}\in\real^p}
   \sum_{i=1}^n( Y_i - X_{i,\cdot}\cdot\tilde{\beta} )^2
-\tag{2}\]</span></span> where <span class="math inline">\(X_{i,\cdot}\)</span> is the <span class="math inline">\(i\)</span>th row of the matrix <span class="math inline">\(X\)</span>. In the simple regression setting, this reduces to <span class="math display">\[
+\tag{1.2}\]</span></span> where <span class="math inline">\(X_{i,\cdot}\)</span> is the <span class="math inline">\(i\)</span>th row of the matrix <span class="math inline">\(X\)</span>. In the simple regression setting, this reduces to <span class="math display">\[
   (\hat{\beta}_0,\hat{\beta}_1) =
-  \underset{(\tilde{\beta}_0,\tilde{\beta}_1)\in\mathbb{R}^2}{\arg\min}
+  \argmin{(\tilde{\beta}_0,\tilde{\beta}_1)\in\real^2}
   \sum_{i=1}^n( Y_i - (\tilde{\beta}_0 + \tilde{\beta}_1x_i) )^2.
 \]</span> Note that this is equivalent to choosing a <span class="math inline">\(\hat{\beta}\)</span> to minimize the sum of the squared residuals.</p>
 <p>It is perfectly reasonable to consider other criterion beyond minimizing the sum of squared residuals. However, this approach results in an estimator with many nice properties. Most notably is the Gauss-Markov theorem:</p>
 <div id="thm-gaussMarkov" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;1</a> and that for the errors, <span class="math inline">\(\mathrm{E}\varepsilon_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
+<p><span class="theorem-title"><strong>Theorem 1.1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> and that for the errors, <span class="math inline">\(\xv \veps_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\var{\veps_i} = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\cov{\veps_i}{\veps_j} = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
 (This is sometimes referred to as the ``Best Linear Unbiased Estimator’’ or BLUE)</p>
 </div>
-<p>Hence, it can be shown that the estimator is unbiased, <span class="math inline">\(\mathrm{E}\hat{\beta} = \beta\)</span>. Furthermore, as long as the model contains an intercept term <span class="math inline">\(\beta_0\)</span>, the constructed least squares line passes through the centre of the data in the sense that the sum of the residuals is zero, <span class="math inline">\(\sum_{i=1}^n r_i = 0\)</span> and that <span class="math inline">\(\bar{Y} = \hat{\beta}\bar{X}\)</span> where <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span> and where <span class="math inline">\(\bar{X}\)</span> is the vector of column means of the matrix <span class="math inline">\(X\)</span>.</p>
-<section id="derivation-of-the-ols-estimator" class="level3">
-<h3 class="anchored" data-anchor-id="derivation-of-the-ols-estimator">Derivation of the OLS estimator</h3>
-<p>The goal is to derive an explicit solution to <a href="#eq-leastSquares" class="quarto-xref">Equation&nbsp;2</a>. First, consider the following partial derivative: <span class="math display">\[\begin{align*}
+<p>Hence, it can be shown that the estimator is unbiased, <span class="math inline">\(\xv\hat{\beta} = \beta\)</span>. Furthermore, as long as the model contains an intercept term <span class="math inline">\(\beta_0\)</span>, the constructed least squares line passes through the centre of the data in the sense that the sum of the residuals is zero, <span class="math inline">\(\sum_{i=1}^n r_i = 0\)</span> and that <span class="math inline">\(\bar{Y} = \hat{\beta}\bar{X}\)</span> where <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span> and where <span class="math inline">\(\bar{X}\)</span> is the vector of column means of the matrix <span class="math inline">\(X\)</span>.</p>
+<section id="derivation-of-the-ols-estimator" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="derivation-of-the-ols-estimator"><span class="header-section-number">1.2.1</span> Derivation of the OLS estimator</h3>
+<p>The goal is to derive an explicit solution to <a href="#eq-leastSquares" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>. First, consider the following partial derivative: <span class="math display">\[\begin{align*}
   \frac{\partial}{\partial \hat{\beta}_k}
   \sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})^2
   &amp;= -2\sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})X_{i,k}\\
@@ -302,66 +401,66 @@ window.Quarto = {
      +2\sum_{i=1}^n\sum_{j=1}^{p+1} X_{i,j}X_{i,k}\hat{\beta}_j
 \end{align*}\]</span> The above is the <span class="math inline">\(k\)</span>th entry in the vector <span class="math inline">\(\nabla \sum_{i=1}^n(Y_i-X_{i,\cdot}\hat{\beta})^2\)</span>. Hence, <span class="math display">\[
   \nabla \sum_{i=1}^n(Y_i-X_{i,\cdot}\hat{\beta})^2
-  = -2 {X}^\mathrm{T}Y + 2{X}^\mathrm{T}X\hat{\beta}.
+  = -2 \TT{X}Y + 2\TT{X}X\hat{\beta}.
 \]</span> Setting this equal to zero results in a critical point at <span class="math display">\[
-  {X}^\mathrm{T}Y = {X}^\mathrm{T}X\hat{\beta}
-\]</span> or <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> assuming <span class="math inline">\({X}^\mathrm{T}X\)</span> is invertible. Revisiting the terminology in the above definitions sections gives the following table:</p>
-<p>|————————–|————————————————–| | Least Squares Estimator: | <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Fitted Values: | <span class="math inline">\(\hat{Y} = X\hat{\beta}=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Residuals: | <span class="math inline">\(r = Y-\hat{Y} = (I_n - X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y\)</span> |</p>
-<p>In the case that <span class="math inline">\(n&gt;p\)</span> and that the columns of <span class="math inline">\(X\)</span> are linearly independent, the matrix <span class="math inline">\(P_X:=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\)</span> is a rank <span class="math inline">\(p+1\)</span> projection matrix. Similarly, <span class="math inline">\(I_n-P_X\)</span> is the complementary rank <span class="math inline">\(n-p-1\)</span> projection matrix. Intuitively, this implies that the fitted values are the projection on the observed values onto a <span class="math inline">\(p\)</span>-dimensional subspace while the residuals arise from a projection onto the orthogonal subspace. As a result, it can be shown that <span class="math inline">\(\mathrm{cov}\left(\hat{Y},r\right) = 0\)</span>.</p>
+  \TT{X}Y = \TT{X}X\hat{\beta}
+\]</span> or <span class="math inline">\(\hat{\beta} = (\TT{X}X)^{-1}\TT{X}Y\)</span> assuming <span class="math inline">\(\TT{X}X\)</span> is invertible. Revisiting the terminology in the above definitions sections gives the following table:</p>
+<p>|————————–|————————————————–| | Least Squares Estimator: | <span class="math inline">\(\hat{\beta} = (\TT{X}X)^{-1}\TT{X}Y\)</span> | | Fitted Values: | <span class="math inline">\(\hat{Y} = X\hat{\beta}=X(\TT{X}X)^{-1}\TT{X}Y\)</span> | | Residuals: | <span class="math inline">\(r = Y-\hat{Y} = (I_n - X(\TT{X}X)^{-1}\TT{X})Y\)</span> |</p>
+<p>In the case that <span class="math inline">\(n&gt;p\)</span> and that the columns of <span class="math inline">\(X\)</span> are linearly independent, the matrix <span class="math inline">\(P_X:=X(\TT{X}X)^{-1}\TT{X}\)</span> is a rank <span class="math inline">\(p+1\)</span> projection matrix. Similarly, <span class="math inline">\(I_n-P_X\)</span> is the complementary rank <span class="math inline">\(n-p-1\)</span> projection matrix. Intuitively, this implies that the fitted values are the projection on the observed values onto a <span class="math inline">\(p\)</span>-dimensional subspace while the residuals arise from a projection onto the orthogonal subspace. As a result, it can be shown that <span class="math inline">\(\cov{\hat{Y}}{r} = 0\)</span>.</p>
 <p>Now that we have an explicit expression for the least squares estimator <span class="math inline">\(\hat{\beta}\)</span>, we can show that it is unbiased. <span class="math display">\[
-  \mathrm{E}\hat{\beta} = \mathrm{E}\left(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\right)
-  = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\mathrm{E}Y
-  = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T} X\beta = \beta.
+  \xv\hat{\beta} = \xval{(\TT{X}X)^{-1}\TT{X}Y}
+  = (\TT{X}X)^{-1}\TT{X}\xv Y
+  = (\TT{X}X)^{-1}\TT{X} X\beta = \beta.
 \]</span> Following that, we can compute its variance. <span class="math display">\[\begin{align*}
-  \mathrm{Var}\left(\hat{\beta}\right)
-  &amp;= \mathrm{E}\left( (\hat{\beta}-\beta){(\hat{\beta}-\beta)}^\mathrm{T} \right)\\
-  &amp;= \mathrm{E}\left( \hat{\beta}{\hat{\beta}}^\mathrm{T} \right) - \beta{\beta}^\mathrm{T}\\
-  &amp;= \mathrm{E}\left( ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y{(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y)}^\mathrm{T} \right)
-     - \beta{\beta}^\mathrm{T}\\
-  &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\mathrm{E}\left( Y{Y}^\mathrm{T} \right)X({X}^\mathrm{T}X)^{-1}
-     - \beta{\beta}^\mathrm{T}\\
-  &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T} (
-       \sigma^2I_n + X\beta{\beta}^\mathrm{T}{X}^\mathrm{T}
-     ) X({X}^\mathrm{T}X)^{-1}
-     - \beta{\beta}^\mathrm{T}\\
-  &amp;= \sigma^2({X}^\mathrm{T}X)^{-1}.
+  \var{\hat{\beta}}
+  &amp;= \xval{ (\hat{\beta}-\beta)\TT{(\hat{\beta}-\beta)} }\\
+  &amp;= \xval{ \hat{\beta}\TT{\hat{\beta}} } - \beta\TT{\beta}\\
+  &amp;= \xval{ (\TT{X}X)^{-1}\TT{X}Y\TT{((\TT{X}X)^{-1}\TT{X}Y)} }
+     - \beta\TT{\beta}\\
+  &amp;= (\TT{X}X)^{-1}\TT{X}\xval{ Y\TT{Y} }X(\TT{X}X)^{-1}
+     - \beta\TT{\beta}\\
+  &amp;= (\TT{X}X)^{-1}\TT{X} (
+       \sigma^2I_n + X\beta\TT{\beta}\TT{X}
+     ) X(\TT{X}X)^{-1}
+     - \beta\TT{\beta}\\
+  &amp;= \sigma^2(\TT{X}X)^{-1}.
 \end{align*}\]</span></p>
-<p>Thus far, we have only assumed that <span class="math inline">\(\varepsilon\)</span> is a random vector with iid entries with mean zero and variance <span class="math inline">\(\sigma^2\)</span>. If in addition, we assumed that <span class="math inline">\(\varepsilon\)</span> has a <em>normal</em> or <em>Gaussian</em> distribution, then <span class="math display">\[
-  \varepsilon\sim\mathcal{N}\left(0,\sigma^2I_n\right),~~
-  Y\sim\mathcal{N}\left(X\beta,\sigma^2I_n\right),\text{ and }
-  \hat{\beta}\sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right).
+<p>Thus far, we have only assumed that <span class="math inline">\(\veps\)</span> is a random vector with iid entries with mean zero and variance <span class="math inline">\(\sigma^2\)</span>. If in addition, we assumed that <span class="math inline">\(\veps\)</span> has a <em>normal</em> or <em>Gaussian</em> distribution, then <span class="math display">\[
+  \veps\dist\distNormal{0}{\sigma^2I_n},~~
+  Y\dist\distNormal{X\beta}{\sigma^2I_n},\text{ and }
+  \hat{\beta}\dist\distNormal{\beta}{\sigma^2(\TT{X}X)^{-1}}.
 \]</span> Furthermore, with a little work, one can show that for the fitted values and residuals also have normal distributions in this setting: <span class="math display">\[
-  \hat{Y}\sim\mathcal{N}\left(X\hat{\beta},\sigma^2P_X\right),~\text{ and }~
-  r\sim\mathcal{N}\left(0,\sigma^2(I_n-P_X)\right).
+  \hat{Y}\dist\distNormal{X\hat{\beta}}{\sigma^2P_X},~\text{ and }~
+  r\dist\distNormal{0}{\sigma^2(I_n-P_X)}.
 \]</span> Notice that the two above covariance matrices are not generally of full rank. This assumption that the errors follow a normal distribution is a very common assumption to make in practice.</p>
 </section>
-<section id="maximum-likelihood-estimate-under-normality" class="level3">
-<h3 class="anchored" data-anchor-id="maximum-likelihood-estimate-under-normality">Maximum likelihood estimate under normality</h3>
+<section id="maximum-likelihood-estimate-under-normality" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="maximum-likelihood-estimate-under-normality"><span class="header-section-number">1.2.2</span> Maximum likelihood estimate under normality</h3>
 <p>In the previous section, the OLS estimator is derived by minimizing the sum of the squared errors. Now, given the additional assumption that the errors have a normal distribution, we can compute an alternative estimator for <span class="math inline">\(\beta\)</span>: the maximum likelihood estimate (MLE). We can also use this to simultaneously compute the MLE for <span class="math inline">\(\sigma^2\)</span>.</p>
-<p>From above we have that <span class="math inline">\(Y\sim\mathcal{N}\left(X\beta,\sigma^2I_n\right)\)</span>, and hence the likelihood is <span class="math display">\[\begin{align*}
+<p>From above we have that <span class="math inline">\(Y\dist\distNormal{X\beta}{\sigma^2I_n}\)</span>, and hence the likelihood is <span class="math display">\[\begin{align*}
   L(\beta,\sigma^2; X,Y)
   &amp;= (2\pi\sigma^2)^{-n/2}\exp\left(
-    -\frac{1}{2\sigma^2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta)
+    -\frac{1}{2\sigma^2}\TT{(Y-X\beta)}(Y-X\beta)
   \right).
 \end{align*}\]</span> The log likelihood is then <span class="math display">\[\begin{multline*}
 \ell(\beta,\sigma^2;X,Y) = \log L(\beta,\sigma^2;X,Y)
 =\\= -\frac{n}{2}\log 2\pi -\frac{n}{2}\log \sigma^2
-   -\frac{1}{2\sigma^2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta).
+   -\frac{1}{2\sigma^2}\TT{(Y-X\beta)}(Y-X\beta).
 \end{multline*}\]</span> This implies that the MLE for <span class="math inline">\(\beta\)</span> comes from solving <span class="math display">\[
   0 = \frac{\partial\ell}{\partial\beta} =
-  \frac{\partial}{\partial\beta} {(Y-X\beta)}^\mathrm{T}(Y-X\beta),
+  \frac{\partial}{\partial\beta} \TT{(Y-X\beta)}(Y-X\beta),
 \]</span> which is solved by the OLS estimator from above. Hence, the MLE under normality is the least squares estimator.</p>
 <p>For the variance term <span class="math inline">\(\sigma^2\)</span>, the MLE is similarly found by solving <span class="math display">\[
   0= \frac{\partial\ell}{\partial\sigma^2} =
   -\frac{n}{2} (\sigma^{2})^{-1}
-  +\frac{(\sigma^2)^{-2}}{2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta).
-\]</span> This occurs for <span class="math inline">\(\hat{\sigma}^2 = n^{-1}{(Y-X\hat{\beta})}^\mathrm{T}(Y-X\hat{\beta})\)</span>, which is just the average sum of squares of the residuals: <span class="math inline">\(\hat{\sigma}^2 = n^{-1}\sum_{i=1}^n r_i^2\)</span>. However, this is a biased estimator of the variance as the residuals are not independent and have a degenerate covariance matrix of rank <span class="math inline">\(n-p-1\)</span>. Intuitively, this implies that the sum of squared residuals has <span class="math inline">\(n-p-1\)</span> degrees of freedom resulting in <span class="math display">\[
+  +\frac{(\sigma^2)^{-2}}{2}\TT{(Y-X\beta)}(Y-X\beta).
+\]</span> This occurs for <span class="math inline">\(\hat{\sigma}^2 = n^{-1}\TT{(Y-X\hat{\beta})}(Y-X\hat{\beta})\)</span>, which is just the average sum of squares of the residuals: <span class="math inline">\(\hat{\sigma}^2 = n^{-1}\sum_{i=1}^n r_i^2\)</span>. However, this is a biased estimator of the variance as the residuals are not independent and have a degenerate covariance matrix of rank <span class="math inline">\(n-p-1\)</span>. Intuitively, this implies that the sum of squared residuals has <span class="math inline">\(n-p-1\)</span> degrees of freedom resulting in <span class="math display">\[
   \frac{SS_\text{res}}{\sigma^2} = \frac{1}{\sigma^2}\sum_{i=1}^n r_i^2
-  \sim\chi^2\left(n-p-1\right)
+  \dist\distChiSquared{n-p-1}
 \]</span> and the unbiased estimator of <span class="math inline">\(\sigma^2\)</span> being <span class="math inline">\(SS_\text{res}/(n-p-1) = \hat{\sigma}^2(n/(n-p-1))\)</span>.<br>
 For a more precise explanation of where this comes from, see <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a> which is beyond the scope of this course.</p>
-<section id="chocolate-nobel-data" class="level4">
-<h4 class="anchored" data-anchor-id="chocolate-nobel-data">Chocolate-Nobel Data</h4>
+<section id="chocolate-nobel-data" class="level4" data-number="1.2.2.1">
+<h4 data-number="1.2.2.1" class="anchored" data-anchor-id="chocolate-nobel-data"><span class="header-section-number">1.2.2.1</span> Chocolate-Nobel Data</h4>
 <p>Running a regression in R on the chocolate consumption vs Nobel prize data from above results in a fitted model <span class="math display">\[
   (\text{Nobel Prizes}) =  -0.991 + 1.3545(\text{Chocolate})
 \]</span> This indicates that a 1 kg increase in chocolate consumption per capita corresponds to an expected increase in 1.35 Nobel prizes per 10 million people.</p>
@@ -395,61 +494,61 @@ F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
 </div>
 </section>
 </section>
-<section id="proof-of-the-gauss-markov-theorem" class="level3">
-<h3 class="anchored" data-anchor-id="proof-of-the-gauss-markov-theorem">Proof of the Gauss-Markov Theorem</h3>
+<section id="proof-of-the-gauss-markov-theorem" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="proof-of-the-gauss-markov-theorem"><span class="header-section-number">1.2.3</span> Proof of the Gauss-Markov Theorem</h3>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Any linear estimator can be written as <span class="math inline">\(AY\)</span> for some non-random matrix <span class="math inline">\(A\in\mathbb{R}^{(p+1)\times n}\)</span>. We can in turn write <span class="math inline">\(A = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D\)</span> for some matrix <span class="math inline">\(D\in\mathbb{R}^{(p+1)\times n}\)</span>. Then, as <span class="math display">\[\begin{align*}
-    \mathrm{E}\left( AY \right)  
+<p><span class="proof-title"><em>Proof</em>. </span>Any linear estimator can be written as <span class="math inline">\(AY\)</span> for some non-random matrix <span class="math inline">\(A\in\real^{(p+1)\times n}\)</span>. We can in turn write <span class="math inline">\(A = (\TT{X}X)^{-1}\TT{X}+D\)</span> for some matrix <span class="math inline">\(D\in\real^{(p+1)\times n}\)</span>. Then, as <span class="math display">\[\begin{align*}
+    \xval{ AY }  
     &amp;= AX\beta \\
-    &amp;= \left[({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D\right]X\beta \\
+    &amp;= \left[(\TT{X}X)^{-1}\TT{X}+D\right]X\beta \\
     &amp;= \beta + DX\beta,
-  \end{align*}\]</span> the unbiased condition implies that <span class="math inline">\(DX\beta=0\)</span> for any <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span> and hence that <span class="math inline">\(DX=0\)</span>.</p>
+  \end{align*}\]</span> the unbiased condition implies that <span class="math inline">\(DX\beta=0\)</span> for any <span class="math inline">\(\beta\in\real^{p+1}\)</span> and hence that <span class="math inline">\(DX=0\)</span>.</p>
 <p>Next, we compute the variance of the arbitrary linear unbiased estimator to get <span class="math display">\[\begin{align*}
-    \mathrm{Var}\left(AY\right) &amp;=
-    A\mathrm{Var}\left(Y\right){A}^\mathrm{T}\\
+    \var{AY} &amp;=
+    A\var{Y}\TT{A}\\
     &amp;=\sigma^2\left[
-      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D
-    \right]{\left[
-      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D
-    \right]}^\mathrm{T}\\
+      (\TT{X}X)^{-1}\TT{X}+D
+    \right]\TT{\left[
+      (\TT{X}X)^{-1}\TT{X}+D
+    \right]}\\
     &amp;= \sigma^2\left[
-      ({X}^\mathrm{T}X)^{-1} +
-      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}{D}^\mathrm{T} +
-      DX({X}^\mathrm{T}X)^{-1} +
-      D{D}^\mathrm{T}
+      (\TT{X}X)^{-1} +
+      (\TT{X}X)^{-1}\TT{X}\TT{D} +
+      DX(\TT{X}X)^{-1} +
+      D\TT{D}
     \right] \\
     &amp;= \sigma^2\left[
-      ({X}^\mathrm{T}X)^{-1} +
-      D{D}^\mathrm{T}
+      (\TT{X}X)^{-1} +
+      D\TT{D}
     \right].
-  \end{align*}\]</span> Hence, to minimize the variance, we must minimize <span class="math inline">\(D{D}^\mathrm{T}\)</span> as <span class="math inline">\(D{D}^\mathrm{T}\)</span> is necessarily a positive semi-definite matrix. This is achieved by setting <span class="math inline">\(D=0\)</span> and arriving at <span class="math inline">\(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> having minimial variance.</p>
+  \end{align*}\]</span> Hence, to minimize the variance, we must minimize <span class="math inline">\(D\TT{D}\)</span> as <span class="math inline">\(D\TT{D}\)</span> is necessarily a positive semi-definite matrix. This is achieved by setting <span class="math inline">\(D=0\)</span> and arriving at <span class="math inline">\((\TT{X}X)^{-1}\TT{X}Y\)</span> having minimial variance.</p>
 </div>
 <div id="rem-remark1" class="proof remark">
-<p><span class="proof-title"><em>Remark 1</em>. </span>Note that <span class="math inline">\(D{D}^\mathrm{T}\)</span> is positive semi-definite for any choice of <span class="math inline">\(D\)</span> as for any <span class="math inline">\(w\in\mathbb{R}^{p+1}\)</span>, we have <span class="math display">\[
-    {w}^\mathrm{T}(D{D}^\mathrm{T}){w} =
-    {({D}^\mathrm{T}w)}^\mathrm{T}(Dw) = \lVert Dw\rVert_2 \ge 0.
+<p><span class="proof-title"><em>Remark 1.1</em>. </span>Note that <span class="math inline">\(D\TT{D}\)</span> is positive semi-definite for any choice of <span class="math inline">\(D\)</span> as for any <span class="math inline">\(w\in\real^{p+1}\)</span>, we have <span class="math display">\[
+    \TT{w}(D\TT{D}){w} =
+    \TT{(\TT{D}w)}(Dw) = \norm{Dw}_2 \ge 0.
   \]</span></p>
 </div>
 <div id="rem-remark2" class="proof remark">
-<p><span class="proof-title"><em>Remark 2</em>. </span>While <span class="math inline">\(\hat{\beta}\)</span> has minimal variance over all unbiased estimators, we can lessen the variance further if we allow for biased estimators. This is considered in many more advanced regression methods such as ridge regression and lasso.</p>
+<p><span class="proof-title"><em>Remark 1.2</em>. </span>While <span class="math inline">\(\hat{\beta}\)</span> has minimal variance over all unbiased estimators, we can lessen the variance further if we allow for biased estimators. This is considered in many more advanced regression methods such as ridge regression and lasso.</p>
 </div>
 </section>
 </section>
-<section id="hypothesis-testing" class="level2">
-<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
-<section id="goodness-of-fit" class="level3">
-<h3 class="anchored" data-anchor-id="goodness-of-fit">Goodness of fit</h3>
+<section id="hypothesis-testing" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="hypothesis-testing"><span class="header-section-number">1.3</span> Hypothesis Testing</h2>
+<section id="goodness-of-fit" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="goodness-of-fit"><span class="header-section-number">1.3.1</span> Goodness of fit</h3>
 <p>We now have a model for our data, and in some sense, this model is optimal as it minimizes the squared errors. However, even being optimal, we are still interested in knowing whether or not this is a good model for our data. This is a question of <em>goodness of fit</em>.</p>
 <p>The first question to ask is, do any of the regressors provide information about the response in the linear model framework? This can be written mathematically as <span id="eq-hypftest"><span class="math display">\[
 H_0: \beta_1 = \ldots = \beta_p = 0, ~~~~~ H_1: \exists i\ge1~s.t.~\beta_i\ne0,
-\tag{3}\]</span></span> which is asking is there at least one <span class="math inline">\(\beta_i\)</span> that we can claim is non-zero and hence implies that the regressor <span class="math inline">\(x_i\)</span> has some nontrivial influence over <span class="math inline">\(y\)</span>.</p>
-<p>To test this hypothesis, we revisit the explained and residual sums of squares introduced in the Definitions section. Specifically, we already have that <span class="math inline">\(SS_\text{res}/\sigma^2 \sim\chi^2\left(n-p-1\right)\)</span> from above. Similarly, <span class="math inline">\(SS_\text{exp}/\sigma^2 \sim\chi^2\left(p\right)\)</span> under the null hypothesis where <span class="math inline">\(\beta_1=\ldots=\beta_p=0\)</span>, and hence any variation in those terms should be pure noise. Lastly, it can be demonstrated that <span class="math inline">\(SS_\text{res}\)</span> and <span class="math inline">\(SS_\text{exp}\)</span> are independent random variables, which intuitively follows from the orthogonality of the fitted values and the errors. Once again, this can be made precise via <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a>.</p>
-<p>The usual test statistic for the hypothesis in <a href="#eq-hypftest" class="quarto-xref">Equation&nbsp;3</a> is <span class="math display">\[
-  \frac{SS_\text{exp}/p}{SS_\text{res}/(n-p-1)} \sim
-  F\left(p,n-p-1\right),
+\tag{1.3}\]</span></span> which is asking is there at least one <span class="math inline">\(\beta_i\)</span> that we can claim is non-zero and hence implies that the regressor <span class="math inline">\(x_i\)</span> has some nontrivial influence over <span class="math inline">\(y\)</span>.</p>
+<p>To test this hypothesis, we revisit the explained and residual sums of squares introduced in the Definitions section. Specifically, we already have that <span class="math inline">\(SS_\text{res}/\sigma^2 \dist\distChiSquared{n-p-1}\)</span> from above. Similarly, <span class="math inline">\(SS_\text{exp}/\sigma^2 \dist\distChiSquared{p}\)</span> under the null hypothesis where <span class="math inline">\(\beta_1=\ldots=\beta_p=0\)</span>, and hence any variation in those terms should be pure noise. Lastly, it can be demonstrated that <span class="math inline">\(SS_\text{res}\)</span> and <span class="math inline">\(SS_\text{exp}\)</span> are independent random variables, which intuitively follows from the orthogonality of the fitted values and the errors. Once again, this can be made precise via <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a>.</p>
+<p>The usual test statistic for the hypothesis in <a href="#eq-hypftest" class="quarto-xref">Equation&nbsp;<span>1.3</span></a> is <span class="math display">\[
+  \frac{SS_\text{exp}/p}{SS_\text{res}/(n-p-1)} \dist
+  \distFdist{p}{n-p-1},
 \]</span> which leads to an <em>F test</em>. If the test statistic is large, then the explained variation is larger than the noise resulting in a small p-value and a rejection of the null hypothesis.</p>
-<section id="f-test-on-chocolate-nobel-data" class="level4">
-<h4 class="anchored" data-anchor-id="f-test-on-chocolate-nobel-data">F test on Chocolate-Nobel data</h4>
+<section id="f-test-on-chocolate-nobel-data" class="level4" data-number="1.3.1.1">
+<h4 data-number="1.3.1.1" class="anchored" data-anchor-id="f-test-on-chocolate-nobel-data"><span class="header-section-number">1.3.1.1</span> F test on Chocolate-Nobel data</h4>
 <p>From the final line of the R output from the <code>summary()</code> command, we have a test statistic value of 15.45 with degrees of freedom 1 and 14. This results in a very small p-value of 0.001508.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmDat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -532,24 +631,24 @@ F-statistic: 44.24 on 1 and 15 DF,  p-value: 7.725e-06</code></pre>
 </div>
 </section>
 </section>
-<section id="regression-coefficients" class="level3">
-<h3 class="anchored" data-anchor-id="regression-coefficients">Regression coefficients</h3>
+<section id="regression-coefficients" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="regression-coefficients"><span class="header-section-number">1.3.2</span> Regression coefficients</h3>
 <p>Given that the previous F test results in a significant p-value, the subsequent question is to ask which of the <span class="math inline">\(p\)</span> regressors are significant? Hence, we have the following hypotheses for <span class="math inline">\(j=0,1,\ldots,p\)</span>. <span class="math display">\[
   H_{0,j}: \beta_j=0 ~~~~~
   H_{1,j}: \beta_j\ne0.
-\]</span> Each individual <span class="math inline">\(\hat{\beta}_j\sim\mathcal{N}\left(\beta_j,\sigma^2({X}^\mathrm{T}X)^{-1}_{j,j}\right)\)</span> where <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{j,j}\)</span> is the <span class="math inline">\(j\)</span>th entry in the diagonal of <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{j,j}\)</span>.</p>
+\]</span> Each individual <span class="math inline">\(\hat{\beta}_j\dist\distNormal{\beta_j}{\sigma^2(\TT{X}X)^{-1}_{j,j}}\)</span> where <span class="math inline">\((\TT{X}X)^{-1}_{j,j}\)</span> is the <span class="math inline">\(j\)</span>th entry in the diagonal of <span class="math inline">\((\TT{X}X)^{-1}_{j,j}\)</span>.</p>
 <div id="rem-indexing" class="proof remark">
-<p><span class="proof-title"><em>Remark 3</em>. </span>We will index the entries of the matrix from <span class="math inline">\(0,1,\ldots,p\)</span> to conform with the indexing of the <span class="math inline">\(\beta\)</span>’s. Note that this is a <span class="math inline">\((p+1)\times(p+1)\)</span> matrix.</p>
+<p><span class="proof-title"><em>Remark 1.3</em>. </span>We will index the entries of the matrix from <span class="math inline">\(0,1,\ldots,p\)</span> to conform with the indexing of the <span class="math inline">\(\beta\)</span>’s. Note that this is a <span class="math inline">\((p+1)\times(p+1)\)</span> matrix.</p>
 </div>
 <p>Thus, under the null hypothesis that <span class="math inline">\(\beta_j=0\)</span>, we have that <span class="math display">\[
-  \hat{\beta}_j/\sqrt{ \sigma^2({X}^\mathrm{T}X)^{-1}_{j,j} } \sim\mathcal{N}\left(0,1\right).
+  \hat{\beta}_j/\sqrt{ \sigma^2(\TT{X}X)^{-1}_{j,j} } \dist\distNormal{0}{1}.
 \]</span> However, we cannot perform a z test as <span class="math inline">\(\sigma^2\)</span> is unknown. To rectify this, the unbiased estimator for <span class="math inline">\(\sigma^2\)</span> is used in its place resulting in <span class="math display">\[
-  \frac{\hat{\beta}_j}{\sqrt{ ({X}^\mathrm{T}X)^{-1}_{j,j}SS_\text{res}/(n-p-1) }}
-  \sim t\left(n-p-1\right),
+  \frac{\hat{\beta}_j}{\sqrt{ (\TT{X}X)^{-1}_{j,j}SS_\text{res}/(n-p-1) }}
+  \dist\distTdist{n-p-1},
 \]</span> and a t test can be performed. If the value of the test statistic is large, then there may be sufficient evidence to reject the null that <span class="math inline">\(\beta_j=0\)</span>. The denominator is often referred to as the <em>standard error</em>. To simplify future formulae, this will be denoted as <span class="math inline">\(\text{se}(\beta_j)\)</span>.</p>
 <p>It is worth noting that this test looks for significant influence of the <span class="math inline">\(j\)</span>th regressor on the response given all of the other regressors. Hence, it quantifies the marginal as opposed to the absolute effect of that variable on the model. These ideas will be investigated further when discussing variable selection later in this book. However, as a quick word of caution, when <span class="math inline">\(p\)</span> hypothesis tests are performed, the analyst needs to consider <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem" class="external" target="_blank">multiple testing corrections</a>.</p>
-<section id="t-test-on-chocolate-nobel-data" class="level4">
-<h4 class="anchored" data-anchor-id="t-test-on-chocolate-nobel-data">t test on Chocolate-Nobel data</h4>
+<section id="t-test-on-chocolate-nobel-data" class="level4" data-number="1.3.2.1">
+<h4 data-number="1.3.2.1" class="anchored" data-anchor-id="t-test-on-chocolate-nobel-data"><span class="header-section-number">1.3.2.1</span> t test on Chocolate-Nobel data</h4>
 <p>The R commands <code>lm()</code> and <code>summary()</code> will return a table of regression coefficients, t test statistics and p-values associated with each coefficient. For the Chocolate-Nobel prize data, the table looks like</p>
 <table class="caption-top table">
 <thead>
@@ -558,7 +657,7 @@ F-statistic: 44.24 on 1 and 15 DF,  p-value: 7.725e-06</code></pre>
 <th>Estimate</th>
 <th>Std. Error</th>
 <th>t value</th>
-<th>Pr(<span class="math inline">\(&gt;\lvert t\rvert\)</span>)</th>
+<th>Pr(<span class="math inline">\(&gt;\abs{t}\)</span>)</th>
 </tr>
 </thead>
 <tbody>
@@ -603,50 +702,50 @@ F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
 </div>
 </section>
 </section>
-<section id="partial-f-test" class="level3">
-<h3 class="anchored" data-anchor-id="partial-f-test">Partial F-test</h3>
+<section id="partial-f-test" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="partial-f-test"><span class="header-section-number">1.3.3</span> Partial F-test</h3>
 <p>In the previous two sections, we first tested as to whether or not there exists at least one <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j=1,\ldots,p\)</span>, that is non-zero. Then, we tested whether or not a specific <span class="math inline">\(\beta_j\)</span> is non-zero. The next logical question is whether or not some collection of <span class="math inline">\(\beta_j\)</span>’s of size strictly between <span class="math inline">\(1\)</span> and <span class="math inline">\(p\)</span> has a non-zero element. That is, for a fixed <span class="math inline">\(q\)</span>, <span id="eq-hypPartftest"><span class="math display">\[
   H_0: \beta_{p-q+1} = \ldots = \beta_p = 0 ~~~~~~~~
   H_1: \exists i\ge p-q+1~s.t.~\beta_i\ne0.
-\tag{4}\]</span></span> Here, we are comparing two different models, which are the partial and full models, respectively, <span class="math display">\[
-  Y = \beta_{0:p-q}X+\varepsilon,~~\text{ and }~~Y = \beta_{0:p-q}X+\beta_{p-q+1:p}X+\varepsilon,
+\tag{1.4}\]</span></span> Here, we are comparing two different models, which are the partial and full models, respectively, <span class="math display">\[
+  Y = \beta_{0:p-q}X+\veps,~~\text{ and }~~Y = \beta_{0:p-q}X+\beta_{p-q+1:p}X+\veps,
 \]</span> and want to know whether the final <span class="math inline">\(q\)</span> regressors add any significant explanation to our model given the other <span class="math inline">\(p-q\)</span>. For the above notation, <span class="math display">\[
-  \beta_{i:j} = {(0,\ldots,0,\beta_i,\beta_{i+1},\ldots,\beta_j,0,\ldots,0)}^\mathrm{T}.
+  \beta_{i:j} = \TT{(0,\ldots,0,\beta_i,\beta_{i+1},\ldots,\beta_j,0,\ldots,0)}.
 \]</span></p>
-<p>To run the hypothesis test in <a href="#eq-hypPartftest" class="quarto-xref">Equation&nbsp;4</a>, we would have to compute the least squares estimator in the partial model, <span class="math inline">\(\hat{\beta}_{1:p-q}\)</span>, and the standard least squares estimator in the full model, <span class="math inline">\(\hat{\beta}\)</span>. Then, we will have to compute the additional explained sum of squares gained from adding the <span class="math inline">\(q\)</span> extra regressors to our model, which is <span class="math display">\[
+<p>To run the hypothesis test in <a href="#eq-hypPartftest" class="quarto-xref">Equation&nbsp;<span>1.4</span></a>, we would have to compute the least squares estimator in the partial model, <span class="math inline">\(\hat{\beta}_{1:p-q}\)</span>, and the standard least squares estimator in the full model, <span class="math inline">\(\hat{\beta}\)</span>. Then, we will have to compute the additional explained sum of squares gained from adding the <span class="math inline">\(q\)</span> extra regressors to our model, which is <span class="math display">\[
   SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q}) =
   SS_\text{exp}(\beta) - SS_\text{exp}(\beta_{1:p-q}),
 \]</span> the explained sum of squares from the full model minus the explained sum of squares from the partial model.</p>
-<p>Similarly to the full F-test from above, we have under the null hypothesis that <span class="math inline">\(SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/\sigma^2 \sim\chi^2\left(q\right).\)</span> Hence, <span class="math display">\[
-  \frac{SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/q}{SS_\text{res}/(n-p-1)} \sim
-  F\left(q,n-p-1\right),
+<p>Similarly to the full F-test from above, we have under the null hypothesis that <span class="math inline">\(SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/\sigma^2 \dist\distChiSquared{q}.\)</span> Hence, <span class="math display">\[
+  \frac{SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/q}{SS_\text{res}/(n-p-1)} \dist
+  \distFdist{q}{n-p-1},
 \]</span> so if this test statistic is large, then we have evidence to suggestion that at least one of the additional <span class="math inline">\(q\)</span> regressors adds some explanatory power to our model.</p>
 </section>
 </section>
-<section id="interval-estimators" class="level2">
-<h2 class="anchored" data-anchor-id="interval-estimators">Interval Estimators</h2>
-<section id="confidence-intervals" class="level3">
-<h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+<section id="interval-estimators" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="interval-estimators"><span class="header-section-number">1.4</span> Interval Estimators</h2>
+<section id="confidence-intervals" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">1.4.1</span> Confidence Intervals</h3>
 <p>Confidence intervals play a complementary role with hypothesis testing. From the development of the above test for an individual <span class="math inline">\({\beta}_j\)</span>, we have that <span class="math display">\[
   \frac{\hat{\beta}_j-\beta_j}{\text{se}(\beta_j)}
-  \sim t\left(n-p-1\right),
+  \dist\distTdist{n-p-1},
 \]</span> Hence, a <span class="math inline">\(1-\alpha\)</span> confidence interval for the parameter <span class="math inline">\(\beta_j\)</span> is <span class="math display">\[
   \hat{\beta}_j - t_{\alpha/2,n-p-1}\text{se}(\beta_j)
   \le \beta \le
   \hat{\beta}_j + t_{\alpha/2,n-p-1}\text{se}(\beta_j)
-\]</span> where <span class="math inline">\(t_{\alpha/2,n-p-1}\in\mathbb{R}^+\)</span> is such that <span class="math inline">\(\mathrm{P}\left(T \le t_{\alpha/2,n-p-1}\right)=\alpha/2\)</span> when <span class="math inline">\(T\sim t\left(n-p-1\right)\)</span>.</p>
-<p>While the above can be used to produce a confidence interval for each individual parameter, combining these intervals will not result in a <span class="math inline">\(1-\alpha\)</span> confidence set for the entire parameter vector. To construct such a confidence region, a little more care is required. Also, we will construct a confidence set for the entire vector <span class="math inline">\((\beta_0,\beta_1,\ldots,\beta_p)\)</span>, which results in <span class="math inline">\(p+1\)</span> degrees of freedom in what follows. As <span class="math inline">\(\hat{\beta} \sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right)\)</span> we have that <span class="math display">\[
-  \sigma^{-2}{(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)
-  \sim\chi^2\left(p+1\right).
-\]</span> From before, we have that <span class="math inline">\(SS_\text{res}/\sigma^2 \sim\chi^2\left(n-p-1\right)\)</span>. Hence <span class="math display">\[
+\]</span> where <span class="math inline">\(t_{\alpha/2,n-p-1}\in\real^+\)</span> is such that <span class="math inline">\(\prob{T \le t_{\alpha/2,n-p-1}}=\alpha/2\)</span> when <span class="math inline">\(T\dist\distTdist{n-p-1}\)</span>.</p>
+<p>While the above can be used to produce a confidence interval for each individual parameter, combining these intervals will not result in a <span class="math inline">\(1-\alpha\)</span> confidence set for the entire parameter vector. To construct such a confidence region, a little more care is required. Also, we will construct a confidence set for the entire vector <span class="math inline">\((\beta_0,\beta_1,\ldots,\beta_p)\)</span>, which results in <span class="math inline">\(p+1\)</span> degrees of freedom in what follows. As <span class="math inline">\(\hat{\beta} \dist\distNormal{\beta}{\sigma^2(\TT{X}X)^{-1}}\)</span> we have that <span class="math display">\[
+  \sigma^{-2}\TT{(\hat{\beta}-\beta)}\TT{X}X(\hat{\beta}-\beta)
+  \dist\distChiSquared{p+1}.
+\]</span> From before, we have that <span class="math inline">\(SS_\text{res}/\sigma^2 \dist\distChiSquared{n-p-1}\)</span>. Hence <span class="math display">\[
   \frac{
-    {(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)/(p+1)
+    \TT{(\hat{\beta}-\beta)}\TT{X}X(\hat{\beta}-\beta)/(p+1)
   }{
     SS_\text{res}/(n-p-1)
-  } \sim F\left(p+1,n-p-1\right).
+  } \dist\distFdist{p+1}{n-p-1}.
 \]</span> Thus, a <span class="math inline">\(1-\alpha\)</span> confidence ellipsoid can be constructed as <span class="math display">\[
   \frac{
-    {(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)/(p+1)
+    \TT{(\hat{\beta}-\beta)}\TT{X}X(\hat{\beta}-\beta)/(p+1)
   }{
     SS_\text{res}/(n-p-1)
   } \le F_{\alpha,p+1,n-p-1}.
@@ -683,45 +782,45 @@ Attaching package: 'ellipse'</code></pre>
 </div>
 </div>
 </section>
-<section id="prediction-intervals-for-an-expected-observation" class="level3">
-<h3 class="anchored" data-anchor-id="prediction-intervals-for-an-expected-observation">Prediction Intervals for an expected observation</h3>
+<section id="prediction-intervals-for-an-expected-observation" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="prediction-intervals-for-an-expected-observation"><span class="header-section-number">1.4.2</span> Prediction Intervals for an expected observation</h3>
 <p>Given the least squares model, the analyst may be interested in estimating the expected value of <span class="math inline">\(Y\)</span> have some specific input <span class="math inline">\(x=(1,x_1,\ldots,x_p)\)</span>. Our new random variable is <span class="math inline">\(\hat{Y}_0 = \hat{\beta}\cdot X\)</span> where <span class="math inline">\(X\)</span> is fixed and <span class="math inline">\(\hat{\beta}\)</span> is random. Of course, the expected value is just <span class="math display">\[
-  \mathrm{E}\left(\hat{Y}_0\middle|X=x\right) = \mathrm{E}{\hat{\beta}}\cdot x
+  \Xval{\hat{Y}_0}{X=x} = \xv{\hat{\beta}}\cdot x
   = \beta_0 + \sum_{i=1}^p \beta_ix_i.
-\]</span> To find a <span class="math inline">\(1-\alpha\)</span> interval estimate for <span class="math inline">\(\hat{Y}_0\)</span> at <span class="math inline">\(X=x\)</span>, recall once again that <span class="math inline">\(\hat{\beta}\sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right)\)</span>. Thus, <span class="math display">\[
-  \hat{Y}_0|(X=x) \sim\mathcal{N}\left(\beta\cdot x,\sigma^2 {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x\right).
+\]</span> To find a <span class="math inline">\(1-\alpha\)</span> interval estimate for <span class="math inline">\(\hat{Y}_0\)</span> at <span class="math inline">\(X=x\)</span>, recall once again that <span class="math inline">\(\hat{\beta}\dist\distNormal{\beta}{\sigma^2(\TT{X}X)^{-1}}\)</span>. Thus, <span class="math display">\[
+  \hat{Y}_0|(X=x) \dist\distNormal{\beta\cdot x}{\sigma^2 \TT{x}(\TT{X}X)^{-1}x}.
 \]</span> Hence, <span class="math display">\[
-  \frac{\hat{\beta}\cdot x - \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)}{
-    \sqrt{ \sigma^2 {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x }
-  }\sim\mathcal{N}\left(0,1\right),
+  \frac{\hat{\beta}\cdot x - \Xval{\hat{Y}_0}{X=x}}{
+    \sqrt{ \sigma^2 \TT{x}(\TT{X}X)^{-1}x }
+  }\dist\distNormal{0}{1},
 \]</span> and <span class="math display">\[
-  \frac{\hat{\beta}\cdot x - \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)}{
-    \sqrt{ (SS_\text{res}/(n-p-1)){x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x }
-  }\sim t\left(n-p-1\right),
+  \frac{\hat{\beta}\cdot x - \Xval{\hat{Y}_0}{X=x}}{
+    \sqrt{ (SS_\text{res}/(n-p-1))\TT{x}(\TT{X}X)^{-1}x }
+  }\dist\distTdist{n-p-1},
 \]</span> which results in the following <span class="math inline">\(1-\alpha\)</span> confidence interval: <span class="math display">\[\begin{multline*}
   \hat{\beta}\cdot x - t_{\alpha/2,n-p-1}\sqrt{
-    \frac{SS_\text{res}}{n-p-1}{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x
+    \frac{SS_\text{res}}{n-p-1}\TT{x}(\TT{X}X)^{-1}x
   }
-  \le\\\le \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)=\beta\cdot x \le\\\le
+  \le\\\le \Xval{\hat{Y}_0}{X=x}=\beta\cdot x \le\\\le
   \hat{\beta}\cdot x + t_{\alpha/2,n-p-1}\sqrt{
-    \frac{SS_\text{res}}{n-p-1}{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x
+    \frac{SS_\text{res}}{n-p-1}\TT{x}(\TT{X}X)^{-1}x
   }.
 \end{multline*}\]</span></p>
 </section>
-<section id="prediction-intervals-for-a-new-observation" class="level3">
-<h3 class="anchored" data-anchor-id="prediction-intervals-for-a-new-observation">Prediction Intervals for a new observation</h3>
-<p>In the previous subsection, we asked for a confidence interval for the expected value of the response given a new vector of regressors, which was a confidence interval for <span class="math inline">\(\mathrm{E}\left(\hat{Y}_0\middle|X=x\right)=\beta\cdot x\)</span> based on <span class="math inline">\(\hat{\beta}\cdot x\)</span>. Now, we want to determine a confidence interval for the future response given a vector of regressors. That is, we want an interval for <span class="math inline">\(Y_0 = \beta\cdot x + \varepsilon_0\sim\mathcal{N}\left(\beta\cdot x,\sigma^2\right)\)</span>, but, as usual, <span class="math inline">\(\beta\)</span> unknown.<br>
+<section id="prediction-intervals-for-a-new-observation" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="prediction-intervals-for-a-new-observation"><span class="header-section-number">1.4.3</span> Prediction Intervals for a new observation</h3>
+<p>In the previous subsection, we asked for a confidence interval for the expected value of the response given a new vector of regressors, which was a confidence interval for <span class="math inline">\(\Xval{\hat{Y}_0}{X=x}=\beta\cdot x\)</span> based on <span class="math inline">\(\hat{\beta}\cdot x\)</span>. Now, we want to determine a confidence interval for the future response given a vector of regressors. That is, we want an interval for <span class="math inline">\(Y_0 = \beta\cdot x + \veps_0\dist\distNormal{\beta\cdot x}{\sigma^2}\)</span>, but, as usual, <span class="math inline">\(\beta\)</span> unknown.<br>
 To circumvent this, note that <span class="math display">\[
   Y_0 - \hat{Y}_0
-  = (\beta\cdot x + \varepsilon_0) - \hat{\beta}\cdot x
-  \sim\mathcal{N}\left(0,\sigma^2( 1 + {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x )\right),
-\]</span> because the variances of <span class="math inline">\(\varepsilon_0\)</span> and <span class="math inline">\(\hat{\beta}\cdot x\)</span> sum as these are independent random variables. Hence, applying the usual rearrangement of terms and replacement of <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> results in <span class="math display">\[\begin{multline*}
+  = (\beta\cdot x + \veps_0) - \hat{\beta}\cdot x
+  \dist\distNormal{0}{\sigma^2( 1 + \TT{x}(\TT{X}X)^{-1}x )},
+\]</span> because the variances of <span class="math inline">\(\veps_0\)</span> and <span class="math inline">\(\hat{\beta}\cdot x\)</span> sum as these are independent random variables. Hence, applying the usual rearrangement of terms and replacement of <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> results in <span class="math display">\[\begin{multline*}
   \hat{\beta}\cdot x - t_{\alpha/2,n-p-1}\sqrt{
-    \frac{(1+{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x)SS_\text{res}}{n-p-1}
+    \frac{(1+\TT{x}(\TT{X}X)^{-1}x)SS_\text{res}}{n-p-1}
   }
   \le Y_0 \le \\ \le
   \hat{\beta}\cdot x + t_{\alpha/2,n-p-1}\sqrt{
-    \frac{(1+{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x)SS_\text{res}}{n-p-1}
+    \frac{(1+\TT{x}(\TT{X}X)^{-1}x)SS_\text{res}}{n-p-1}
   }.
 \end{multline*}\]</span></p>
 <p>To demonstrate these prediction intervals, we once again consider the Chocolate-Nobel prize data for both the expected mean and for a new observation.</p>
@@ -772,23 +871,23 @@ To circumvent this, note that <span class="math display">\[
 </div>
 </section>
 </section>
-<section id="indicator-variables-and-anova" class="level2">
-<h2 class="anchored" data-anchor-id="indicator-variables-and-anova">Indicator Variables and ANOVA</h2>
-<section id="indicator-variables" class="level3">
-<h3 class="anchored" data-anchor-id="indicator-variables">Indicator variables</h3>
+<section id="indicator-variables-and-anova" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="indicator-variables-and-anova"><span class="header-section-number">1.5</span> Indicator Variables and ANOVA</h2>
+<section id="indicator-variables" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="indicator-variables"><span class="header-section-number">1.5.1</span> Indicator variables</h3>
 <p>Thus far, we have considered models of the form <span class="math display">\[
-  y = \beta_0 + \beta_1x_1 +\ldots+\beta_px_p + \varepsilon
-\]</span> where the regressors <span class="math inline">\(x_1,\ldots,x_p\in\mathbb{R}\)</span> can take on any real value. However, very often in practice, we have regressors that take on categorical values. For example, male vs female, employed vs unemployed, treatment vs placebo, Edmonton vs Calgary, etc. When there is a binary choice as in these examples, we can choose one category to correspond to zero and the other category to correspond to one.</p>
+  y = \beta_0 + \beta_1x_1 +\ldots+\beta_px_p + \veps
+\]</span> where the regressors <span class="math inline">\(x_1,\ldots,x_p\in\real\)</span> can take on any real value. However, very often in practice, we have regressors that take on categorical values. For example, male vs female, employed vs unemployed, treatment vs placebo, Edmonton vs Calgary, etc. When there is a binary choice as in these examples, we can choose one category to correspond to zero and the other category to correspond to one.</p>
 <p>As an example, consider <span id="eq-indcLinReg"><span class="math display">\[
-  y = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \varepsilon
-\tag{5}\]</span></span> where <span class="math inline">\(x_1\in\mathbb{R}\)</span> and <span class="math inline">\(x_2\in\{0,1\}\)</span>. Then, we effectively have two models: <span class="math display">\[\begin{align*}
-  y &amp;= \beta_0 + \beta_1x_1 + 0 + \varepsilon\\
-  y &amp;= \beta_0 + \beta_1x_1 + \beta_2 + \varepsilon= (\beta_0+\beta_2) + \beta_2x_1 +\varepsilon.
+  y = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \veps
+\tag{1.5}\]</span></span> where <span class="math inline">\(x_1\in\real\)</span> and <span class="math inline">\(x_2\in\{0,1\}\)</span>. Then, we effectively have two models: <span class="math display">\[\begin{align*}
+  y &amp;= \beta_0 + \beta_1x_1 + 0 + \veps \\
+  y &amp;= \beta_0 + \beta_1x_1 + \beta_2 + \veps = (\beta_0+\beta_2) + \beta_2x_1 +\veps.
 \end{align*}\]</span> What we have is two models with the same slope <span class="math inline">\(\beta_1\)</span> but with two different intercepts <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_0+\beta_2\)</span>, which are two parallel lines.</p>
 <div id="rem-indcVar" class="proof remark">
-<p><span class="proof-title"><em>Remark 4</em>. </span>A first thought is to merely split the data and train two separate models. However, we want to use the entire dataset at once specifically to estimate the common slope <span class="math inline">\(\beta_1\)</span> with as much accuracy as possible.</p>
+<p><span class="proof-title"><em>Remark 1.4</em>. </span>A first thought is to merely split the data and train two separate models. However, we want to use the entire dataset at once specifically to estimate the common slope <span class="math inline">\(\beta_1\)</span> with as much accuracy as possible.</p>
 </div>
-<p>While the range of the regressors has changed, we will fit the least squares estimate to the model precisely as before. Now, considering the model in <a href="#eq-indcLinReg" class="quarto-xref">Equation&nbsp;5</a>, assume that we have <span class="math inline">\(m\)</span> samples with <span class="math inline">\(x_2=0\)</span> and <span class="math inline">\(n\)</span> samples with <span class="math inline">\(x_2=1\)</span>. Our design matrix takes on a new form: <span class="math display">\[
+<p>While the range of the regressors has changed, we will fit the least squares estimate to the model precisely as before. Now, considering the model in <a href="#eq-indcLinReg" class="quarto-xref">Equation&nbsp;<span>1.5</span></a>, assume that we have <span class="math inline">\(m\)</span> samples with <span class="math inline">\(x_2=0\)</span> and <span class="math inline">\(n\)</span> samples with <span class="math inline">\(x_2=1\)</span>. Our design matrix takes on a new form: <span class="math display">\[
   Y =
   \begin{pmatrix}
     Y_1 \\ \vdots \\ Y_m \\ Y_{m+1} \\ \vdots \\ Y_{m+n}
@@ -806,30 +905,30 @@ To circumvent this, note that <span class="math display">\[
   \begin{pmatrix}
     \beta_0 \\ \beta_1 \\ \beta_2
   \end{pmatrix},~~~~
-  \varepsilon=
+  \veps =
   \begin{pmatrix}
-    \varepsilon_1 \\ \vdots \\ \varepsilon_{m+n}
+    \veps_1 \\ \vdots \\ \veps_{m+n}
   \end{pmatrix}.
-\]</span> However, the least squares estimate is computed as before as <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span>. Furthermore, we can perform hypothesis tests on the fitted model such as <span class="math display">\[
+\]</span> However, the least squares estimate is computed as before as <span class="math inline">\(\hat{\beta} = (\TT{X}X)^{-1}\TT{X}Y\)</span>. Furthermore, we can perform hypothesis tests on the fitted model such as <span class="math display">\[
   H_0: \beta_2=0~~~~H_1:\beta_2\ne0,
 \]</span> which is equivalently asking whether or not the regression lines have the same intercept.</p>
-<p>Models can be expanded to include multiple indicator variables as long as the matrix <span class="math inline">\({X}^\mathrm{T}X\)</span> is still invertible. For example, let’s suppose we want to look at wages in Alberta with respect to age but partitioned for male vs female and for Edmonton vs Calgary. Then, the model would look like <span class="math display">\[
+<p>Models can be expanded to include multiple indicator variables as long as the matrix <span class="math inline">\(\TT{X}X\)</span> is still invertible. For example, let’s suppose we want to look at wages in Alberta with respect to age but partitioned for male vs female and for Edmonton vs Calgary. Then, the model would look like <span class="math display">\[
   (\text{wage}) = \beta_0 + \beta_1(\text{age}) +
   \beta_2(\text{Is male?}) + \beta_3(\text{Is from Edmonton?}).
-\]</span> In the silly case that our data only consisted of men from Calgary and women from Edmonton, then the final regressor is redundant and <span class="math inline">\({X}^\mathrm{T}X\)</span> will not be invertible. While this extreme case should not occur, it is possible to have an imbalance in the categories, which we will discuss later.</p>
+\]</span> In the silly case that our data only consisted of men from Calgary and women from Edmonton, then the final regressor is redundant and <span class="math inline">\(\TT{X}X\)</span> will not be invertible. While this extreme case should not occur, it is possible to have an imbalance in the categories, which we will discuss later.</p>
 </section>
-<section id="anova" class="level3">
-<h3 class="anchored" data-anchor-id="anova">ANOVA</h3>
+<section id="anova" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="anova"><span class="header-section-number">1.5.2</span> ANOVA</h3>
 <p>ANOVA, or the Analysis of Variance, is a slightly overloaded term in statistics. We already considered ANOVA tables when comparing nested models in the hypothesis tests. However, ANOVA can also be used in the setting of the so-called <a href="https://en.wikipedia.org/wiki/One-way_analysis_of_variance" class="external" target="_blank">One-Way Analysis of Variance</a>. In this case, we want to compare <span class="math inline">\(k\)</span> samples for equality of the means. For example, we take height measurements from randomly selected citizens from different countries and ask whether or not there is significant evidence to reject the claim that all nations have roughly the same height distribution.</p>
 <p>The reason for discussing ANOVA in these notes is that it can be written in a linear regression context as follows. Imagine that we have <span class="math inline">\(k\)</span> different groups of observations with sample sizes <span class="math inline">\(n_j\)</span>, <span class="math inline">\(j=1,\ldots,k\)</span> for each group. Let <span class="math inline">\(y_{i,j}\)</span> be the <span class="math inline">\(i\)</span>th observation from the <span class="math inline">\(j\)</span>th group where <span class="math inline">\(i\in\{1,\ldots,n_j\}\)</span> and <span class="math inline">\(j\in\{1,\ldots,k\}\)</span>. The model is <span class="math display">\[
-  y_{i,j} = \mu_j + \varepsilon_{i,j},
+  y_{i,j} = \mu_j + \veps_{i,j},
 \]</span> which is each observation is just some group mean, <span class="math inline">\(\mu_j\)</span>, with the addition of random noise.</p>
 <p>From here, one can show that the fitted values as just <span class="math inline">\(\hat{y}_{i,j} = n_{j}^{-1}\sum_{l=1}^{n_j} y_{l,j}\)</span>, which is the <span class="math inline">\(j\)</span>th sample mean. Then, an F-test can be performed similar to what we did above with F tests to test <span class="math display">\[
   H_0: \mu_1=\ldots=\mu_k~~~
   H_1: \exists j_1\ne j_2~s.t.~\mu_{j_1}\ne\mu_{j_2}.
 \]</span></p>
 <p>To reformulate the model to align with our F-test from before, we rewrite it as a linear regression with indicator variables for the regressors <span class="math display">\[
-  y = \beta_0 + \beta_1x_1 + \ldots + \beta_{k-1}x_{k-1} + \varepsilon_{i,j}
+  y = \beta_0 + \beta_1x_1 + \ldots + \beta_{k-1}x_{k-1} + \veps_{i,j}
 \]</span> with <span class="math inline">\(\beta_0 = \mu_k\)</span> and <span class="math inline">\(\beta_j={\mu_j-\mu_k}\)</span> for <span class="math inline">\(j=1,\ldots,k-1\)</span>. Then, we can test for whether or not there exists at least one <span class="math inline">\(\beta_j\ne0\)</span> for <span class="math inline">\(j=1,\ldots,k-1\)</span>. Here, the degrees of freedom for the explained sum of squares is <span class="math inline">\(k-1\)</span> and the degrees of freedom for the residual sum of squares is <span class="math inline">\(N - (k-1) -1 = N-k\)</span> with <span class="math inline">\(N = \sum_{j=1}^k n_j\)</span>.<br>
 If all of the <span class="math inline">\(n_j\)</span> are equal, this reduces to <span class="math inline">\(k(n-1)\)</span>.</p>
 <p>In this case, the vector <span class="math inline">\(Y\)</span> and the design matrix <span class="math inline">\(X\)</span> will take on the form <span class="math display">\[
@@ -855,8 +954,8 @@ If all of the <span class="math inline">\(n_j\)</span> are equal, this reduces t
 \]</span></p>
 </section>
 </section>
-<section id="data-example-exam-grades" class="level2">
-<h2 class="anchored" data-anchor-id="data-example-exam-grades">Data Example: Exam Grades</h2>
+<section id="data-example-exam-grades" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="data-example-exam-grades"><span class="header-section-number">1.6</span> Data Example: Exam Grades</h2>
 <p>To illustrate the topics discussed in this chapter, we will consider a dataset of course grades for a linear regression class. This dataset consists of <span class="math inline">\(n=56\)</span> undergraduate students who are either in their 3rd year (22 students) or 4th year (33 students) of university studies. The year of study acts as a binary variable as discussed in the previous section. This dataset also has columns corresponding to the students overall mark on written homework assignments, online coding assignments, the midterm exam, and the final exam. In what follows, we will see what variables if any can be used to predict the final exam grade and, furthermore, if there is a difference between the final exam grades for the 3rd year and 4th year students.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in Data</span></span>
@@ -916,7 +1015,7 @@ mean in group 3rd Year mean in group 4th Year
 </div>
 </div>
 <p>We can also view a two sample t test as a linear regression of the response variable (final exam grade) on the dummy variable (student year). The regression equation becomes <span class="math display">\[
-  (\text{final exam grade}) = \beta_0 + \beta_1(\text{student year}) + \varepsilon
+  (\text{final exam grade}) = \beta_0 + \beta_1(\text{student year}) + \veps
 \]</span> What we can see from the output below is that this model is equivalent to the two sample t test assuming equal (homogeneous) variances among the two samples. In the end, there is no noticable difference between the performance of 3rd and 4th year students.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A two-sample test</span></span>
@@ -1080,7 +1179,7 @@ Model 2: final ~ year + written + online
 2     52 15706.6  1   -8505.8         </code></pre>
 </div>
 </div>
-<p>The general equation for a linear regression is <span class="math inline">\(Y=X\beta+\varepsilon\)</span>. To recover the design matrix <span class="math inline">\(X\)</span>, we can use the function <code>model.matrix()</code> in R.<br>
+<p>The general equation for a linear regression is <span class="math inline">\(Y=X\beta+\veps\)</span>. To recover the design matrix <span class="math inline">\(X\)</span>, we can use the function <code>model.matrix()</code> in R.<br>
 Notice that the column corresponding to <code>year</code> is now encoded as a binary variable with a 1 indicating 4th year and a 0 indicating 3rd year.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(md.exams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1151,7 +1250,6 @@ attr(,"contrasts")$year
 </div>
 
 
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -1560,6 +1658,18 @@ attr(,"contrasts")$year
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chpt2_ModAss.html" class="pagination-link" aria-label="Model Assumptions and Choices">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Assumptions and Choices</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
