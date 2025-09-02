@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>chpt2_modass</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="chpt2_ModAss.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div class="hidden">
+
+</div>
+<section id="latex-macros" class="level1">
+<h1>Latex Macros</h1>
+<p>That is all</p>
+</section>
+<section id="model-assumptions-and-choices" class="level1">
+<h1>Model Assumptions and Choices</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Thus far, we have considered linear regression given some key assumptions. Namely, for models of the form <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \varepsilon
+\]</span> we assume that the noise or errors <span class="math inline">\(\varepsilon\)</span> have zero mean, constant finite variance, and are uncorrelated. Furthermore, in order to perform hypothesis tests–F test, t test, partial F-tests–and to construct confidence and prediction intervals as we did in the previous chapter, we further assumes that <span class="math inline">\(\varepsilon\)</span> has a normal distribution.</p>
+<p>In this chapter, we will consider deviations from these assumptions, which will lead to questions such as</p>
+<ol type="1">
+<li><p>What happens if the variance of <span class="math inline">\(\varepsilon\)</span> is not constant?</p></li>
+<li><p>What happens if <span class="math inline">\(\varepsilon\)</span> has heavier tails than those of a normal distribution?</p></li>
+<li><p>What effect can outliers have on our model?</p></li>
+<li><p>How can we transform our data to correct for some of these deviations?</p></li>
+<li><p>What happens if the true model is not linear?</p></li>
+</ol>
+</section>
+<section id="plotting-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-residuals">Plotting Residuals</h2>
+<p>In the last chapter, we constructed the residuals as follows. Assume we have a sample of <span class="math inline">\(n\)</span> observations <span class="math inline">\((Y_i,X_i)\)</span> where <span class="math inline">\(Y_i\in\mathbb{R}\)</span> and <span class="math inline">\(X_i\in\mathbb{R}^p\)</span> with <span class="math inline">\(p\)</span> being the number of regressors and <span class="math inline">\(p&lt;n\)</span>. The model, as before, is <span class="math display">\[
+  Y = X\beta + \varepsilon
+\]</span> where <span class="math inline">\(Y\in\mathbb{R}^n\)</span>, <span class="math inline">\(X\in\mathbb{R}^{n\times (p+1)}\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(\varepsilon\in\mathbb{R}^n\)</span>. The least squares estimator is <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> and the vector of residuals is thus <span class="math display">\[
+  r = (I-P)Y = (I-X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y.
+\]</span></p>
+<p>We can use the residuals to look for problems in our data with respect to deviations from the assumptions. But first, they should be normalized in some way. As we know from the previous chapter, the covariance of the residuals is <span class="math inline">\((I-P)\sigma^2\)</span> and that <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> is an unbiased estimator for the unknown variance <span class="math inline">\(\sigma^2\)</span>. This implies that while the errors <span class="math inline">\(\varepsilon_i\)</span> are assumed to be uncorrelated, the residuals are, in fact, correlated. Explicitly, <span class="math display">\[
+  \mathrm{Var}\left(r_i\right) = (1 - P_{i,i})\sigma^2,
+  \text{ and }
+  \mathrm{cov}\left(r_i,r_j\right) = -P_{i,j}\sigma^2
+  \text{ for } i\ne j
+\]</span> where <span class="math inline">\(P_{i,j}\)</span> is the <span class="math inline">\((i,j)\)</span>th entry of the matrix <span class="math inline">\(P\)</span>.<br>
+Hence, a standard normalization technique is to write <span class="math display">\[
+  s_i = \frac{r_i}{\sqrt{(1-P_{i,i})SS_\text{res}/(n-p-1)}},
+\]</span> which are denoted as the <em>studentized residuals</em>. For a linear model fit in <code>R</code> by the function <code>lm()</code>, we can extract the residuals with <code>resid()</code> and extract the studentized residuals with <code>rstudent()</code>.</p>
+<section id="plotting-residuals-1" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-residuals-1">Plotting Residuals</h3>
+<section id="studentized-residuals" class="level4">
+<h4 class="anchored" data-anchor-id="studentized-residuals">Studentized Residuals</h4>
+<p>A plot of studentized residuals from a simple linear regression is displayed below. Generally, abnormally large studentized residuals indicate that an observation may be an outlier.</p>
+<p>::: {#rem-residuals} There are other types of residuals that can be computed such as standardized residuals, PRESS residuals, and externally studentized residuals. These are also used to look for outliers. :::</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate some linear regression data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">=</span> <span class="fu">runif</span>(<span class="at">n=</span><span class="dv">50</span>,<span class="at">min=</span><span class="dv">0</span>,<span class="at">max=</span><span class="dv">5</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>yy <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add in one outlier</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">&lt;-</span> <span class="fu">c</span>(xx, <span class="dv">3</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>yy <span class="ot">&lt;-</span> <span class="fu">c</span>(yy,<span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>md <span class="ot">=</span> <span class="fu">lm</span>(yy<span class="sc">~</span>xx)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = yy ~ xx)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11.0377  -1.2028   0.3087   1.4941   3.8238 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -0.3412     0.7148  -0.477    0.635    
+xx            3.1263     0.2400  13.028   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.549 on 49 degrees of freedom
+Multiple R-squared:  0.776, Adjusted R-squared:  0.7714 
+F-statistic: 169.7 on 1 and 49 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xx[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>],yy[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>],<span class="at">las=</span><span class="dv">1</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">16</span>),<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(xx[<span class="dv">51</span>],yy[<span class="dv">51</span>],<span class="at">pch=</span><span class="dv">17</span>,<span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(md,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Residuals</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">rstudent</span>(md)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  xx[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>],res[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>],<span class="at">las=</span><span class="dv">1</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="fl">2.5</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Studentized Residuals"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(xx[<span class="dv">51</span>],res[<span class="dv">51</span>],<span class="at">pch=</span><span class="dv">17</span>,<span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>(<span class="sc">-</span><span class="dv">10</span>)<span class="sc">:</span><span class="dv">10</span>,<span class="at">col=</span><span class="st">'gray'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="residuals-vs-fitted-values" class="level4">
+<h4 class="anchored" data-anchor-id="residuals-vs-fitted-values">Residuals vs Fitted Values</h4>
+<p>The residuals and the fitted values as necessarily uncorrelated. That is, <span class="math inline">\(\mathrm{cov}\left(r,\hat{Y}\right)=0\)</span>. However, if <span class="math inline">\(\varepsilon\)</span> is not normally distributed, then they may not be independent. Plotting the fitted values against the residuals can give useful diagnostic information about your data.</p>
+<p>The code below gives four examples of plots of the residuals against the fitted values. The first plot in the top left came from a simple linear regression model where all of the standard assumptions are met. The second plot in the top right came from a simple linear regression but with errors <span class="math inline">\(\varepsilon_i \sim\mathcal{N}\left(0,\sigma^2_i\right)\)</span> where <span class="math inline">\(\sigma_i^2\)</span> was increasing in <span class="math inline">\(i\)</span>. Hence, the plot has an expanding look to it. The third plot in the bottom left came from a simple linear regression with the addition of a quadratic term. Fitting a model without the quadratic term still yielded significant test statistics, but failed to account for the nonlinear interaction between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The final plot in the bottom right came from a simple linear regression where the errors were correlated. Specifically, <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = \min\{x_i,x_j\}\)</span>.</p>
+<blockquote class="blockquote">
+<p>Fun fact: This is actually the covariance of Brownian motion.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the outlier from the last code block</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">&lt;-</span> xx[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">256</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a "good" linear regression</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>yy.lin  <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">1</span>);</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>md.lin  <span class="ot">=</span> <span class="fu">lm</span>(yy.lin <span class="sc">~</span> xx)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.lin,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a linear regression with increasing variance</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>yy.het  <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,xx);</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>md.het  <span class="ot">=</span> <span class="fu">lm</span>(yy.het <span class="sc">~</span> xx)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.het,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a linear regression with quadratic trend</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yy.quad <span class="ot">=</span> xx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">1</span>);</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>md.quad <span class="ot">=</span> <span class="fu">lm</span>(yy.quad <span class="sc">~</span> xx)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.quad,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a linear regression with correlated errors</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>err <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">1</span>);</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>err <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(err);</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>yy.cor <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> err;</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>md.cor  <span class="ot">=</span> <span class="fu">lm</span>(yy.cor <span class="sc">~</span> xx)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.cor,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  err,<span class="at">type=</span><span class="st">'l'</span>,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"correlated errors, see Time Series Analysis"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-2-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normal-q-q-plots" class="level4">
+<h4 class="anchored" data-anchor-id="normal-q-q-plots">Normal Q-Q plots</h4>
+<p>Another type of plot that can offer insight into your data is the so-called Normal Q-Q plot. This tool plots the studentized residuals against the <em>quantiles</em> of a standard normal distribution.</p>
+<div id="def-quantile" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1</strong></span> The quantile function is the inverse of the cumulative distribution function. That is, in the case of the normal distribution, let <span class="math inline">\(Z\sim\mathcal{N}\left(0,1\right)\)</span>. Then the CDF is <span class="math inline">\(\Phi(z) = \mathrm{P}\left( Z&lt; z \right) \in(0,1)\)</span> for <span class="math inline">\(z\in\mathbb{R}\)</span>. The quantile function is <span class="math inline">\(\Phi^{-1}(t)\in[-\infty,\infty]\)</span> for <span class="math inline">\(t\in[0,1]\)</span>. For more details, see <a href="https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot">QQ Plot</a></p>
+</div>
+<p>For a normal Q-Q plot, let <span class="math inline">\(s_1,\ldots,s_n\)</span> be the <strong>ordered</strong> studentized residuals, so that <span class="math inline">\(s_1\le\ldots\le s_n\)</span>. The theoretical quantiles are denoted <span class="math inline">\(q_1,\ldots,q_n\)</span> where <span class="math inline">\(q_i = \Phi^{-1}( i/(n+1) )\)</span>. In <code>R</code>, a slightly different formula is used. The figures below compare various normal Q-Q plots. In the first, the errors are normally distributed and the ordered residuals roughly follow the red line. In the second, the heteroskedastic errors cause the black points to deviate from the red line. This is also seen in the third plot, which fits a linear model to quadratic data. The fourth plot considers correlated errors and the QQ-plot has black points very close to the red line.</p>
+<div id="rem-interpret" class="proof remark">
+<p><span class="proof-title"><em>Remark 1</em>. </span>As noted in Montgomery, Peck, &amp; Vining, these are not always easy to interpret and often fail to capture non-normality in the model. However, they seem to be very popular nonetheless.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the above residuals in QQ-plots </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># against the normal distribution</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">rstudent</span>(md.lin))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">rstudent</span>(md.het))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">rstudent</span>(md.quad))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">rstudent</span>(md.cor))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="beer-data-example" class="level3">
+<h3 class="anchored" data-anchor-id="beer-data-example">Beer Data Example</h3>
+<p>The following section considers a dataset that tracks a person’s blood alcohol content after consuming some number of beers. Two covariates in this dataset are the subjects sex and weight. I got this dataset in 2018 from a statistician I met at <a href="https://iase-web.org/Conference_Proceedings.php?p=ICOTS_10_2018">ICOTS 2018</a>, because, yes, statisticians trade datasets at conferences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bac <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/BACfull.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>bac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     BAC weight    sex beers
+1  0.100    132 female     5
+2  0.030    128 female     2
+3  0.190    110 female     9
+4  0.120    192   male     8
+5  0.040    172   male     3
+6  0.095    250 female     7
+7  0.070    125 female     3
+8  0.060    175   male     5
+9  0.020    175 female     3
+10 0.050    275   male     5
+11 0.070    130 female     4
+12 0.100    168   male     6
+13 0.085    128 female     5
+14 0.090    246   male     7
+15 0.010    164   male     1
+16 0.050    175   male     4</code></pre>
+</div>
+</div>
+<p>We can fit a simple regression model that only considers the number of <code>beers consumed</code> as the sole predictor for blood alcohol content. The resulting model estimates that each beer raises a subjects blood alcohol content by 0.018.<br>
+In the residual vs fitted plot, the subject with the largest residual (person 3) was also the subject with the lowest weight and most beers consumed. Of course, the following simple regression model does not consider <code>weight</code> as a predictor variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>md.bac1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( BAC<span class="sc">~</span>beers, <span class="at">data=</span>bac  )</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.bac1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = BAC ~ beers, data = bac)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.027118 -0.017350  0.001773  0.008623  0.041027 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.012701   0.012638  -1.005    0.332    
+beers        0.017964   0.002402   7.480 2.97e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.02044 on 14 degrees of freedom
+Multiple R-squared:  0.7998,    Adjusted R-squared:  0.7855 
+F-statistic: 55.94 on 1 and 14 DF,  p-value: 2.969e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.bac1,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can include <code>sex</code> as a predictor variable which results in the model below. In this case, we see a slight significant in the <code>sex</code> variable, which seems to suggest that males have on average a lower blood alcohol content than females by 0.02. The three subjects with the largest (absolute) residuals are subject 3, the female with the lowest overall weight, and subjects 6 and 9, the females with the highest overall weights. Once again, we note that without considering a subject’s weight in this regression model, the largest residuals (i.e.&nbsp;those points that most deviate from our fitted model) come from subjects with the largest and smallest weights.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>md.bac2 <span class="ot">&lt;-</span> <span class="fu">lm</span>( BAC<span class="sc">~</span>beers<span class="sc">+</span>sex, <span class="at">data=</span>bac  )</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.bac2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = BAC ~ beers + sex, data = bac)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-0.0308247 -0.0088126 -0.0003627  0.0133905  0.0305743 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.003476   0.012004  -0.290   0.7767    
+beers        0.018100   0.002135   8.478 1.18e-06 ***
+sexmale     -0.019763   0.009086  -2.175   0.0487 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01816 on 13 degrees of freedom
+Multiple R-squared:  0.8532,    Adjusted R-squared:  0.8307 
+F-statistic: 37.79 on 2 and 13 DF,  p-value: 3.826e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.bac2,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, we also include weight as a predictor variable. As a result, the <code>sex</code> variable is no longer seen to have any statistical significance in determining blood alcohol content. We note that the range of the residuals has decreased from the previous models meaning that this last model provides a tighter fit to the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>md.bac3 <span class="ot">&lt;-</span> <span class="fu">lm</span>( BAC<span class="sc">~</span>beers<span class="sc">+</span>sex<span class="sc">+</span>weight, <span class="at">data=</span>bac  )</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.bac3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = BAC ~ beers + sex + weight, data = bac)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.018125 -0.005713  0.001501  0.007896  0.014655 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.871e-02  1.097e-02   3.528 0.004164 ** 
+beers        1.990e-02  1.309e-03  15.196 3.35e-09 ***
+sexmale     -3.240e-03  6.286e-03  -0.515 0.615584    
+weight      -3.444e-04  6.842e-05  -5.034 0.000292 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01072 on 12 degrees of freedom
+Multiple R-squared:  0.9528,    Adjusted R-squared:  0.941 
+F-statistic: 80.81 on 3 and 12 DF,  p-value: 3.162e-08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md.bac3,<span class="at">which=</span><span class="dv">1</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The significance of <code>sex</code> is the second model was only due to the males in this dataset having, on average, higher <code>weight</code> than the females, which can be seen in the boxplot below. Thus, these two predictor variables are confounded or correlated. This is not seen in the case of <code>beers consumed</code> vs <code>sex</code>. For our two numeric variables, <code>beers consumed</code> and <code>weight</code>, there is a slight positive correlation of about 0.25.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bac0 <span class="ot">&lt;-</span> bac</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>bac0<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(bac0<span class="sc">$</span>sex))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(bac0[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          weight        sex      beers
+weight 1.0000000 0.51282368 0.24887716
+sex    0.5128237 1.00000000 0.02937367
+beers  0.2488772 0.02937367 1.00000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(weight<span class="sc">~</span>sex,<span class="at">data=</span>bac,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(beers<span class="sc">~</span>sex,<span class="at">data=</span>bac,<span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="transformation" class="level2">
+<h2 class="anchored" data-anchor-id="transformation">Transformation</h2>
+<p>Often, data does not follow all of the assumptions of the ordinary least squares regression model. However, it is often possible to transform data in order to correct for this deviations. We will consider such methods in the following subsections. One dissatisfying remark about such methods is that they often are applied <em>empirically</em>, which less euphemistically means in an add-hoc way. Sometimes there may be genuine information suggesting certain methods for transforming data. Other times, transforms are chosen because they seem to work.</p>
+<section id="variance-stabilizing" class="level3">
+<h3 class="anchored" data-anchor-id="variance-stabilizing">Variance Stabilizing</h3>
+<p>One of the major requirements of the least squares model is that the variance of the errors is constant, which is that <span class="math inline">\(\mathrm{Var}\left(y_i\right) = \mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>. Mainly, when <span class="math inline">\(\sigma^2\)</span> is non-constant in <span class="math inline">\(y\)</span>, problems can occur. Our goal is thus to find some transformation <span class="math inline">\(T(y)\)</span> so that <span class="math inline">\(\mathrm{Var}\left(T(y_i)\right)\)</span> is constant for all <span class="math inline">\(i=1,\ldots,n\)</span>.</p>
+<p>Such a transformation <span class="math inline">\(T(\cdot)\)</span> can be determined through a tool known as the <em>delta method</em>, which is beyond the scope of these notes.<br>
+See Chapter 3, Asymptotic Statistics, A W van der Vaart or <a href="https://en.wikipedia.org/wiki/Delta_method">Delta Method</a> for more. However, we will consider a simplified version for our purposes. For simplicity of notation, we write <span class="math inline">\(\mathrm{E}Y = \mu\)</span> instead of <span class="math inline">\(\mathrm{E}Y = \beta_0 + \beta_1x_1 + \ldots + \beta_p x_p\)</span>. Furthermore, assume that <span class="math inline">\(T\)</span> is twice differentiable. Note that we only require the second derivative for a more pleasant exposition. Then, Taylor’s theorem says that <span class="math display">\[
+  T(Y) = T(\mu) + T'(\mu)(Y-\mu) + \frac{T''(\xi)}{2}(Y-\mu)^2
+\]</span> for some <span class="math inline">\(\xi\)</span> between <span class="math inline">\(Y\)</span> and <span class="math inline">\(\mu\)</span>. We can, with a little hand-waving, ignore the higher order remainder term and just write <span class="math display">\[
+  T(Y) \approx T(\mu) + T'(\mu)(Y-\mu),
+\]</span> which implies that <span class="math display">\[
+  \mathrm{E}T(Y) \approx T(\mu)
+  ~~\text{ and }~~
+  \mathrm{Var}\left(T(Y)\right) \approx T'(\mu)^2\mathrm{Var}\left(Y\right).
+\]</span> We want a transformation such that <span class="math inline">\(\mathrm{Var}\left(T(Y)\right) = 1\)</span> is constant. Meanwhile, we assume that the variance of <span class="math inline">\(Y\)</span> is a function of the mean <span class="math inline">\(\mu\)</span>, which is <span class="math inline">\(\mathrm{Var}\left(Y\right) = s(\mu)^2\)</span>. Hence, we need to solve <span class="math display">\[
+  1 = T'(\mu)^2 s(\mu)^2
+  ~~\text{ or }~~
+  T(\mu) = \int \frac{1}{s(\mu)}d\mu.
+\]</span></p>
+<div id="exm-varstab1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> For a trivial example, assume that <span class="math inline">\(s(\mu)=\sigma\)</span> is already constant. Then, <span class="math display">\[
+    T(\mu) = \int \frac{1}{\sigma}d\mu = \mu/\sigma.
+  \]</span> Thus, <span class="math inline">\(T\)</span> is just scaling by <span class="math inline">\(\sigma\)</span> to achieve a unit variance.</p>
+</div>
+<div id="exm-varstab2" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2</strong></span> Now, consider the nontrivial example with <span class="math inline">\(s(\mu) = \sqrt{\mu}\)</span>, which is that the variance of <span class="math inline">\(Y\)</span> is a linear function of <span class="math inline">\(\mu\)</span>. Then, <span class="math display">\[
+    T(\mu) = \int \frac{1}{\sqrt{\mu}} d\mu
+    = 2 \sqrt{\mu}.
+  \]</span> This is the square root transformation, which is applied to, for example, Poisson data. The coefficient of 2 in the above derivation can be dropped as we are not concerned with the scaling.</p>
+</div>
+<p>Given that we have found a suitable transform, we can then apply it to the data <span class="math inline">\(y_1,\ldots,y_n\)</span> to get a model of the form <span class="math display">\[
+  T(y) = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \varepsilon
+\]</span> where the variance of <span class="math inline">\(\varepsilon\)</span> is constant–i.e not a function of the regressors.</p>
+</section>
+<section id="linearization" class="level3">
+<h3 class="anchored" data-anchor-id="linearization">Linearization</h3>
+<p>Another key assumption is that the relationship between the regressors and response, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, is linear. If there is reason to believe that <span class="math display">\[
+  y = f( \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon)
+\]</span> and that <span class="math inline">\(f(\cdot)\)</span> is invertible, then we can rewrite this model as <span class="math display">\[
+  y' = f^{-1}(y) = \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon
+\]</span> and apply our usual linear regression tools.</p>
+<p>An example from the textbook, which is also quite common in practice, is to assume that <span class="math display">\[
+  y = c \mathrm{e}^{ \beta_1 x_1 + \ldots + \beta_px_p + \varepsilon}
+\]</span> and apply a logarithm to transform to <span class="math display">\[
+  y' = \log y =  \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon
+\]</span> where <span class="math inline">\(\beta_0 = \log c\)</span>. Furthermore, if <span class="math inline">\(\varepsilon\)</span> has a normal distribution then <span class="math inline">\(\mathrm{e}^\varepsilon\)</span> has a log-normal distribution. This model is particularly useful when one is dealing with exponential growth in some population.</p>
+<div id="rem-linearization" class="proof remark">
+<p><span class="proof-title"><em>Remark 2</em>. </span>Linearization by applying a function to <span class="math inline">\(y\)</span> looks very similar to the variance stabilizing transforms of the previous section. In fact, such transforms have an effect on both the linearity and the variance of the model and should be used with care. Often non-linear methods are preferred.</p>
+</div>
+<p>Sometimes it is beneficial to transform the regressors, <span class="math inline">\(x\)</span>’s, as well. As we are not treating them as random variables, there are less problems to consider.<br>
+<span class="math display">\[
+  ~~~~~~y = \beta_0 + \beta_1 f(x) + \varepsilon
+  ~~\Rightarrow~~
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = f^{-1}(x')
+\]</span> Examples include <span class="math display">\[\begin{align*}
+  y = \beta_0 + \beta_1 \log x + \varepsilon
+  ~~&amp;\Rightarrow~~
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = \mathrm{e}^{x'}\\
+  y = \beta_0 + \beta_1 x^2 + \varepsilon
+  ~~&amp;\Rightarrow~~
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = \sqrt{x'}
+\end{align*}\]</span> This second example can be alternatively dealt with by employing polynomial regression to be discussed in a subsequent section.</p>
+</section>
+<section id="box-cox-and-the-power-transform" class="level3">
+<h3 class="anchored" data-anchor-id="box-cox-and-the-power-transform">Box-Cox and the power transform</h3>
+<p>In short, Box-Cox is a family of transforms parametrized by some <span class="math inline">\(\lambda\in\mathbb{R}\)</span>, which can be optimized via maximum likelihood. Specifically, for <span class="math inline">\(y_i&gt;0\)</span>, we aim to choose the best transform of the form <span class="math display">\[
+  y_i \rightarrow y_i^{(\lambda)} =  \left\{\begin{array}{ll}
+    \frac{y_i^\lambda-1}{\lambda} &amp; \lambda\ne0\\
+    \log y_i &amp; \lambda=0
+  \end{array}\right.
+\]</span> by maximizing the likelihood as we did in Chapter 1, but with parameters <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\sigma^2\)</span>, and <span class="math inline">\(\lambda\)</span>.</p>
+<p>To do this, we assume that the transformed variables follow all of the usual least squares regression assumptions and hence have a joint normal distribution with <span class="math display">\[
+  f( Y^{(\lambda)} ) = (2\pi\sigma^2)^{-n/2}\exp\left(
+    -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i - X_{i,\cdot}\beta)^2
+  \right).
+\]</span> Transforming <span class="math inline">\(Y \rightarrow Y^{(\lambda)}\)</span> is a change of variables with Jacobian <span class="math display">\[
+  \prod_{i=1}^n\frac{dy_i}{dy_i}^{(\lambda)} = \prod_{i=1}^ny_i^{\lambda-1}.
+\]</span> Hence, the likelihood function in terms of <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span> is <span class="math display">\[
+  L(\beta,\sigma^2,\lambda|y,X) =
+  (2\pi\sigma^2)^{-n/2}\exp\left(
+    -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i^{\lambda} - X_{i,\cdot}\beta)^2
+  \right) \prod_{i=1}^n y_i^{\lambda-1}
+\]</span> with log likelihood <span class="math display">\[
+  \log L =
+  -\frac{n}{2}\log( 2\pi\sigma^2 )
+  -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i - X_{i,\cdot}\beta)^2
+  + (\lambda-1)\sum_{i=1}^n \log y_i.
+\]</span> From here, the MLEs for <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\sigma^2\)</span> are solved for as before but are now in terms of the transformed <span class="math inline">\(Y^{(\lambda)}\)</span>. <span class="math display">\[\begin{align*}
+  \hat{\beta}    &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y^{(\lambda)}\\
+  \hat{\sigma}^2  
+  &amp;= \frac{1}{n}\sum_{i=1}^n(y_i^{(\lambda)}-X_{i,\cdot}\hat{\beta})^2
+   = \frac{SS_\text{res}^{(\lambda)}}{n}.
+\end{align*}\]</span> Plugging these into the log likelihood gives and replacing all of the constants with some <span class="math inline">\(C\)</span> gives <span class="math display">\[\begin{align*}
+  \log L &amp;=
+  -\frac{n}{2}\log( 2\pi\hat{\sigma}^2 )
+  -\frac{n}{2} + (\lambda-1)\sum_{i=1}^n \log y_i\\
+  &amp;= C - \frac{n}{2}\log\hat{\sigma}^2 +
+     \log\left( (\prod y_i)^{\lambda-1}\right).
+\end{align*}\]</span> Defining the geometric mean of the <span class="math inline">\(y_i\)</span> to be <span class="math inline">\(\gamma = (\prod_{i=1}^n y_i)^{1/n}\)</span>, we have <span class="math display">\[\begin{align*}
+  \log L  
+  &amp;= C - \frac{n}{2}\log\hat{\sigma}^2 +
+     \frac{n}{2}\log\left( \gamma^{2(\lambda-1)}\right)\\
+  &amp;= C - \frac{n}{2}\log\left(
+       \frac{\hat{\sigma}^2}{\gamma^{2(\lambda-1)}}
+     \right).
+\end{align*}\]</span> Considering the term inside the log, we have that it is just the residual sum of squares from the least squares regression <span class="math display">\[
+  \frac{Y^{(\lambda)}}{\gamma^{\lambda-1}} = X\theta + \varepsilon
+\]</span> where <span class="math inline">\(\theta\in\mathbb{R}^{p+1}\)</span> is a transformed version of the original <span class="math inline">\(\beta\)</span>. Hence, we can choose <span class="math inline">\(\hat{\lambda}\)</span> by maximizing the log likelihood above, which is equivalent to minimizing the residual sum of squares for this new model. This can be calculated numerically in statistical programs like R.</p>
+</section>
+<section id="cars-data" class="level3">
+<h3 class="anchored" data-anchor-id="cars-data">Cars Data</h3>
+<p>To test some of these linearization techniques, we consider the cars dataset, which is included in the standard distribution of <code>R</code>. It consists of 50 observations of a car’s speed and a car’s stopping distance. The goal is to model and predict the stopping distance given the speed of the car. Such a study could be used, for example, for influencing speed limits and other road rules for the sake of public safety. The observed speeds range from 4 to 25 mph.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  cars,<span class="at">las=</span><span class="dv">1</span>,<span class="at">main=</span><span class="st">"Car Stopping Distance"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">max</span>(cars<span class="sc">$</span>speed)),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">max</span>(cars<span class="sc">$</span>dist))</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can first fit a simple regression to the data with <code>lm( dist~speed, data=cars)</code>. This results in a significant p-value, an <span class="math inline">\(R^2 = 0.651\)</span>, and an estimated model of <span class="math display">\[
+  (\text{dist}) = -17.6 + 3.9(\text{speed}) + \varepsilon.
+\]</span> If we wanted to extrapolate a bit, we can use this model to predict the stopping distance for a speed of 50 mph, which is 179 feet.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>md.car.lin <span class="ot">=</span> <span class="fu">lm</span>( dist<span class="sc">~</span>speed, <span class="at">data=</span>cars)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.car.lin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = dist ~ speed, data = cars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.069  -9.525  -2.272   9.215  43.201 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -17.5791     6.7584  -2.601   0.0123 *  
+speed         3.9324     0.4155   9.464 1.49e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.38 on 48 degrees of freedom
+Multiple R-squared:  0.6511,    Adjusted R-squared:  0.6438 
+F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(md.car.lin,<span class="fu">data.frame</span>(<span class="at">speed=</span><span class="dv">50</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+179.0413 </code></pre>
+</div>
+</div>
+<p>We could stop here and be happy with a significant fit. However, looking at the data, there seems to be a nonlinear relationship between speed and stopping distance. Hence, we could try to fit a model with the response being the square root of the stopping distance: <code>lm( sqrt(dist)~speed, data=cars)</code>. Doing so results in <span class="math display">\[
+  \sqrt{(\text{dist})} = 1.28 + 0.32(\text{speed}) + \varepsilon.
+\]</span> In this case, we similarly get a significant p-value and a slightly higher <span class="math inline">\(R^2 = 0.709\)</span>. The prediction for the stopping distance for a speed of 50 mph is now the much higher 302 feet.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>md.car.sqrt <span class="ot">=</span> <span class="fu">lm</span>( <span class="fu">sqrt</span>(dist)<span class="sc">~</span>speed, <span class="at">data=</span>cars)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.car.sqrt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sqrt(dist) ~ speed, data = cars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.0684 -0.6983 -0.1799  0.5909  3.1534 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.27705    0.48444   2.636   0.0113 *  
+speed        0.32241    0.02978  10.825 1.77e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.102 on 48 degrees of freedom
+Multiple R-squared:  0.7094,    Adjusted R-squared:  0.7034 
+F-statistic: 117.2 on 1 and 48 DF,  p-value: 1.773e-14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that we have to use ( )^2 to get our </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction on the right scale</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(md.car.sqrt,<span class="fu">data.frame</span>(<span class="at">speed=</span><span class="dv">50</span>))<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+302.6791 </code></pre>
+</div>
+</div>
+<p>We can further apply a log-log transform with <code>lm( log(dist)~log(speed), data=cars)</code>. This results in an even higher <span class="math inline">\(R^2=0.733\)</span>. The fitted model is <span class="math display">\[
+  \log(y) = -0.73 + 1.6 \log(x) + \varepsilon,
+\]</span> and the predicted stopping distance for a car travelling at 50 mph is 254 feet. Note that the square root transform is modelling <span class="math inline">\(y \propto x^2\)</span> whereas the log-log transform is modelling <span class="math inline">\(y \propto x^{1.6}\)</span>, which is a slower rate of increase.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>md.car.log <span class="ot">=</span> <span class="fu">lm</span>( <span class="fu">log</span>(dist)<span class="sc">~</span><span class="fu">log</span>(speed), <span class="at">data=</span>cars)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.car.log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(dist) ~ log(speed), data = cars)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.00215 -0.24578 -0.02898  0.20717  0.88289 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -0.7297     0.3758  -1.941   0.0581 .  
+log(speed)    1.6024     0.1395  11.484 2.26e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4053 on 48 degrees of freedom
+Multiple R-squared:  0.7331,    Adjusted R-squared:  0.7276 
+F-statistic: 131.9 on 1 and 48 DF,  p-value: 2.259e-15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that we have to use exp( ) to get our </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction on the right scale</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>( <span class="fu">predict</span>(md.car.log,<span class="fu">data.frame</span>(<span class="at">speed=</span><span class="dv">50</span>)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+254.4037 </code></pre>
+</div>
+</div>
+<p>We can also let the data decide on the best transformation by using the Box-Cox transformation. In this case, we may want to test the hypothesis that the optimal power to transform with is 1/2; i.e.&nbsp;the square root transformation. The Box-Cox transform choose a power of <span class="math inline">\(\lambda=0.424\)</span>. However, the value 1/2 lies within the confidence interval for <span class="math inline">\(\lambda\)</span>. We may prefer to use the square root transform instead of the power 0.424, since the square root is more interpretable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need the package MASS for boxcox</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the Box-Cox transform</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>bc  <span class="ot">=</span> <span class="fu">boxcox</span>(md.car.lin);</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">c</span>(<span class="fl">0.5</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="st">'red'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>lmb <span class="ot">=</span> bc<span class="sc">$</span>x[ <span class="fu">which.max</span>(bc<span class="sc">$</span>y) ];</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Optimal lambda is "</span>,lmb))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Optimal lambda is  0.424242424242424"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>carsBC <span class="ot">=</span> <span class="fu">cbind</span>(cars, <span class="at">distBC =</span> (cars<span class="sc">$</span>dist<span class="sc">^</span>lmb<span class="dv">-1</span>)<span class="sc">/</span>lmb)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>md.car.bc <span class="ot">=</span> <span class="fu">lm</span>( distBC<span class="sc">~</span>speed, <span class="at">data=</span>carsBC );</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.car.bc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = distBC ~ speed, data = carsBC)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0926 -1.0444 -0.3055  0.7999  4.7520 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.08227    0.73856   1.465    0.149    
+speed        0.49541    0.04541  10.910 1.35e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.681 on 48 degrees of freedom
+Multiple R-squared:  0.7126,    Adjusted R-squared:  0.7066 
+F-statistic:   119 on 1 and 48 DF,  p-value: 1.354e-14</code></pre>
+</div>
+</div>
+<p>The four models considered are plotted below. As we move away from the range of the regressors–i.e 4 to 25 mph–the models begin to diverge making extrapolating a bit dangerous.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  cars,<span class="at">las=</span><span class="dv">1</span>,<span class="at">main=</span><span class="st">"Car Stopping Distance"</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">40</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">160</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">40</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( </span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  xx, <span class="fu">predict</span>(md.car.lin,<span class="fu">data.frame</span>(<span class="at">speed=</span>xx)),  </span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="dv">1</span>,<span class="at">lty=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( </span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>  xx, <span class="fu">predict</span>(md.car.sqrt,<span class="fu">data.frame</span>(<span class="at">speed=</span>xx))<span class="sc">^</span><span class="dv">2</span>,  </span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( </span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  xx, <span class="fu">exp</span>(<span class="fu">predict</span>(md.car.log,<span class="fu">data.frame</span>(<span class="at">speed=</span>xx))),  </span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( </span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>  xx, (lmb<span class="sc">*</span><span class="fu">predict</span>(md.car.bc,<span class="fu">data.frame</span>(<span class="at">speed=</span>xx))<span class="sc">+</span><span class="dv">1</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span>lmb),  </span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="dv">4</span>,<span class="at">lty=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Linear"</span>,<span class="st">"Square Root"</span>,<span class="st">"Log-Log"</span>,<span class="st">"Box-Cox"</span>),</span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The choice in transformation can also have a big effect on both predictions and the confidence surronding such predictions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>new.val <span class="ot">=</span> <span class="dv">40</span>;</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(md.car.lin,<span class="fu">data.frame</span>(<span class="at">speed=</span>new.val),<span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 139.7173 102.3311 177.1034</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(md.car.sqrt,<span class="fu">data.frame</span>(<span class="at">speed=</span>new.val),<span class="at">interval=</span><span class="st">"prediction"</span>)<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 200.8895 132.1058 284.0361</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">predict</span>(md.car.log,<span class="fu">data.frame</span>(<span class="at">speed=</span>new.val),<span class="at">interval=</span><span class="st">"prediction"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 177.9245 74.39848 425.5077</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(lmb<span class="sc">*</span><span class="fu">predict</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  md.car.bc,<span class="fu">data.frame</span>(<span class="at">speed=</span>new.val),<span class="at">interval=</span><span class="st">"prediction"</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span><span class="dv">1</span>)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span>lmb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      fit      lwr      upr
+1 220.465 139.8189 322.8649</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="polynomial-regression" class="level2">
+<h2 class="anchored" data-anchor-id="polynomial-regression">Polynomial Regression</h2>
+<p><em>In the following subsections, we will only consider models with a single regressor</em> <span class="math inline">\(x\in\mathbb{R}\)</span> until the final part below where we will consider polynomials in multiple variables <span class="math inline">\(x_1,\ldots,x_p\)</span>.</p>
+<p>One of the examples of atypical residual behavior from above occurs when there is an unaccounted for quadratic term in the model such as trying to fit a model of the form <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 +\varepsilon
+\]</span> to data generated by <span class="math display">\[
+  y = \beta_0 + \beta_1x_1^2 + \varepsilon.
+\]</span> If this is suspected, we can look at the residuals and try to transform <span class="math inline">\(x\)</span>, such as <span class="math inline">\(x \rightarrow \sqrt{x}\)</span>, in order to put this back into the linear model framework. However, we can also just fit a polynomial model to our data.</p>
+<p>Consider the setting where we observe <span class="math inline">\(n\)</span> data pairs <span class="math inline">\((y_i,x_i)\in\mathbb{R}^2\)</span>. We can then attempt to fit a model of the form <span class="math display">\[
+  y = \beta_0 + \beta_1x + \beta_2x^2 + \ldots + \beta_px^p + \varepsilon
+\]</span> to the observations. The <span class="math inline">\(n\times p\)</span> design matrix will look like <span class="math display">\[
+  X = \begin{pmatrix}
+    1 &amp; x_1 &amp; x_1^2 &amp; \ldots &amp; x_1^p \\
+    1 &amp; x_2 &amp; x_2^2 &amp; \ldots &amp; x_2^p \\
+    \vdots &amp; \vdots &amp; \vdots &amp;\ddots &amp; \vdots\\
+    1 &amp; x_n &amp; x_n^2 &amp; \ldots &amp; x_n^p
+  \end{pmatrix}
+\]</span> and the parameters can be estimated as usual: <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span>. This matrix arises in Linear Algebra as the <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix">Vandermonde matrix</a>.</p>
+<div id="rem-linearIndep" class="proof remark">
+<p><span class="proof-title"><em>Remark 3</em>. </span>While the columns of <span class="math inline">\(X\)</span> are, in general, linearly independent, as <span class="math inline">\(p\)</span> gets larger, many problems can occur. In particular, the columns become near linearly dependent resulting in instability when computing <span class="math inline">\(({X}^\mathrm{T}X)^{-1}\)</span>.</p>
+</div>
+<section id="model-problems" class="level3">
+<h3 class="anchored" data-anchor-id="model-problems">Model Problems</h3>
+<p>Polynomial regression is very powerful for modelling, but can also lead to very erroneous results if used incorrectly. What follows are some potential issues to take into consideration.</p>
+<section id="overfitting" class="level4">
+<h4 class="anchored" data-anchor-id="overfitting">Overfitting</h4>
+<p>As a general rule, the degree of the polynomial model should be kept as low as possible. High order polynomials can be misleading as they can often fit the data quite well. In fact, given <span class="math inline">\(n\)</span> data points, it is possible to fit an <span class="math inline">\(n-1\)</span> degree polynomial that passes through each data point. In this extreme case, all of the residuals would be zero, but we would never expect this to be the correct model for the data.</p>
+<p>Problems can occur even when <span class="math inline">\(p\)</span> is much smaller than <span class="math inline">\(n\)</span>. As an example, two models were fit to <span class="math inline">\(n=50\)</span> data points generated from the model <span class="math display">\[
+  y = 3x^2 + \varepsilon
+\]</span> with <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,1\right)\)</span>. The first was a cubic model. The second was a degree 20 model. The first regression resulted in three significant regressors. Note that in these two cases, orthogonal polynomials were used to maintain numerical stability.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate some regression data with</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a quadratic trend</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="fl">0.05</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>len <span class="ot">=</span> <span class="fu">length</span>(xx)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>yy  <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n=</span>len,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a cubic model using orthogonal polynomials</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co"># and extract the most significant terms</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>md3  <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">3</span>) )</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>sm3  <span class="ot">&lt;-</span> <span class="fu">summary</span>(md3)</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>sm3<span class="sc">$</span>coefficients[<span class="fu">which</span>(sm3<span class="sc">$</span>coefficients[,<span class="dv">4</span>]<span class="sc">&lt;</span><span class="fl">0.01</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)   4.115491  0.1730479 23.782384 5.118095e-24
+poly(xx, 3)1 21.730420  1.1080471 19.611459 3.843069e-21
+poly(xx, 3)2  8.025826  1.1080471  7.243217 1.347334e-08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a degree-20 model using orthogonal polynomials</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and extract the most significant terms</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>md20 <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">20</span>) )</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>sm20<span class="ot">&lt;-</span> <span class="fu">summary</span>(md20)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>sm20<span class="sc">$</span>coefficients[<span class="fu">which</span>(sm20<span class="sc">$</span>coefficients[,<span class="dv">4</span>]<span class="sc">&lt;</span><span class="fl">0.01</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)    4.115491  0.1944119 21.168925 3.641662e-15
+poly(xx, 20)1 21.730420  1.2448436 17.456345 1.424531e-13
+poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data and models</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( xx,yy, <span class="at">xlab=</span><span class="st">'X'</span>,<span class="at">ylab=</span><span class="st">"Y"</span>,<span class="at">las=</span><span class="dv">1</span> )</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="dv">3</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">'black'</span>,<span class="at">lty=</span><span class="dv">1</span> )</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="fu">predict</span>(md3),<span class="at">col=</span><span class="st">'red'</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="fu">predict</span>(md20),<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Truth"</span>,<span class="st">"Cubic"</span>,<span class="st">"Deg20"</span>),</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"red"</span>,<span class="st">"blue"</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="extrapolating" class="level4">
+<h4 class="anchored" data-anchor-id="extrapolating">Extrapolating</h4>
+<p>The overfitting from the previous section also indicates problems that can occur when extrapolating with polynomial models. When high degrees are present, the best fit curve can change directions quickly and even make impossible or illogical predictions.</p>
+<p>Beyond that, even when the fitted polynomial models all trend in the same general direction, polynomials of different degree will diverge quickly from one another. Consider a model where the data are generated from <span class="math display">\[
+  y = 2x + 3x^3 + \varepsilon.
+\]</span> All four models displayed below generated very significant F tests. However, each one will give very different answers to predicting the value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=5\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate some regression data with</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a quadratic trend</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="fl">0.05</span>)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>len <span class="ot">=</span> <span class="fu">length</span>(xx)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>yy  <span class="ot">=</span> <span class="dv">2</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n=</span>len,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit some low degree polynomial models</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>md1 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">1</span>) )</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>md2 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">2</span>) )</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>md3 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">3</span>) )</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>md4 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">4</span>) )</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the models (interpolate)</span></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span>,<span class="at">main=</span><span class="st">"Interpolation"</span>)</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,<span class="fu">predict</span>(md1),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,<span class="fu">predict</span>(md2),<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,<span class="fu">predict</span>(md3),<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,<span class="fu">predict</span>(md4),<span class="at">lty=</span><span class="dv">4</span>,<span class="at">col=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb61-18"><a href="#cb61-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb61-19"><a href="#cb61-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"linear"</span>,<span class="st">"quad"</span>,<span class="st">"cube"</span>,<span class="st">"quart"</span>),</span>
+<span id="cb61-20"><a href="#cb61-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb61-21"><a href="#cb61-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the models (extrapolate)</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>xx.ext <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="fl">0.05</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span>,<span class="at">main=</span><span class="st">"Extrapolation"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(yy),<span class="dv">200</span>)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx.ext,<span class="fu">predict</span>(md1,<span class="fu">data.frame</span>(<span class="at">xx=</span>xx.ext)),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx.ext,<span class="fu">predict</span>(md2,<span class="fu">data.frame</span>(<span class="at">xx=</span>xx.ext)),<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx.ext,<span class="fu">predict</span>(md3,<span class="fu">data.frame</span>(<span class="at">xx=</span>xx.ext)),<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx.ext,<span class="fu">predict</span>(md4,<span class="fu">data.frame</span>(<span class="at">xx=</span>xx.ext)),<span class="at">lty=</span><span class="dv">4</span>,<span class="at">col=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"linear"</span>,<span class="st">"quad"</span>,<span class="st">"cube"</span>,<span class="st">"quart"</span>),</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hierarchy" class="level4">
+<h4 class="anchored" data-anchor-id="hierarchy">Hierarchy</h4>
+<p>An hierarchical polynomial model is one such that if it contains a term of degree <span class="math inline">\(k\)</span>, then it will contain all terms of order <span class="math inline">\(i=0,1\ldots,k-1\)</span> as well. In practice, it is not strictly necessary to do this. However, doing so will maintain invariance to linear shifts in the data.</p>
+<p>Consider the simple linear regression model <span class="math inline">\(y = \beta_0 + \beta_1 x + \varepsilon\)</span>. If we were to shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
+  y
+  &amp;= \beta_0 + \beta_1 (x+a)+ \varepsilon\\
+  &amp;= (\beta_0+a\beta_1) + \beta_1 x + \varepsilon\\
+  &amp;= \beta_0' + \beta_1 x + \varepsilon
+\end{align*}\]</span> and we still have the same model but with a modified intercept term.</p>
+<p>Now consider the polynomial regression model <span class="math inline">\(y = \beta_0 + \beta_2 x^2 + \varepsilon\)</span>. If we were to similarly shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
+  y
+  &amp;= \beta_0 + \beta_2 (x+a)^2+ \varepsilon\\
+  &amp;= (\beta_0+a^2\beta_2) + 2\beta_2ax + \beta_2 x^2 + \varepsilon\\
+  &amp;= \beta_0' + \beta_1' x + \beta_2 x^2 + \varepsilon.
+\end{align*}\]</span> Now, our model has a linear term, that is <span class="math inline">\(\beta_1'x\)</span>, in it, which was not there before.</p>
+<p>In general, for a degree <span class="math inline">\(p\)</span> model, if <span class="math inline">\(x\)</span> is shifted by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[
+  y = \beta_0 + \sum_{i=1}^p \beta_ix^i
+  ~~\Rightarrow~~
+  y = \beta_0' + \sum_{i=1}^p \beta_i'x^i.
+\]</span> Thus, the model is invariant under linear translation.</p>
+</section>
+</section>
+<section id="piecewise-polynomials" class="level3">
+<h3 class="anchored" data-anchor-id="piecewise-polynomials">Piecewise Polynomials</h3>
+<p>While a single high degree polynomial can be fit very closely to the observed data, there exist the already discussed problems of overfitting and subsequent extrapolation. Hence, an alternative to capture the behaviour of highly nonlinear data is to apply a piecewise polynomial model, which is often referred to as a spline model.</p>
+<p>To begin, assume that the observed regressors take values in the interval <span class="math inline">\([a,b]\)</span>. Then, we partition the interval with <span class="math inline">\(k+1\)</span> by <span class="math inline">\(a=t_1 &lt; t_2 &lt; \ldots &lt; t_{k+1}=b\)</span>. The general spline model of order <span class="math inline">\(p\)</span> takes on the form <span id="eq-splineFormula"><span class="math display">\[
+  y = \sum_{j=1}^k \beta_{0,j}\boldsymbol{1}\!\left[x\ge t_j\right] +
+  \sum_{i=1}^p \sum_{j=1}^k \beta_{i,j}( x - t_j )^i_+
+\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{1}\!\left[x&gt;t_j\right]\)</span> is the indicator function that takes on a value of <span class="math inline">\(0\)</span> when <span class="math inline">\(x&lt;t_j\)</span> and a value of <span class="math inline">\(1\)</span> otherwise, and where <span class="math inline">\(( x - t_j )^i_+ = ( x - t_j )^i\boldsymbol{1}\!\left[x&gt;t_j\right]\)</span>.</p>
+<div class="{rem-splineStuff}">
+<p><a href="#eq-splineFormula" class="quarto-xref">Equation&nbsp;1</a> is equivalent to fitting a separate <span class="math inline">\(p\)</span>th order polynomial to the data in each interval <span class="math inline">\([t_j,t_{j+1}]\)</span>. While doing so does result in many parameters to estimate, it will allow us to perform hypothesis tests for continuity and differentiability of the data, which we will discuss in the next section.</p>
+</div>
+<p>Submodels of <a href="#eq-splineFormula" class="quarto-xref">Equation&nbsp;1</a> have a collection of interesting properties. If the coefficients <span class="math inline">\(\beta_{0,j}\)</span> are set to <span class="math inline">\(0\)</span>, then we will fit a model that ensures continuity at the knots. For example, the model <span class="math display">\[
+  y = \beta_{0,1} + \sum_{j=1}^k \beta_{1,j}( x-t_j )_+
+\]</span> is a piecewise linear model with continuity at the knots. Conversely, a model of the form <span class="math display">\[
+  y = \sum_{j=1}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right]
+\]</span> fits a piecewise constant model and can be used to look for change points in an otherwise constant process.</p>
+<p>In practice, spline models with only cubic terms are generally preferred as they have a high enough order to ensure a good amount of smoothness–i.e.&nbsp;the curves are twice continuously differentiable–but generally do not lead to overfitting of the data.</p>
+<section id="a-spline-example" class="level4">
+<h4 class="anchored" data-anchor-id="a-spline-example">A Spline Example</h4>
+<p><em>Note that there are R packages to fit spline models to data. However, in this example we will do it manually for pedagogical purposes.</em></p>
+<p>Consider a model of the form <span class="math display">\[
+  y = 2+3x-4x^5+x^7 + \varepsilon
+\]</span> with <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,4\right)\)</span> with <span class="math inline">\(n=41\)</span> observations with regressor <span class="math inline">\(x\in[0,2]\)</span>. A degree 4 and degree 7 polynomial regression were fit to the data, and the results are displayed below. These deviate quickly from the true curve outside of the range of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">256</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Data from a degree-7 polynomial</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="fl">0.05</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>len <span class="ot">=</span> <span class="fu">length</span>(xx)</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>yy  <span class="ot">=</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">5</span> <span class="sc">+</span> xx<span class="sc">^</span><span class="dv">7</span> <span class="sc">+</span> <span class="fu">rnorm</span>(len,<span class="dv">0</span>,<span class="dv">4</span>)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit degree 4 and degree 7 models</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>md4 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">4</span>) )</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>md7 <span class="ot">=</span> <span class="fu">lm</span>( yy<span class="sc">~</span><span class="fu">poly</span>(xx,<span class="dv">7</span>) )</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot polynomial models </span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span> )</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">5</span> <span class="sc">+</span> xx<span class="sc">^</span><span class="dv">7</span>, <span class="at">col=</span><span class="st">'gray'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">1</span> )</span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="fu">predict</span>(md4), <span class="at">col=</span><span class="st">'red'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span> )</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="fu">predict</span>(md7), <span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">3</span> )</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bottomleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Truth"</span>,<span class="st">"Deg 4"</span>,<span class="st">"Deg 7"</span>),</span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="fu">c</span>(<span class="st">"gray"</span>,<span class="st">"red"</span>,<span class="st">"blue"</span>),<span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The next plot fits a piecewise linear spline with 6 knots–i.e.&nbsp;<span class="math inline">\(k=5\)</span>. The model is of the form <span class="math display">\[
+  y = \beta_{0,1} + \beta_{1,1}( x-0.0 )_+ + \beta_{1,2}( x-0.4 )_+ +
+  \ldots + \beta_{1,5}( x-1.6 )_+.
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manually creating the inputs to the regression model</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>knt  <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">17</span>,<span class="dv">25</span>,<span class="dv">33</span>)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">1</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">1</span>]]);</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">2</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">2</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">2</span>]]);</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">3</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">3</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">3</span>]]);</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">4</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">4</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">4</span>]]);</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">5</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">5</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">5</span>]]);</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear spline model</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>md<span class="fl">.1</span>spline <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span>reg1<span class="sc">+</span>reg2<span class="sc">+</span>reg3<span class="sc">+</span>reg4<span class="sc">+</span>reg5 )</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the linear spline model</span></span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>  xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span></span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">5</span> <span class="sc">+</span> xx<span class="sc">^</span><span class="dv">7</span>, <span class="at">col=</span><span class="st">'gray'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">1</span> )</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>  xx,<span class="fu">predict</span>(md<span class="fl">.1</span>spline),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">'red'</span></span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bottomleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Truth"</span>,<span class="st">"Linear Spline"</span>),</span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="fu">c</span>(<span class="st">"gray"</span>,<span class="st">"red"</span>),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The final plot fits a spline with only piecewise cubic terms and a spline with cubic and linear terms. The only cubic model provides a very reasonable approximation to the data. The cubic-linear spline model becomes a bit crazy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manually creating the inputs to the regression model</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>knt  <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">9</span>,<span class="dv">17</span>,<span class="dv">25</span>,<span class="dv">33</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>cub1 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">1</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">1</span>]])<span class="sc">^</span><span class="dv">3</span>;</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>cub2 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">2</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">2</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">2</span>]])<span class="sc">^</span><span class="dv">3</span>;</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>cub3 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">3</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">3</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">3</span>]])<span class="sc">^</span><span class="dv">3</span>;</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>cub4 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">4</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">4</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">4</span>]])<span class="sc">^</span><span class="dv">3</span>;</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>cub5 <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,knt[<span class="dv">5</span>]<span class="sc">-</span><span class="dv">1</span>),xx[knt[<span class="dv">5</span>]<span class="sc">:</span>len] <span class="sc">-</span> xx[knt[<span class="dv">5</span>]])<span class="sc">^</span><span class="dv">3</span>;</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit cubic spline model</span></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>md<span class="fl">.3</span>spline <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span>cub1<span class="sc">+</span>cub2<span class="sc">+</span>cub3<span class="sc">+</span>cub4<span class="sc">+</span>cub5 )</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear and cubic spline model</span></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>md<span class="fl">.13</span>spline <span class="ot">&lt;-</span> <span class="fu">lm</span>( </span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  yy<span class="sc">~</span>reg1<span class="sc">+</span>reg2<span class="sc">+</span>reg3<span class="sc">+</span>reg4<span class="sc">+</span>reg5<span class="sc">+</span>cub1<span class="sc">+</span>cub2<span class="sc">+</span>cub3<span class="sc">+</span>cub4<span class="sc">+</span>cub5 </span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the linear spline model</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a>  xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( xx, <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>xx <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>xx<span class="sc">^</span><span class="dv">5</span> <span class="sc">+</span> xx<span class="sc">^</span><span class="dv">7</span>, <span class="at">col=</span><span class="st">'gray'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">1</span> )</span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(</span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a>  xx,<span class="fu">predict</span>(md<span class="fl">.3</span>spline),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">'red'</span></span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(</span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>  xx,<span class="fu">predict</span>(md<span class="fl">.13</span>spline),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">'green'</span>,<span class="at">lty=</span><span class="dv">2</span></span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bottomleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Truth"</span>,<span class="st">"Cubic Spline"</span>,<span class="st">"Cubic &amp; Linear"</span>),</span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="fu">c</span>(<span class="st">"gray"</span>,<span class="st">"red"</span>,<span class="st">"green"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hypothesis-testing-for-spline-models" class="level4">
+<h4 class="anchored" data-anchor-id="hypothesis-testing-for-spline-models">Hypothesis testing for spline models</h4>
+<p>It is useful to consider what the hypothesis tests mean in the context of spline models. For example, consider fitting the piecewise constant model to some data: <span class="math display">\[
+  y = \sum_{j=1}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right].
+\]</span> The usual F-test will consider the hypotheses <span class="math display">\[
+  H_0: \beta_{0,2}=\ldots=\beta_{0,k}=0~~~~~~
+  H_1: \exists i\in\{2,3,\ldots,k\}~\text{s.t.}~\beta_{0,i}\ne0.
+\]</span> This hypothesis is asking whether or not we believe the mean of the observations changes as <span class="math inline">\(x\)</span> increases. <em>Note that <span class="math inline">\(\beta_{0,1}\)</span> is the overall intercept term in this model.</em></p>
+<p>We can also compare two different spline models with a partial F-test. For example, <span class="math display">\[\begin{align*}
+  &amp;\text{Model 1:}&amp; y&amp;= \beta_{0,1} +
+   \textstyle
+   \sum_{j=1}^k \beta_{3,j}( x-t_j )^3_+\\
+  &amp;\text{Model 2:}&amp; y&amp;= \beta_{0,1} +
+   \textstyle
+   \sum_{j=2}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right]+
+   \sum_{j=1}^k \beta_{3,j}( x-t_j )^3_+
+\end{align*}\]</span> The partial F-test between models 1 and 2 asks whether or not the addition of the piecewise constant terms adds any explanatory power to our model. Equivalently, it is testing for whether or not the model has any discontinuities in it. Similarly, first order terms can be used to test for differentiability.</p>
+<p>Instead of constructing a bigger model by adding polynomial terms of different orders, it is also possible to increase the number of knots in the model. Similar to all of the past examples, we will require that the new set of knots contains the old set–that is, <span class="math inline">\(\{t_1,\ldots,t_k\}\subset\{s_1,\ldots,s_m\}\)</span>.<br>
+This requirement ensures that our models are nested and thus can be compared in an ANOVA table.</p>
+<p>In what we considered above, the spline models were comprised of polynomials with supports of the form <span class="math inline">\([t_j,\infty)\)</span> for knots <span class="math inline">\(t_1&lt;\ldots&lt;t_k\)</span>. However, there are many different families of splines with different desirable properties. Some such families are the B-splines, Non-uniform rational B-splines (NURBS), box splines, Bézier splines, and many others. Here we will briefly consider the family of B-splines due to their simplicity and popularity. Note that in the spline literature, sometimes the knots are referred to as control points.</p>
+<p>The ultimate goal of the of the B-splines is to construct a polynomial basis where the constituent polynomials have finite support. Specifically, for an interval <span class="math inline">\([a,b]\)</span> and knots <span class="math inline">\(a=t_1&lt;t_2&lt;\ldots&lt;t_k&lt;t_{k+1}=b\)</span>, the constant polynomials will have support on two knots such as <span class="math inline">\([t_1,t_2]\)</span>, the linear terms on three knots such as <span class="math inline">\([t_1,t_3]\)</span>, and so on up to degree <span class="math inline">\(p\)</span> terms, which require <span class="math inline">\(p+2\)</span> knots.</p>
+<p>B-splines can be defined recursively starting with the constant, or degree 0, terms: <span class="math display">\[
+  B_{j,0}(x) = \boldsymbol{1}_{ x\in[t_j,t_{j+1}] },
+\]</span> which takes a value of 1 on the interval <span class="math inline">\([t_j,t_{j+1}]\)</span> and is 0 elsewhere. From here, the higher order terms can be written as <span class="math display">\[
+  B_{j,i}(x) =
+  \left(\frac{x-t_j}{t_{j+i}-t_{j}}\right)B_{j,i-1}(x) +
+  \left(\frac{t_{j+i+1}-x}{t_{j+i+1}-t_{j+1}}\right)B_{j+1,i-1}(x).
+\]</span> For example, with knots <span class="math inline">\(\{0,1,2,3\}\)</span>, we have <span class="math display">\[\begin{align*}
+  &amp;\text{Constant:}&amp;
+  B_{j,0} &amp;= \boldsymbol{1}_{ x\in[j,j+1] }&amp;j&amp;=0,1,2\\
+  &amp;\text{Linear:}&amp;
+  B_{j,1} &amp;= \left\{
+    \begin{array}{ll}
+      (x-j),&amp;   x\in[j,j+1]  \\
+      (j+2-x),&amp; x\in[j+1,j+2]  
+    \end{array}
+  \right. &amp;j&amp;=0,1\\
+  &amp;\text{Quadratic:}&amp;
+  B_{j,2} &amp;= \left\{
+    \begin{array}{ll}
+      x^2/2,&amp;   x\in[0,1]  \\
+      (-2x^2+6x-3)/2,&amp; x\in[1,2]    \\
+      (3-x)^2/2,&amp;   x\in[2,3]  
+    \end{array}
+  \right. &amp;j&amp;=0.\\
+\end{align*}\]</span> The linear and quadratic splines are displayed below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>xx   <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">3</span>,<span class="fl">0.1</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>lin1 <span class="ot">=</span> <span class="fu">c</span>(xx[<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>],<span class="dv">2</span><span class="sc">-</span>xx[<span class="dv">12</span><span class="sc">:</span><span class="dv">21</span>],<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>lin2 <span class="ot">=</span> <span class="fu">rev</span>(lin1)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>quad <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  xx[<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>]<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>,(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>xx[<span class="dv">12</span><span class="sc">:</span><span class="dv">21</span>]<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">6</span><span class="sc">*</span>xx[<span class="dv">12</span><span class="sc">:</span><span class="dv">21</span>]<span class="sc">-</span><span class="dv">3</span>)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">3</span><span class="sc">-</span>xx[<span class="dv">22</span><span class="sc">:</span><span class="dv">31</span>])<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>,<span class="dv">0</span>,<span class="at">type=</span><span class="st">'n'</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span></span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,lin1,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,lin2,<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">3</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xx,quad,<span class="at">lty=</span><span class="dv">4</span>,<span class="at">col=</span><span class="dv">4</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">'gray'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Just as we fit a spline model above, we could use the linear regression tools to fit a B-spline model of the form <span class="math display">\[
+  y = \sum_{i=0}^p \sum_{j=1}^{k-i} \beta_{i,j} B_{j,i}(x).
+\]</span> Here, we require that <span class="math inline">\(k&gt;p\)</span> as we will at least need knots <span class="math inline">\(t_1,\ldots,t_{p+1}\)</span> for a <span class="math inline">\(p\)</span>th degree polynomial. The total number of terms in the regression, which is number of parameters <span class="math inline">\(\beta_{i,j}\)</span> to estimate, is <span class="math display">\[
+  k + (k-1) + \ldots + (k-p).
+\]</span></p>
+</section>
+</section>
+<section id="interacting-regressors" class="level3">
+<h3 class="anchored" data-anchor-id="interacting-regressors">Interacting Regressors</h3>
+<p>Thus far in this section, we have considered only polynomial models with a single regressor. However, it is certainly possible to fit a polynomial model for more than one regressor such as <span class="math display">\[
+  y = \beta_0 + \beta_{1}x_1 + \beta_{2}x_2
+  + \beta_{11} x_1^2 + \beta_{12} x_1x_2 + \beta_{22}x_2^2 +
+  \varepsilon.
+\]</span> Here we have linear and quadratic terms for <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> as well as an interaction term <span class="math inline">\(\beta_{12}x_1x_2\)</span>.</p>
+<p>Fitting such models to the data follows from what we did for single variable polynomials. In this case, the number of interaction terms can grow quite large in practice. With <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(x_1,\ldots,x_k\)</span>, there will be <span class="math inline">\(k\choose p\)</span> interaction terms of degree <span class="math inline">\(p\)</span> assuming <span class="math inline">\(p&lt;k\)</span>. This leads to the topic of <a href="https://en.wikipedia.org/wiki/Response_surface_methodology">Response Surface Methodology</a>, which is a subtopic of the field of experimental design.</p>
+<p>We will not consider this topic further in these notes. However, it is worth noting that in <code>R</code>, it is possible to fit a linear regression with interaction terms such as <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3 +
+  \beta_{12}x_1x_2 + \beta_{13}x_1x_3 + \beta_{23}x_2x_3 +
+  \beta_{123}x_1x_2x_3 +\varepsilon
+\]</span> with the simple syntax <code>lm( y~x1*x2*x3 )</code> where the symbol <code>*</code> replaces the usual <code>+</code> from before.</p>
+</section>
+</section>
+<section id="influence-and-leverage" class="level2">
+<h2 class="anchored" data-anchor-id="influence-and-leverage">Influence and Leverage</h2>
+<p>The overall intuition for this section is that each observation does not have an equal influence on the estimation of <span class="math inline">\(\hat{\beta}\)</span>. If a given observed regressor <span class="math inline">\(x\)</span> lies far from the other observed values, it can have a strong effect on the least squares regression line. The goal of this section is to identify such points or subset of points that have a large influence on the regression.</p>
+<p>If we use the <code>R</code> command <code>lm()</code> to fit a linear model to some data, then we can use the command <code>influence.measures()</code> to compute an array of diagnostic metrics for each observation to test its influence on the regression. The function <code>influence.measures()</code> computes DFBETAS, DFFITS, covariance ratios, Cook’s distances and the diagonal elements of the so-called hat matrix. We will look at each of these in the following subsections.</p>
+<div class="{rem-influenceWarning}">
+<p><strong>Warning</strong>: You may notice that the word <em>heuristic</em> appears often in the following subsections when it comes to identifying observations with significant influence. Ultimately, these are rough guidelines based on the intuition of past statisticians and should not be taken as strict rules.</p>
+</div>
+<section id="the-hat-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="the-hat-matrix">The Hat Matrix</h3>
+<p>The projection or ``hat’’ matrix, <span class="math inline">\(P = X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\)</span>, directly measures the influence of one point on another.<br>
+This is because under the usual model assumptions, the fitted values have a covariance matrix <span class="math inline">\(\text{var}(\hat{Y}) = \sigma^2P\)</span>. Hence, the <span class="math inline">\(i,j\)</span>th entry in <span class="math inline">\(P\)</span> is a measure of the covariance between the fitted values <span class="math inline">\(\hat{Y}_i\)</span> and <span class="math inline">\(\hat{Y}_j\)</span>.</p>
+<p>The function <code>influence.measures()</code> reports the diagonal entries of the matrix <span class="math inline">\(P\)</span>. Heuristically, any entries that are much larger than the rest will have a strong influence on the regression. More precisely, we know that for a linear model <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p,
+\]</span> we have that <span class="math inline">\(\text{rank}(P)=p+1\)</span>.<br>
+Hence, <span class="math inline">\(\text{trace}(P)=p+1\)</span> where the trace of a matrix is the sum of the diagonal entries. Thus, as <span class="math inline">\(P\)</span> is an <span class="math inline">\(n\times n\)</span> matrix, we roughly expect the diagonal entries to be approximately <span class="math inline">\((p+1)/n\)</span>. Large deviations from this value should be investigated. For example, Montgomery, Peck, &amp; Vining recommend looking at observations with <span class="math inline">\(P_{i,i}&gt;2(p+1)/n\)</span>.</p>
+<div class="{rem-hatMat}">
+<p>The <span class="math inline">\(i\)</span>th diagonal entry <span class="math inline">\(P_{i,i}\)</span> is referred to as the leverage of the <span class="math inline">\(i\)</span>th observation in Montgomery, Peck, &amp; Vining. However, in , leverage is <span class="math inline">\(P_{i,i}/(1-P_{i,i})\)</span>. This sometimes referred to as the leverage factor.</p>
+</div>
+</section>
+<section id="cooks-d" class="level3">
+<h3 class="anchored" data-anchor-id="cooks-d">Cook’s D</h3>
+<p>Cook’s D or distance computes the distance between the vector of estimated parameters on all <span class="math inline">\(n\)</span> data points, <span class="math inline">\(\hat{\beta}\)</span>, and the vector of estimated parameters on <span class="math inline">\(n-1\)</span> data points, <span class="math inline">\(\hat{\beta}_{(i)}\)</span> where the <span class="math inline">\(i\)</span>th observation has been removed. Intuitively, if the <span class="math inline">\(i\)</span>th observation has a lot of influence on the estimation of <span class="math inline">\(\beta\)</span>, then the distance between <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\hat{\beta}_{(i)}\)</span> should be large.</p>
+<p>For a linear model with <span class="math inline">\(p+1\)</span> parameters and a sample size of <span class="math inline">\(n\)</span> observations, the usual form for Cook’s D is <span class="math display">\[
+  D_i = \frac{
+    {(\hat{\beta}_{(i)}-\hat{\beta})}^\mathrm{T} {X}^\mathrm{T}X
+    {(\hat{\beta}_{(i)}-\hat{\beta})}/(p+1)
+  }{SS_\text{res}/(n-p-1)}.
+\]</span> This is very similar to the confidence ellipsoid from the last chapter. However, this is not an usual F statistic, so we do not compute a p-value as we have done before. Instead, some heuristics are used to determine what a large value is. Some authors suggest looking for <span class="math inline">\(D_i\)</span> greater than <span class="math inline">\(1\)</span> or greater than <span class="math inline">\(4/n\)</span>. See <a href="https://en.wikipedia.org/wiki/Cook%27s_distance">Cook’s Distance</a>.</p>
+<p>Cook’s D can be written in different forms. One, in terms of the diagonal entries of <span class="math inline">\(P\)</span>, is <span class="math display">\[
+  D_i =
+  \frac{s_i^2}{p+1}
+  \left(\frac{P_{i,i}}{1-P_{i,i}}\right)
+\]</span> where <span class="math inline">\(s_i\)</span> is the <span class="math inline">\(i\)</span>th studentized residual. Another form of this measure compares the distance between the usual fitted values on all of the data <span class="math inline">\(\hat{Y} = X\hat{\beta}\)</span> and the fitted values based on all but the <span class="math inline">\(i\)</span>th observation, <span class="math inline">\(\hat{Y}_{(i)} = X\hat{\beta}_{(i)}\)</span>.<br>
+That is, <span class="math display">\[
+  D_i = \frac{
+    {(\hat{Y}_{(i)}-\hat{Y})}^\mathrm{T}(\hat{Y}_{(i)}-\hat{Y})/(p+1)
+  }{
+    SS_\text{res}/(n-p-1)
+  }
+\]</span> Note that like <span class="math inline">\(\hat{Y}\)</span>, the vector <span class="math inline">\(\hat{Y}_{(i)}\in\mathbb{R}^n\)</span>.<br>
+The <span class="math inline">\(i\)</span>th entry in the vector <span class="math inline">\(\hat{Y}_{(i)}\)</span> is the predicted value of <span class="math inline">\(y\)</span> given <span class="math inline">\(x_i\)</span>.</p>
+</section>
+<section id="dfbetas" class="level3">
+<h3 class="anchored" data-anchor-id="dfbetas">DFBETAS</h3>
+<p>The intuition behind DFBETAS is similar to that for Cook’s D. In this case, we consider the normalized difference between <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\hat{\beta}_{(i)}\)</span>. What results is an <span class="math inline">\(n\times(p+1)\)</span> matrix whose <span class="math inline">\(i\)</span>th row is <span class="math display">\[
+  \text{DFBETAS}_{i} =
+  \frac{\hat{\beta} - \hat{\beta}_{(i)}
+  }{
+    \sqrt{({X}^\mathrm{T}X)_{i,i}^{-1}  SS_{\text{res}(i)}/(n-p-2) }
+  } \in \mathbb{R}^{p+1}
+\]</span> where <span class="math inline">\(SS_{\text{res}(i)}\)</span> is the sum of the squared residuals for the model fit after removing the <span class="math inline">\(i\)</span>th data point and where <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{i,i}\)</span> is the <span class="math inline">\(i\)</span>th diagonal entry of the matrix <span class="math inline">\(({X}^\mathrm{T}X)^{-1}\)</span>. The recommended heuristic is to consider the <span class="math inline">\(i\)</span>th observation as an influential point if the <span class="math inline">\(i,j\)</span>th entry of DFBETAS has a magnitude greater than <span class="math inline">\(2/\sqrt{n}\)</span>.</p>
+</section>
+<section id="dffits" class="level3">
+<h3 class="anchored" data-anchor-id="dffits">DFFITS</h3>
+<p>The DFFITS value is very similar to the previously discussed DFBETAS. In this case, we are concerned with by how much the fitted values change when the <span class="math inline">\(i\)</span>th observation is removed. Explicitly, <span class="math display">\[
+  \text{DFFIT} =
+  \frac{\hat{Y} - \hat{Y}_{(i)}
+  }{
+    \sqrt{ ({X}^\mathrm{T}X)_{i,i}^{-1} SS_{\text{res}(i)}/(n-p-2) }
+  } \in \mathbb{R}^n.
+\]</span> The claim is that DFFIT is effected by both leverage and prediction error. The heuristic is to investigate any observation with DFFIT greater in magnitude than <span class="math inline">\(2\sqrt{(p+1)/n}\)</span>.</p>
+</section>
+<section id="covariance-ratios" class="level3">
+<h3 class="anchored" data-anchor-id="covariance-ratios">Covariance Ratios</h3>
+<p>The covariance ratio whether the precision of the model increases or decreases when the <span class="math inline">\(i\)</span>th observation is included. This measure is based on the idea that a small value for <span class="math inline">\(\det\left[ ({X}^\mathrm{T}X)^{-1}SS_{\text{res}} \right]\)</span> indicates high precision in our model. Hence, the covariance ratio considers a ratio of determinants <span class="math display">\[\begin{multline*}
+  \text{covratio}_i =
+  \frac{
+    \det\left[
+      ({X}^\mathrm{T}_{(i)}X_{(i)})^{-1}SS_{\text{res}(i)}/(n-p-2)
+    \right]
+  }{
+    \det\left[ ({X}^\mathrm{T}X)^{-1}SS_{\text{res}}/(n-p-1) \right]
+  } = \\ =
+  \left(
+    \frac{
+      SS_{\text{res}(i)}/(n-p-2)
+    }{
+      SS_\text{res}/(n-p-1)
+    }
+  \right)^{p+1}
+  \left(\frac{1}{1-P_{i,i}}\right).
+\end{multline*}\]</span> If the value is greater than 1, then inclusion of the <span class="math inline">\(i\)</span>th point has increased the model’s precision. If it is less than 1, then the precision has decreased. The suggested heuristic threshold for this measure of influence is when the value is greater than <span class="math inline">\(1+3(p+1)/n\)</span> or less than <span class="math inline">\(1-3(p+1)/n\)</span>. Though, it is noted that this only is valid for large enough sample sizes.</p>
+</section>
+<section id="influence-measures-an-example" class="level3">
+<h3 class="anchored" data-anchor-id="influence-measures-an-example">Influence Measures: An Example</h3>
+<p>To test these different measures, we create a dataset of <span class="math inline">\(n=50\)</span> observations from the model <span class="math display">\[
+  y = 3 + 2x + \varepsilon
+\]</span> where <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,1\right)\)</span> and <span class="math inline">\(x\in[0,2]\)</span>. To this dataset, we add 2 anomalous points at <span class="math inline">\((4,8)\)</span> and at <span class="math inline">\((1,0)\)</span>. Thus, we fit a simple linear regression to the original 50 data points and also to the new set of 52 data points resulting in the red and blue lines, respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">216</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data and fit a linear regression</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">2</span>);</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>yy  <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>xx <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">1</span>);</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>md0 <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span>xx )</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add two influential points and fit a new regression</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">&lt;-</span> <span class="fu">c</span>(xx,<span class="dv">4</span>,<span class="dv">1</span>);</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>yy  <span class="ot">&lt;-</span> <span class="fu">c</span>(yy,<span class="dv">8</span>,<span class="dv">0</span>);</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>md1 <span class="ot">&lt;-</span> <span class="fu">lm</span>( yy<span class="sc">~</span>xx )</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data and two linear models</span></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xx,yy,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"X"</span>,<span class="at">ylab=</span><span class="st">"Y"</span>)</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(md0,<span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(md1,<span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(</span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>,xx[<span class="dv">1</span>]),<span class="at">y=</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">0</span>,yy[<span class="dv">1</span>]),<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"51"</span>,<span class="st">"52"</span>,<span class="st">"1"</span>),<span class="at">pos =</span> <span class="dv">2</span></span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt2_ModAss_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can use the <code>R</code> function <code>influence.measures()</code> to compute a matrix containing the DFBETAS, DFFITS, covariance ratios, Cook’s D, and leverage for each data point. Applying the recommended thresholds in the previous sections results in the following extreme points, which are labelled in the above figure:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">influence.measures</span>(md1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Influence measures of
+     lm(formula = yy ~ xx) :
+
+      dfb.1_    dfb.xx     dffit cov.r   cook.d    hat inf
+1  -1.02e-01  0.317757  0.476552 0.846 1.03e-01 0.0346   *
+2   1.58e-01 -0.133249  0.158687 1.098 1.28e-02 0.0652    
+3  -1.53e-02  0.155431  0.289707 0.949 4.03e-02 0.0270    
+4   1.27e-02 -0.053722 -0.087782 1.064 3.91e-03 0.0307    
+5   6.08e-02 -0.036088  0.069801 1.061 2.48e-03 0.0262    
+6   6.90e-02 -0.037061  0.083446 1.055 3.53e-03 0.0240    
+7  -5.31e-02  0.038346 -0.055547 1.077 1.57e-03 0.0367    
+8  -5.16e-02  0.005189 -0.095960 1.042 4.65e-03 0.0193    
+9   3.75e-02 -0.013404  0.054260 1.057 1.50e-03 0.0205    
+10  3.50e-02 -0.153273 -0.252471 0.990 3.12e-02 0.0305    
+11 -1.52e-01  0.120320 -0.153509 1.076 1.19e-02 0.0499    
+12  8.34e-03  0.025927  0.068098 1.056 2.36e-03 0.0225    
+13 -1.56e-02  0.054631  0.085064 1.067 3.68e-03 0.0327    
+14  9.02e-03 -0.027047 -0.040094 1.077 8.19e-04 0.0353    
+15 -6.29e-02  0.157343  0.218130 1.036 2.37e-02 0.0401    
+16  2.06e-01 -0.178913  0.205853 1.108 2.14e-02 0.0786    
+17  3.07e-01 -0.241294  0.310959 1.014 4.75e-02 0.0483    
+18  7.82e-03 -0.031485 -0.050843 1.071 1.32e-03 0.0312    
+19  6.17e-02 -0.043728  0.065015 1.074 2.15e-03 0.0351    
+20 -1.57e-02  0.047578  0.070775 1.073 2.55e-03 0.0351    
+21 -3.96e-05  0.001572  0.003130 1.069 5.00e-06 0.0257    
+22 -3.36e-02 -0.041662 -0.148244 1.020 1.10e-02 0.0209    
+23 -2.25e-02  0.166146  0.299265 0.946 4.29e-02 0.0278    
+24  9.87e-03  0.064128  0.148393 1.028 1.10e-02 0.0236    
+25 -2.78e-01  0.198487 -0.292542 0.984 4.17e-02 0.0356    
+26 -4.68e-02  0.037911 -0.047125 1.100 1.13e-03 0.0545    
+27  1.29e-02  0.016904  0.058694 1.057 1.75e-03 0.0210    
+28  1.73e-03  0.055587  0.116249 1.045 6.82e-03 0.0249    
+29  5.59e-02 -0.005676  0.103967 1.038 5.45e-03 0.0193    
+30  3.01e-03 -0.049070 -0.094617 1.055 4.54e-03 0.0263    
+31  1.09e-02 -0.028400 -0.039997 1.081 8.16e-04 0.0388    
+32  3.00e-01 -0.186937  0.336339 0.917 5.34e-02 0.0278    
+33 -5.67e-02  0.006466 -0.104152 1.038 5.47e-03 0.0193    
+34 -7.21e-04 -0.001449 -0.004288 1.064 9.38e-06 0.0217    
+35  1.74e-02 -0.049266 -0.071575 1.075 2.61e-03 0.0365    
+36  3.98e-03  0.001045  0.010009 1.062 5.11e-05 0.0194    
+37 -2.31e-02  0.008147 -0.033508 1.061 5.72e-04 0.0204    
+38 -6.27e-02  0.042836 -0.067087 1.070 2.29e-03 0.0325    
+39 -2.67e-03  0.031091  0.058627 1.064 1.75e-03 0.0268    
+40 -3.47e-01  0.301114 -0.346781 1.067 5.96e-02 0.0782    
+41 -2.01e-01  0.170219 -0.201503 1.091 2.05e-02 0.0671    
+42  5.05e-03 -0.002790  0.006023 1.067 1.85e-05 0.0245    
+43 -7.14e-02 -0.017213 -0.176762 0.997 1.54e-02 0.0194    
+44 -5.01e-02 -0.036746 -0.171232 1.003 1.45e-02 0.0202    
+45  1.50e-04  0.000339  0.000969 1.065 4.79e-07 0.0219    
+46 -2.25e-02  0.060242  0.085784 1.074 3.74e-03 0.0379    
+47  1.88e-04 -0.003403 -0.006597 1.069 2.22e-05 0.0262    
+48  1.01e-01 -0.058014  0.118145 1.045 7.04e-03 0.0253    
+49  2.45e-02 -0.020183  0.024645 1.105 3.10e-04 0.0584    
+50 -5.75e-02  0.044956 -0.058414 1.090 1.74e-03 0.0472    
+51  8.89e-01 -1.195032 -1.234540 1.307 7.26e-01 0.3053   *
+52 -4.63e-01  0.209038 -0.608400 0.594 1.41e-01 0.0218   *</code></pre>
+</div>
+</div>
+<p>Note that point 1 is just part of the randomly generated data while points 51 and 52 were purposefully added to be anomalous. Hence, just because an observation is beyond one of these thresholds does not necessarily imply that it lies outside of the model.</p>
+</section>
+</section>
+<section id="weighted-least-squares" class="level2">
+<h2 class="anchored" data-anchor-id="weighted-least-squares">Weighted Least Squares</h2>
+<p>A key assumption of the Gauss-Markov theorem is that <span class="math inline">\(\varepsilon_i = \sigma^2\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>. What happens when <span class="math inline">\(\varepsilon_i = \sigma_i^2\)</span>–i.e.&nbsp;when the variance can differ for each observation? Normalizing the errors <span class="math inline">\(\varepsilon_i\)</span> can be done by <span class="math display">\[
+  \frac{\varepsilon_i}{\sigma_i}  
+  = \frac{1}{\sigma_{i,i}}(Y_i - X_{i,\cdot}\beta)
+  \sim\mathcal{N}\left(0,1\right).
+\]</span> In Chapter 1, we computed the least squares estimator as the vector <span class="math inline">\(\hat{\beta}\)</span> such that <span class="math display">\[
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
+  \sum_{i=1}^n (Y_i - X_{i,\cdot}\tilde{\beta})^2
+\]</span> Now, we will solve the slighly modified equation <span class="math display">\[
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
+  \sum_{i=1}^n \frac{(Y_i - X_{i,\cdot}\tilde{\beta})^2}{\sigma^2_i}.
+\]</span> In this setting, dividing by <span class="math inline">\(\sigma_i^2\)</span> is the ``weight’’ that gives this method the name weighted least squares.</p>
+<p>Proceeding as in chapter 1, we take a derivative with respect to the <span class="math inline">\(j\)</span>th <span class="math inline">\(\tilde{\beta}_j\)</span> to get <span class="math display">\[\begin{align*}
+  \frac{\partial}{\partial \tilde{\beta}_j}
+  \sum_{i=1}^n \frac{(Y_i - X_{i,\cdot}\tilde{\beta})^2}{\sigma^2_i}
+  &amp;=
+  2\sum_{i=1}^n \frac{(Y_i - X_{i,\cdot}\tilde{\beta})}{\sigma^2_i}X_{i,j}\\
+  &amp;=
+  2\sum_{i=1}^n \frac{Y_iX_{i,j}}{\sigma^2_i} -
+  2\sum_{i=1}^n \frac{X_{i,\cdot}\tilde{\beta}X_{i,j}}{\sigma^2_i}\\
+  &amp;=
+  2\sum_{i=1}^n {Y_i'X_{i,j}'} -
+  2\sum_{i=1}^n {X_{i,\cdot}'\tilde{\beta}X_{i,j}'}
+\end{align*}\]</span> where <span class="math inline">\(Y_i' = Y_i/\sigma_i\)</span> and <span class="math inline">\(X_{i,j}' = X_{i,j}/\sigma_i\)</span>. Hence, the least squares estimator is as before <span class="math display">\[\begin{align*}
+  \hat{\beta}
+  &amp;= ({X'}^\mathrm{T}X')^{-1}{X'}^\mathrm{T}Y'\\
+  &amp;= ({X}^\mathrm{T}WX)^{-1}{X}^\mathrm{T}WY
+\end{align*}\]</span> where <span class="math inline">\(W \in\mathbb{R}^{n\times n}\)</span> is the diagonal matrix with entries <span class="math inline">\(W_{i,i} = \sigma_{i}^2\)</span>.</p>
+<p>In practise, we do not know the values for <span class="math inline">\(\sigma_i^2\)</span>. Methods to find a good matrix of weights <span class="math inline">\(W\)</span> exist such as <a href="https://en.wikipedia.org/wiki/Iteratively_reweighted_least_squares">Iteratively Reweighted Least Squares</a> which is equivalent to finding the estimator <span class="math display">\[
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
+  \sum_{i=1}^n \lvert Y_i - X_{i,\cdot}\tilde{\beta}\rvert^q
+\]</span> for some <span class="math inline">\(q\in[1,\infty)\)</span>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

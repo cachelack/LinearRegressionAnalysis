@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>chpt1_ols</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="chpt1_ols.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div class="hidden">
+
+</div>
+<section id="latex-macros" class="level1">
+<h1>Latex Macros</h1>
+<p>That is all</p>
+</section>
+<section id="ordinary-least-squares" class="level1">
+<h1>Ordinary Least Squares</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Linear regression begins with the simple but profound idea that some observed output or {response} variable, <span class="math inline">\(Y\in\mathbb{R}\)</span>, is a function of <span class="math inline">\(p\)</span> input or <em>regressor</em> variables <span class="math inline">\(x_1,\ldots,x_p\)</span> with the addition of some unknown noise variable <span class="math inline">\(\varepsilon\)</span>. Namely, <span class="math display">\[
+  Y = f(x_1,\ldots,x_p) + \varepsilon
+\]</span> where the noise is generally assumed to have mean zero and finite variance. The function <span class="math inline">\(f\)</span> is unknown and relates the inputs <span class="math inline">\(x_i\)</span> to the output <span class="math inline">\(Y\)</span>. Our goal is to ascertain what <span class="math inline">\(f\)</span> could be.</p>
+<p>In this setting, <span class="math inline">\(Y\)</span> is usually considered to be a random variable while the <span class="math inline">\(x_i\)</span> are considered fixed. Hence, the expected value of <span class="math inline">\(Y\)</span> is in terms of the unknown function <span class="math inline">\(f\)</span> and the regressors: <span class="math display">\[
+  \mathrm{E}\left(Y\middle|x_1,\ldots,x_p\right) = f(x_1,\ldots,x_p).
+\]</span> While <span class="math inline">\(f\)</span> can be considered to be in some very general classes of functions, we begin with the standard linear setting. Let <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\in\mathbb{R}\)</span>. Then, the <em>multiple regression model</em> is <span class="math display">\[
+  Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
+    = {\beta}^\mathrm{T} X
+\]</span> where <span class="math inline">\(\beta = {(\beta_0,\ldots,\beta_p)}^\mathrm{T}\)</span> and <span class="math inline">\(X = {(1,x_1,\ldots,x_p)}^\mathrm{T}\)</span>. The <em>simple regression model</em> is a submodel of the above where <span class="math inline">\(p=1\)</span>, which is <span class="math display">\[
+  Y = \beta_0 + \beta_1 x_1 + \varepsilon,
+\]</span> and will be treated concurrently with multiple regression.</p>
+<p>In the statistics setting, the parameter vector <span class="math inline">\(\beta\in\mathbb{R}^p\)</span> is unknown. The analyst observes multiple replications of regressor and response pairs, <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> where <span class="math inline">\(n\)</span> is the <em>sample size</em>, and wishes to choose a ``best’’ estimate for <span class="math inline">\(\beta\)</span> based on these <span class="math inline">\(n\)</span> observations. This setup can be concisely written in a vector-matrix form as <span id="eq-linearRegression"><span class="math display">\[
+  Y = X\beta + \varepsilon
+\tag{1}\]</span></span> where <span class="math display">\[
+  Y =
+  \begin{pmatrix}
+    Y_1 \\ \vdots \\ Y_n
+  \end{pmatrix},~~~~
+  X =
+  \begin{pmatrix}
+    1 &amp; x_{1,1} &amp; \ldots &amp; x_{1,p} \\
+    1 &amp; x_{2,1} &amp; \ldots &amp; x_{2,p} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1 &amp; x_{n,1} &amp; \ldots &amp; x_{n,p}
+  \end{pmatrix},~~~~
+  \beta =
+  \begin{pmatrix}
+    \beta_0 \\ \vdots \\ \beta_p
+  \end{pmatrix},~~~~
+  \varepsilon=
+  \begin{pmatrix}
+    \varepsilon_1 \\ \vdots \\ \varepsilon_n
+  \end{pmatrix}.
+\]</span> Note that <span class="math inline">\(Y,\varepsilon\in\mathbb{R}^n\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(X\in\mathbb{R}^{n\times {p+1}}\)</span>.</p>
+<p>As <span class="math inline">\(Y\)</span> is a random variable, we can compute its mean vector and covariance matrix as follows: <span class="math display">\[
+  \mathrm{E}Y = \mathrm{E}\left( X\beta +\varepsilon\right) = X\beta
+\]</span> and <span class="math display">\[
+  \mathrm{Var}\left(Y\right)
+  = \mathrm{E}\left( (Y-X\beta){(Y-X\beta)}^\mathrm{T} \right)
+  = \mathrm{E}\left( \varepsilon{\varepsilon}^\mathrm{T} \right)
+  = \mathrm{Var}\left( \varepsilon\right)
+  = \sigma^2I_n.
+\]</span></p>
+<p>An example of a linear regression is this following study from the New England Journal of Medicine<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> can be found in the code below. This study highlights the correlation between chocolate consumption and Nobel prizes received in 16 different countries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in Table</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/chocoTable.r"</span>);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  dat<span class="sc">$</span>choco, dat<span class="sc">$</span>nobel,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"Chocolate Consumption (kg per capita)"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">"Nobel prizes per 10 million"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">las=</span><span class="dv">1</span>,<span class="co">#xlim=c(0,max(dat$choco)+1),</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="fu">max</span>(dat<span class="sc">$</span>nobel))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Label data</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span>dat<span class="sc">$</span>choco, <span class="at">y=</span>dat<span class="sc">$</span>nobel,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels=</span>dat<span class="sc">$</span>abbrev, </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">pos=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">0.7</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a linear model</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>lmDat <span class="ot">=</span> <span class="fu">lm</span>( nobel <span class="sc">~</span> choco, <span class="at">data =</span> dat );</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># plot regression line</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmDat,<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt1_ols_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="definitions" class="level3">
+<h3 class="anchored" data-anchor-id="definitions">Definitions</h3>
+<p>Before continuing, we require the following collection of terminology.</p>
+<p>The <em>response</em> <span class="math inline">\(Y\)</span> and the <em>regressors</em> <span class="math inline">\(X\)</span> were already introduced above. These elements comprise the <em>observed data</em> in our regression. The <em>noise</em> or <em>error</em> variable is <span class="math inline">\(\varepsilon\)</span>. The entries in this vector are usually considered to be independent and identically distributed (iid) random variables with mean zero and finite variance <span class="math inline">\(\sigma^2 &lt; \infty\)</span>. Very often, this vector will be assumed to have a multivariate normal distribution: <span class="math inline">\(\varepsilon\sim\mathcal{N}\left({ 0},\sigma^2 I_n\right)\)</span> where <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix. The variance <span class="math inline">\(\sigma^2\)</span> is also generally considered to be unknown to the analyst.</p>
+<p>The unknown vector <span class="math inline">\(\beta\)</span> is our <em>parameter</em> vector. Eventually, we will construct an <em>estimator</em> <span class="math inline">\(\hat{\beta}\)</span> from the observed data. Given such an estimator, the <em>fitted values</em> are <span class="math inline">\(\hat{Y} := X\hat{\beta}\)</span>. These values are what the model believes are the expected values at each regressor.</p>
+<p>Given the fitted values, the <em>residuals</em> are <span class="math inline">\(r = Y-\hat{Y}\)</span> which is a vector with entries <span class="math inline">\(r_i = Y_i - \hat{Y}_i\)</span>. This is the difference between the observed response and the expected response of our model. The residuals are of critical importance to testing how good our model is and will reappear in most subsequent sections.</p>
+<table class="caption-top table">
+<caption>The four variables in the linear regression model of <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;1</a> split between whether they are fixed or random variables and between whether or not the analyst knows their value.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th>Known</th>
+<th>Unknown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fixed</td>
+<td><span class="math inline">\(X\)</span></td>
+<td><span class="math inline">\(\beta\)</span></td>
+</tr>
+<tr class="even">
+<td>Random</td>
+<td><span class="math inline">\(Y\)</span></td>
+<td><span class="math inline">\(\varepsilon\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Lastly, there is the concept of sum of squares. Letting <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^nY_i\)</span> be the sample mean for <span class="math inline">\(Y\)</span>, the <em>total sum of squares</em> is <span class="math inline">\(SS_\text{tot} = \sum_{i=1}^n(Y_i-\bar{Y})^2\)</span>, which can be thought of as the total variation of the responses. This can be decomposed into a sum of the <em>explained sum of squares</em> and the <em>residual sum of squares</em> as follows: <span class="math display">\[
+  SS_\text{tot} = SS_\text{exp} + SS_\text{res}
+  = \sum_{i=1}^n (\hat{Y}_i-\bar{Y})^2
+  + \sum_{i=1}^n (Y_i-\hat{Y}_i)^2.
+\]</span> The explained sum of squares can be thought of as the amount of variation explained by the model while the residual sum of squares can be thought of as a measure of the variation that is not yet contained in the model. The sum of squares gives us an expression for the so called <em>coefficient of determination</em>, <span class="math inline">\(R^2 = SS_\text{exp}/SS_\text{tot} = 1-SS_\text{res}/SS_\text{tot}\in[0,1]\)</span>, which is treated as a measure of what percentage of the variation is explained by the given model.</p>
+</section>
+</section>
+<section id="point-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="point-estimation">Point Estimation</h2>
+<p>In the ordinary least squares setting, the our choice of estimator is <span id="eq-leastSquares"><span class="math display">\[
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^p}{\arg\min}
+  \sum_{i=1}^n( Y_i - X_{i,\cdot}\cdot\tilde{\beta} )^2
+\tag{2}\]</span></span> where <span class="math inline">\(X_{i,\cdot}\)</span> is the <span class="math inline">\(i\)</span>th row of the matrix <span class="math inline">\(X\)</span>. In the simple regression setting, this reduces to <span class="math display">\[
+  (\hat{\beta}_0,\hat{\beta}_1) =
+  \underset{(\tilde{\beta}_0,\tilde{\beta}_1)\in\mathbb{R}^2}{\arg\min}
+  \sum_{i=1}^n( Y_i - (\tilde{\beta}_0 + \tilde{\beta}_1x_i) )^2.
+\]</span> Note that this is equivalent to choosing a <span class="math inline">\(\hat{\beta}\)</span> to minimize the sum of the squared residuals.</p>
+<p>It is perfectly reasonable to consider other criterion beyond minimizing the sum of squared residuals. However, this approach results in an estimator with many nice properties. Most notably is the Gauss-Markov theorem:</p>
+<div id="thm-gaussMarkov" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;1</a> and that for the errors, <span class="math inline">\(\mathrm{E}\varepsilon_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
+(This is sometimes referred to as the ``Best Linear Unbiased Estimator’’ or BLUE)</p>
+</div>
+<p>Hence, it can be shown that the estimator is unbiased, <span class="math inline">\(\mathrm{E}\hat{\beta} = \beta\)</span>. Furthermore, as long as the model contains an intercept term <span class="math inline">\(\beta_0\)</span>, the constructed least squares line passes through the centre of the data in the sense that the sum of the residuals is zero, <span class="math inline">\(\sum_{i=1}^n r_i = 0\)</span> and that <span class="math inline">\(\bar{Y} = \hat{\beta}\bar{X}\)</span> where <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span> and where <span class="math inline">\(\bar{X}\)</span> is the vector of column means of the matrix <span class="math inline">\(X\)</span>.</p>
+<section id="derivation-of-the-ols-estimator" class="level3">
+<h3 class="anchored" data-anchor-id="derivation-of-the-ols-estimator">Derivation of the OLS estimator</h3>
+<p>The goal is to derive an explicit solution to <a href="#eq-leastSquares" class="quarto-xref">Equation&nbsp;2</a>. First, consider the following partial derivative: <span class="math display">\[\begin{align*}
+  \frac{\partial}{\partial \hat{\beta}_k}
+  \sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})^2
+  &amp;= -2\sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})X_{i,k}\\
+  &amp;= -2\sum_{i=1}^n(
+    Y_i-{\textstyle \sum_{j=1}^{p+1} X_{i,j}\hat{\beta}_j}
+  )X_{i,k}\\
+  &amp;= -2\sum_{i=1}^n Y_iX_{i,k}  
+     +2\sum_{i=1}^n\sum_{j=1}^{p+1} X_{i,j}X_{i,k}\hat{\beta}_j
+\end{align*}\]</span> The above is the <span class="math inline">\(k\)</span>th entry in the vector <span class="math inline">\(\nabla \sum_{i=1}^n(Y_i-X_{i,\cdot}\hat{\beta})^2\)</span>. Hence, <span class="math display">\[
+  \nabla \sum_{i=1}^n(Y_i-X_{i,\cdot}\hat{\beta})^2
+  = -2 {X}^\mathrm{T}Y + 2{X}^\mathrm{T}X\hat{\beta}.
+\]</span> Setting this equal to zero results in a critical point at <span class="math display">\[
+  {X}^\mathrm{T}Y = {X}^\mathrm{T}X\hat{\beta}
+\]</span> or <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> assuming <span class="math inline">\({X}^\mathrm{T}X\)</span> is invertible. Revisiting the terminology in the above definitions sections gives the following table:</p>
+<p>|————————–|————————————————–| | Least Squares Estimator: | <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Fitted Values: | <span class="math inline">\(\hat{Y} = X\hat{\beta}=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Residuals: | <span class="math inline">\(r = Y-\hat{Y} = (I_n - X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y\)</span> |</p>
+<p>In the case that <span class="math inline">\(n&gt;p\)</span> and that the columns of <span class="math inline">\(X\)</span> are linearly independent, the matrix <span class="math inline">\(P_X:=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\)</span> is a rank <span class="math inline">\(p+1\)</span> projection matrix. Similarly, <span class="math inline">\(I_n-P_X\)</span> is the complementary rank <span class="math inline">\(n-p-1\)</span> projection matrix. Intuitively, this implies that the fitted values are the projection on the observed values onto a <span class="math inline">\(p\)</span>-dimensional subspace while the residuals arise from a projection onto the orthogonal subspace. As a result, it can be shown that <span class="math inline">\(\mathrm{cov}\left(\hat{Y},r\right) = 0\)</span>.</p>
+<p>Now that we have an explicit expression for the least squares estimator <span class="math inline">\(\hat{\beta}\)</span>, we can show that it is unbiased. <span class="math display">\[
+  \mathrm{E}\hat{\beta} = \mathrm{E}\left(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\right)
+  = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\mathrm{E}Y
+  = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T} X\beta = \beta.
+\]</span> Following that, we can compute its variance. <span class="math display">\[\begin{align*}
+  \mathrm{Var}\left(\hat{\beta}\right)
+  &amp;= \mathrm{E}\left( (\hat{\beta}-\beta){(\hat{\beta}-\beta)}^\mathrm{T} \right)\\
+  &amp;= \mathrm{E}\left( \hat{\beta}{\hat{\beta}}^\mathrm{T} \right) - \beta{\beta}^\mathrm{T}\\
+  &amp;= \mathrm{E}\left( ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y{(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y)}^\mathrm{T} \right)
+     - \beta{\beta}^\mathrm{T}\\
+  &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\mathrm{E}\left( Y{Y}^\mathrm{T} \right)X({X}^\mathrm{T}X)^{-1}
+     - \beta{\beta}^\mathrm{T}\\
+  &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T} (
+       \sigma^2I_n + X\beta{\beta}^\mathrm{T}{X}^\mathrm{T}
+     ) X({X}^\mathrm{T}X)^{-1}
+     - \beta{\beta}^\mathrm{T}\\
+  &amp;= \sigma^2({X}^\mathrm{T}X)^{-1}.
+\end{align*}\]</span></p>
+<p>Thus far, we have only assumed that <span class="math inline">\(\varepsilon\)</span> is a random vector with iid entries with mean zero and variance <span class="math inline">\(\sigma^2\)</span>. If in addition, we assumed that <span class="math inline">\(\varepsilon\)</span> has a <em>normal</em> or <em>Gaussian</em> distribution, then <span class="math display">\[
+  \varepsilon\sim\mathcal{N}\left(0,\sigma^2I_n\right),~~
+  Y\sim\mathcal{N}\left(X\beta,\sigma^2I_n\right),\text{ and }
+  \hat{\beta}\sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right).
+\]</span> Furthermore, with a little work, one can show that for the fitted values and residuals also have normal distributions in this setting: <span class="math display">\[
+  \hat{Y}\sim\mathcal{N}\left(X\hat{\beta},\sigma^2P_X\right),~\text{ and }~
+  r\sim\mathcal{N}\left(0,\sigma^2(I_n-P_X)\right).
+\]</span> Notice that the two above covariance matrices are not generally of full rank. This assumption that the errors follow a normal distribution is a very common assumption to make in practice.</p>
+</section>
+<section id="maximum-likelihood-estimate-under-normality" class="level3">
+<h3 class="anchored" data-anchor-id="maximum-likelihood-estimate-under-normality">Maximum likelihood estimate under normality</h3>
+<p>In the previous section, the OLS estimator is derived by minimizing the sum of the squared errors. Now, given the additional assumption that the errors have a normal distribution, we can compute an alternative estimator for <span class="math inline">\(\beta\)</span>: the maximum likelihood estimate (MLE). We can also use this to simultaneously compute the MLE for <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>From above we have that <span class="math inline">\(Y\sim\mathcal{N}\left(X\beta,\sigma^2I_n\right)\)</span>, and hence the likelihood is <span class="math display">\[\begin{align*}
+  L(\beta,\sigma^2; X,Y)
+  &amp;= (2\pi\sigma^2)^{-n/2}\exp\left(
+    -\frac{1}{2\sigma^2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta)
+  \right).
+\end{align*}\]</span> The log likelihood is then <span class="math display">\[\begin{multline*}
+\ell(\beta,\sigma^2;X,Y) = \log L(\beta,\sigma^2;X,Y)
+=\\= -\frac{n}{2}\log 2\pi -\frac{n}{2}\log \sigma^2
+   -\frac{1}{2\sigma^2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta).
+\end{multline*}\]</span> This implies that the MLE for <span class="math inline">\(\beta\)</span> comes from solving <span class="math display">\[
+  0 = \frac{\partial\ell}{\partial\beta} =
+  \frac{\partial}{\partial\beta} {(Y-X\beta)}^\mathrm{T}(Y-X\beta),
+\]</span> which is solved by the OLS estimator from above. Hence, the MLE under normality is the least squares estimator.</p>
+<p>For the variance term <span class="math inline">\(\sigma^2\)</span>, the MLE is similarly found by solving <span class="math display">\[
+  0= \frac{\partial\ell}{\partial\sigma^2} =
+  -\frac{n}{2} (\sigma^{2})^{-1}
+  +\frac{(\sigma^2)^{-2}}{2}{(Y-X\beta)}^\mathrm{T}(Y-X\beta).
+\]</span> This occurs for <span class="math inline">\(\hat{\sigma}^2 = n^{-1}{(Y-X\hat{\beta})}^\mathrm{T}(Y-X\hat{\beta})\)</span>, which is just the average sum of squares of the residuals: <span class="math inline">\(\hat{\sigma}^2 = n^{-1}\sum_{i=1}^n r_i^2\)</span>. However, this is a biased estimator of the variance as the residuals are not independent and have a degenerate covariance matrix of rank <span class="math inline">\(n-p-1\)</span>. Intuitively, this implies that the sum of squared residuals has <span class="math inline">\(n-p-1\)</span> degrees of freedom resulting in <span class="math display">\[
+  \frac{SS_\text{res}}{\sigma^2} = \frac{1}{\sigma^2}\sum_{i=1}^n r_i^2
+  \sim\chi^2\left(n-p-1\right)
+\]</span> and the unbiased estimator of <span class="math inline">\(\sigma^2\)</span> being <span class="math inline">\(SS_\text{res}/(n-p-1) = \hat{\sigma}^2(n/(n-p-1))\)</span>.<br>
+For a more precise explanation of where this comes from, see <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a> which is beyond the scope of this course.</p>
+<section id="chocolate-nobel-data" class="level4">
+<h4 class="anchored" data-anchor-id="chocolate-nobel-data">Chocolate-Nobel Data</h4>
+<p>Running a regression in R on the chocolate consumption vs Nobel prize data from above results in a fitted model <span class="math display">\[
+  (\text{Nobel Prizes}) =  -0.991 + 1.3545(\text{Chocolate})
+\]</span> This indicates that a 1 kg increase in chocolate consumption per capita corresponds to an expected increase in 1.35 Nobel prizes per 10 million people.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in Table</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/chocoTable.r"</span>);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a linear model</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>lmDat <span class="ot">=</span> <span class="fu">lm</span>( nobel <span class="sc">~</span> choco, <span class="at">dat=</span>dat );</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of model</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmDat);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nobel ~ choco, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.6876 -1.6504 -0.5288  0.1484 11.3922 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.9910     2.1327  -0.465  0.64932   
+choco         1.3545     0.3446   3.931  0.00151 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.666 on 14 degrees of freedom
+Multiple R-squared:  0.5246,    Adjusted R-squared:  0.4907 
+F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="proof-of-the-gauss-markov-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="proof-of-the-gauss-markov-theorem">Proof of the Gauss-Markov Theorem</h3>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Any linear estimator can be written as <span class="math inline">\(AY\)</span> for some non-random matrix <span class="math inline">\(A\in\mathbb{R}^{(p+1)\times n}\)</span>. We can in turn write <span class="math inline">\(A = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D\)</span> for some matrix <span class="math inline">\(D\in\mathbb{R}^{(p+1)\times n}\)</span>. Then, as <span class="math display">\[\begin{align*}
+    \mathrm{E}\left( AY \right)  
+    &amp;= AX\beta \\
+    &amp;= \left[({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D\right]X\beta \\
+    &amp;= \beta + DX\beta,
+  \end{align*}\]</span> the unbiased condition implies that <span class="math inline">\(DX\beta=0\)</span> for any <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span> and hence that <span class="math inline">\(DX=0\)</span>.</p>
+<p>Next, we compute the variance of the arbitrary linear unbiased estimator to get <span class="math display">\[\begin{align*}
+    \mathrm{Var}\left(AY\right) &amp;=
+    A\mathrm{Var}\left(Y\right){A}^\mathrm{T}\\
+    &amp;=\sigma^2\left[
+      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D
+    \right]{\left[
+      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}+D
+    \right]}^\mathrm{T}\\
+    &amp;= \sigma^2\left[
+      ({X}^\mathrm{T}X)^{-1} +
+      ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}{D}^\mathrm{T} +
+      DX({X}^\mathrm{T}X)^{-1} +
+      D{D}^\mathrm{T}
+    \right] \\
+    &amp;= \sigma^2\left[
+      ({X}^\mathrm{T}X)^{-1} +
+      D{D}^\mathrm{T}
+    \right].
+  \end{align*}\]</span> Hence, to minimize the variance, we must minimize <span class="math inline">\(D{D}^\mathrm{T}\)</span> as <span class="math inline">\(D{D}^\mathrm{T}\)</span> is necessarily a positive semi-definite matrix. This is achieved by setting <span class="math inline">\(D=0\)</span> and arriving at <span class="math inline">\(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> having minimial variance.</p>
+</div>
+<div id="rem-remark1" class="proof remark">
+<p><span class="proof-title"><em>Remark 1</em>. </span>Note that <span class="math inline">\(D{D}^\mathrm{T}\)</span> is positive semi-definite for any choice of <span class="math inline">\(D\)</span> as for any <span class="math inline">\(w\in\mathbb{R}^{p+1}\)</span>, we have <span class="math display">\[
+    {w}^\mathrm{T}(D{D}^\mathrm{T}){w} =
+    {({D}^\mathrm{T}w)}^\mathrm{T}(Dw) = \lVert Dw\rVert_2 \ge 0.
+  \]</span></p>
+</div>
+<div id="rem-remark2" class="proof remark">
+<p><span class="proof-title"><em>Remark 2</em>. </span>While <span class="math inline">\(\hat{\beta}\)</span> has minimal variance over all unbiased estimators, we can lessen the variance further if we allow for biased estimators. This is considered in many more advanced regression methods such as ridge regression and lasso.</p>
+</div>
+</section>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<section id="goodness-of-fit" class="level3">
+<h3 class="anchored" data-anchor-id="goodness-of-fit">Goodness of fit</h3>
+<p>We now have a model for our data, and in some sense, this model is optimal as it minimizes the squared errors. However, even being optimal, we are still interested in knowing whether or not this is a good model for our data. This is a question of <em>goodness of fit</em>.</p>
+<p>The first question to ask is, do any of the regressors provide information about the response in the linear model framework? This can be written mathematically as <span id="eq-hypftest"><span class="math display">\[
+H_0: \beta_1 = \ldots = \beta_p = 0, ~~~~~ H_1: \exists i\ge1~s.t.~\beta_i\ne0,
+\tag{3}\]</span></span> which is asking is there at least one <span class="math inline">\(\beta_i\)</span> that we can claim is non-zero and hence implies that the regressor <span class="math inline">\(x_i\)</span> has some nontrivial influence over <span class="math inline">\(y\)</span>.</p>
+<p>To test this hypothesis, we revisit the explained and residual sums of squares introduced in the Definitions section. Specifically, we already have that <span class="math inline">\(SS_\text{res}/\sigma^2 \sim\chi^2\left(n-p-1\right)\)</span> from above. Similarly, <span class="math inline">\(SS_\text{exp}/\sigma^2 \sim\chi^2\left(p\right)\)</span> under the null hypothesis where <span class="math inline">\(\beta_1=\ldots=\beta_p=0\)</span>, and hence any variation in those terms should be pure noise. Lastly, it can be demonstrated that <span class="math inline">\(SS_\text{res}\)</span> and <span class="math inline">\(SS_\text{exp}\)</span> are independent random variables, which intuitively follows from the orthogonality of the fitted values and the errors. Once again, this can be made precise via <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a>.</p>
+<p>The usual test statistic for the hypothesis in <a href="#eq-hypftest" class="quarto-xref">Equation&nbsp;3</a> is <span class="math display">\[
+  \frac{SS_\text{exp}/p}{SS_\text{res}/(n-p-1)} \sim
+  F\left(p,n-p-1\right),
+\]</span> which leads to an <em>F test</em>. If the test statistic is large, then the explained variation is larger than the noise resulting in a small p-value and a rejection of the null hypothesis.</p>
+<section id="f-test-on-chocolate-nobel-data" class="level4">
+<h4 class="anchored" data-anchor-id="f-test-on-chocolate-nobel-data">F test on Chocolate-Nobel data</h4>
+<p>From the final line of the R output from the <code>summary()</code> command, we have a test statistic value of 15.45 with degrees of freedom 1 and 14. This results in a very small p-value of 0.001508.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmDat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nobel ~ choco, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.6876 -1.6504 -0.5288  0.1484 11.3922 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.9910     2.1327  -0.465  0.64932   
+choco         1.3545     0.3446   3.931  0.00151 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.666 on 14 degrees of freedom
+Multiple R-squared:  0.5246,    Adjusted R-squared:  0.4907 
+F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
+</div>
+</div>
+<p>If you were to run the regression in R without the intercept term, which is fixing <span class="math inline">\(\beta_0=0\)</span>, then the result is <span class="math inline">\(\hat{\beta}_1 = 1.22\)</span>, a value for the test statistic for the F test of 44.24, now with degrees of freedom 1 and 15, and an even smaller p-value of <span class="math inline">\(7.7\times10^{-6}\)</span>. Typically, regression models always include an intercept term. However, there are some situations where we wish the enforce that an input of zero returns an output of zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a linear model</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lmDat0 <span class="ot">=</span> <span class="fu">lm</span>( nobel <span class="sc">~</span> choco <span class="sc">-</span> <span class="dv">1</span>, <span class="at">dat=</span>dat );</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of model</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmDat0);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nobel ~ choco - 1, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.4991 -1.7891 -1.3237 -0.1955 10.9910 
+
+Coefficients:
+      Estimate Std. Error t value Pr(&gt;|t|)    
+choco   1.2205     0.1835   6.651 7.73e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.543 on 15 degrees of freedom
+Multiple R-squared:  0.7468,    Adjusted R-squared:  0.7299 
+F-statistic: 44.24 on 1 and 15 DF,  p-value: 7.725e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dat<span class="sc">$</span>choco, dat<span class="sc">$</span>nobel,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"Chocolate Consumption (kg per capita)"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">"Nobel prizes per 10 million"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">las=</span><span class="dv">1</span>,<span class="co">#xlim=c(0,max(dat$choco)+1),</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="fu">max</span>(dat<span class="sc">$</span>nobel))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Label data</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span>dat<span class="sc">$</span>choco, <span class="at">y=</span>dat<span class="sc">$</span>nobel,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels=</span>dat<span class="sc">$</span>abbrev, </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">pos=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">0.7</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># plot regression line</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmDat,<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">1</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmDat0,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a legend</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"with intercept"</span>,<span class="st">"without intercept"</span>),</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt1_ols_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="regression-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="regression-coefficients">Regression coefficients</h3>
+<p>Given that the previous F test results in a significant p-value, the subsequent question is to ask which of the <span class="math inline">\(p\)</span> regressors are significant? Hence, we have the following hypotheses for <span class="math inline">\(j=0,1,\ldots,p\)</span>. <span class="math display">\[
+  H_{0,j}: \beta_j=0 ~~~~~
+  H_{1,j}: \beta_j\ne0.
+\]</span> Each individual <span class="math inline">\(\hat{\beta}_j\sim\mathcal{N}\left(\beta_j,\sigma^2({X}^\mathrm{T}X)^{-1}_{j,j}\right)\)</span> where <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{j,j}\)</span> is the <span class="math inline">\(j\)</span>th entry in the diagonal of <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{j,j}\)</span>.</p>
+<div id="rem-indexing" class="proof remark">
+<p><span class="proof-title"><em>Remark 3</em>. </span>We will index the entries of the matrix from <span class="math inline">\(0,1,\ldots,p\)</span> to conform with the indexing of the <span class="math inline">\(\beta\)</span>’s. Note that this is a <span class="math inline">\((p+1)\times(p+1)\)</span> matrix.</p>
+</div>
+<p>Thus, under the null hypothesis that <span class="math inline">\(\beta_j=0\)</span>, we have that <span class="math display">\[
+  \hat{\beta}_j/\sqrt{ \sigma^2({X}^\mathrm{T}X)^{-1}_{j,j} } \sim\mathcal{N}\left(0,1\right).
+\]</span> However, we cannot perform a z test as <span class="math inline">\(\sigma^2\)</span> is unknown. To rectify this, the unbiased estimator for <span class="math inline">\(\sigma^2\)</span> is used in its place resulting in <span class="math display">\[
+  \frac{\hat{\beta}_j}{\sqrt{ ({X}^\mathrm{T}X)^{-1}_{j,j}SS_\text{res}/(n-p-1) }}
+  \sim t\left(n-p-1\right),
+\]</span> and a t test can be performed. If the value of the test statistic is large, then there may be sufficient evidence to reject the null that <span class="math inline">\(\beta_j=0\)</span>. The denominator is often referred to as the <em>standard error</em>. To simplify future formulae, this will be denoted as <span class="math inline">\(\text{se}(\beta_j)\)</span>.</p>
+<p>It is worth noting that this test looks for significant influence of the <span class="math inline">\(j\)</span>th regressor on the response given all of the other regressors. Hence, it quantifies the marginal as opposed to the absolute effect of that variable on the model. These ideas will be investigated further when discussing variable selection later in this book. However, as a quick word of caution, when <span class="math inline">\(p\)</span> hypothesis tests are performed, the analyst needs to consider <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem" class="external" target="_blank">multiple testing corrections</a>.</p>
+<section id="t-test-on-chocolate-nobel-data" class="level4">
+<h4 class="anchored" data-anchor-id="t-test-on-chocolate-nobel-data">t test on Chocolate-Nobel data</h4>
+<p>The R commands <code>lm()</code> and <code>summary()</code> will return a table of regression coefficients, t test statistics and p-values associated with each coefficient. For the Chocolate-Nobel prize data, the table looks like</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Estimate</th>
+<th>Std. Error</th>
+<th>t value</th>
+<th>Pr(<span class="math inline">\(&gt;\lvert t\rvert\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>-0.9910</td>
+<td>2.1327</td>
+<td>-0.465</td>
+<td>0.64932</td>
+</tr>
+<tr class="even">
+<td>choco</td>
+<td>1.3545</td>
+<td>0.3446</td>
+<td>3.931</td>
+<td>0.00151</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmDat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nobel ~ choco, data = dat)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.6876 -1.6504 -0.5288  0.1484 11.3922 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.9910     2.1327  -0.465  0.64932   
+choco         1.3545     0.3446   3.931  0.00151 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.666 on 14 degrees of freedom
+Multiple R-squared:  0.5246,    Adjusted R-squared:  0.4907 
+F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="partial-f-test" class="level3">
+<h3 class="anchored" data-anchor-id="partial-f-test">Partial F-test</h3>
+<p>In the previous two sections, we first tested as to whether or not there exists at least one <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j=1,\ldots,p\)</span>, that is non-zero. Then, we tested whether or not a specific <span class="math inline">\(\beta_j\)</span> is non-zero. The next logical question is whether or not some collection of <span class="math inline">\(\beta_j\)</span>’s of size strictly between <span class="math inline">\(1\)</span> and <span class="math inline">\(p\)</span> has a non-zero element. That is, for a fixed <span class="math inline">\(q\)</span>, <span id="eq-hypPartftest"><span class="math display">\[
+  H_0: \beta_{p-q+1} = \ldots = \beta_p = 0 ~~~~~~~~
+  H_1: \exists i\ge p-q+1~s.t.~\beta_i\ne0.
+\tag{4}\]</span></span> Here, we are comparing two different models, which are the partial and full models, respectively, <span class="math display">\[
+  Y = \beta_{0:p-q}X+\varepsilon,~~\text{ and }~~Y = \beta_{0:p-q}X+\beta_{p-q+1:p}X+\varepsilon,
+\]</span> and want to know whether the final <span class="math inline">\(q\)</span> regressors add any significant explanation to our model given the other <span class="math inline">\(p-q\)</span>. For the above notation, <span class="math display">\[
+  \beta_{i:j} = {(0,\ldots,0,\beta_i,\beta_{i+1},\ldots,\beta_j,0,\ldots,0)}^\mathrm{T}.
+\]</span></p>
+<p>To run the hypothesis test in <a href="#eq-hypPartftest" class="quarto-xref">Equation&nbsp;4</a>, we would have to compute the least squares estimator in the partial model, <span class="math inline">\(\hat{\beta}_{1:p-q}\)</span>, and the standard least squares estimator in the full model, <span class="math inline">\(\hat{\beta}\)</span>. Then, we will have to compute the additional explained sum of squares gained from adding the <span class="math inline">\(q\)</span> extra regressors to our model, which is <span class="math display">\[
+  SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q}) =
+  SS_\text{exp}(\beta) - SS_\text{exp}(\beta_{1:p-q}),
+\]</span> the explained sum of squares from the full model minus the explained sum of squares from the partial model.</p>
+<p>Similarly to the full F-test from above, we have under the null hypothesis that <span class="math inline">\(SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/\sigma^2 \sim\chi^2\left(q\right).\)</span> Hence, <span class="math display">\[
+  \frac{SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q})/q}{SS_\text{res}/(n-p-1)} \sim
+  F\left(q,n-p-1\right),
+\]</span> so if this test statistic is large, then we have evidence to suggestion that at least one of the additional <span class="math inline">\(q\)</span> regressors adds some explanatory power to our model.</p>
+</section>
+</section>
+<section id="interval-estimators" class="level2">
+<h2 class="anchored" data-anchor-id="interval-estimators">Interval Estimators</h2>
+<section id="confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-intervals">Confidence Intervals</h3>
+<p>Confidence intervals play a complementary role with hypothesis testing. From the development of the above test for an individual <span class="math inline">\({\beta}_j\)</span>, we have that <span class="math display">\[
+  \frac{\hat{\beta}_j-\beta_j}{\text{se}(\beta_j)}
+  \sim t\left(n-p-1\right),
+\]</span> Hence, a <span class="math inline">\(1-\alpha\)</span> confidence interval for the parameter <span class="math inline">\(\beta_j\)</span> is <span class="math display">\[
+  \hat{\beta}_j - t_{\alpha/2,n-p-1}\text{se}(\beta_j)
+  \le \beta \le
+  \hat{\beta}_j + t_{\alpha/2,n-p-1}\text{se}(\beta_j)
+\]</span> where <span class="math inline">\(t_{\alpha/2,n-p-1}\in\mathbb{R}^+\)</span> is such that <span class="math inline">\(\mathrm{P}\left(T \le t_{\alpha/2,n-p-1}\right)=\alpha/2\)</span> when <span class="math inline">\(T\sim t\left(n-p-1\right)\)</span>.</p>
+<p>While the above can be used to produce a confidence interval for each individual parameter, combining these intervals will not result in a <span class="math inline">\(1-\alpha\)</span> confidence set for the entire parameter vector. To construct such a confidence region, a little more care is required. Also, we will construct a confidence set for the entire vector <span class="math inline">\((\beta_0,\beta_1,\ldots,\beta_p)\)</span>, which results in <span class="math inline">\(p+1\)</span> degrees of freedom in what follows. As <span class="math inline">\(\hat{\beta} \sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right)\)</span> we have that <span class="math display">\[
+  \sigma^{-2}{(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)
+  \sim\chi^2\left(p+1\right).
+\]</span> From before, we have that <span class="math inline">\(SS_\text{res}/\sigma^2 \sim\chi^2\left(n-p-1\right)\)</span>. Hence <span class="math display">\[
+  \frac{
+    {(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)/(p+1)
+  }{
+    SS_\text{res}/(n-p-1)
+  } \sim F\left(p+1,n-p-1\right).
+\]</span> Thus, a <span class="math inline">\(1-\alpha\)</span> confidence ellipsoid can be constructed as <span class="math display">\[
+  \frac{
+    {(\hat{\beta}-\beta)}^\mathrm{T}{X}^\mathrm{T}X(\hat{\beta}-\beta)/(p+1)
+  }{
+    SS_\text{res}/(n-p-1)
+  } \le F_{\alpha,p+1,n-p-1}.
+\]</span></p>
+<p>A 95% and a 99% confidence ellipsoid for the Chocolate-Nobel prize data is displayed in the code below. Notice that both ellipses contain <span class="math inline">\(\hat{\beta}_0=0\)</span> which had a t statistic p-value of 0.649. Meanwhile neither contain <span class="math inline">\(\hat{\beta}_1=0\)</span> whose p-value was the very significant 0.0015. The confidence ellipses were plotted with help from the R library <code>ellipse</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellipse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ellipse'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:graphics':
+
+    pairs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ellipse</span>(lmDat,<span class="at">level=</span>.<span class="dv">99</span>),<span class="at">type=</span><span class="st">'l'</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>),<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>,<span class="at">v=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">'darkgray'</span>);</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ellipse</span>(lmDat,<span class="at">level=</span>.<span class="dv">99</span>),<span class="at">type=</span><span class="st">'l'</span>,<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>);</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ellipse</span>(lmDat,<span class="at">level=</span>.<span class="dv">95</span>),<span class="at">type=</span><span class="st">'l'</span>,<span class="at">col=</span><span class="st">'green'</span>,<span class="at">lwd=</span><span class="dv">2</span>);</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topright"</span>,<span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"95% confidence"</span>,<span class="st">"99% confidence"</span>),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"green"</span>,<span class="st">"blue"</span>),<span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt1_ols_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-intervals-for-an-expected-observation" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-intervals-for-an-expected-observation">Prediction Intervals for an expected observation</h3>
+<p>Given the least squares model, the analyst may be interested in estimating the expected value of <span class="math inline">\(Y\)</span> have some specific input <span class="math inline">\(x=(1,x_1,\ldots,x_p)\)</span>. Our new random variable is <span class="math inline">\(\hat{Y}_0 = \hat{\beta}\cdot X\)</span> where <span class="math inline">\(X\)</span> is fixed and <span class="math inline">\(\hat{\beta}\)</span> is random. Of course, the expected value is just <span class="math display">\[
+  \mathrm{E}\left(\hat{Y}_0\middle|X=x\right) = \mathrm{E}{\hat{\beta}}\cdot x
+  = \beta_0 + \sum_{i=1}^p \beta_ix_i.
+\]</span> To find a <span class="math inline">\(1-\alpha\)</span> interval estimate for <span class="math inline">\(\hat{Y}_0\)</span> at <span class="math inline">\(X=x\)</span>, recall once again that <span class="math inline">\(\hat{\beta}\sim\mathcal{N}\left(\beta,\sigma^2({X}^\mathrm{T}X)^{-1}\right)\)</span>. Thus, <span class="math display">\[
+  \hat{Y}_0|(X=x) \sim\mathcal{N}\left(\beta\cdot x,\sigma^2 {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x\right).
+\]</span> Hence, <span class="math display">\[
+  \frac{\hat{\beta}\cdot x - \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)}{
+    \sqrt{ \sigma^2 {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x }
+  }\sim\mathcal{N}\left(0,1\right),
+\]</span> and <span class="math display">\[
+  \frac{\hat{\beta}\cdot x - \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)}{
+    \sqrt{ (SS_\text{res}/(n-p-1)){x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x }
+  }\sim t\left(n-p-1\right),
+\]</span> which results in the following <span class="math inline">\(1-\alpha\)</span> confidence interval: <span class="math display">\[\begin{multline*}
+  \hat{\beta}\cdot x - t_{\alpha/2,n-p-1}\sqrt{
+    \frac{SS_\text{res}}{n-p-1}{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x
+  }
+  \le\\\le \mathrm{E}\left(\hat{Y}_0\middle|X=x\right)=\beta\cdot x \le\\\le
+  \hat{\beta}\cdot x + t_{\alpha/2,n-p-1}\sqrt{
+    \frac{SS_\text{res}}{n-p-1}{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x
+  }.
+\end{multline*}\]</span></p>
+</section>
+<section id="prediction-intervals-for-a-new-observation" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-intervals-for-a-new-observation">Prediction Intervals for a new observation</h3>
+<p>In the previous subsection, we asked for a confidence interval for the expected value of the response given a new vector of regressors, which was a confidence interval for <span class="math inline">\(\mathrm{E}\left(\hat{Y}_0\middle|X=x\right)=\beta\cdot x\)</span> based on <span class="math inline">\(\hat{\beta}\cdot x\)</span>. Now, we want to determine a confidence interval for the future response given a vector of regressors. That is, we want an interval for <span class="math inline">\(Y_0 = \beta\cdot x + \varepsilon_0\sim\mathcal{N}\left(\beta\cdot x,\sigma^2\right)\)</span>, but, as usual, <span class="math inline">\(\beta\)</span> unknown.<br>
+To circumvent this, note that <span class="math display">\[
+  Y_0 - \hat{Y}_0
+  = (\beta\cdot x + \varepsilon_0) - \hat{\beta}\cdot x
+  \sim\mathcal{N}\left(0,\sigma^2( 1 + {x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x )\right),
+\]</span> because the variances of <span class="math inline">\(\varepsilon_0\)</span> and <span class="math inline">\(\hat{\beta}\cdot x\)</span> sum as these are independent random variables. Hence, applying the usual rearrangement of terms and replacement of <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> results in <span class="math display">\[\begin{multline*}
+  \hat{\beta}\cdot x - t_{\alpha/2,n-p-1}\sqrt{
+    \frac{(1+{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x)SS_\text{res}}{n-p-1}
+  }
+  \le Y_0 \le \\ \le
+  \hat{\beta}\cdot x + t_{\alpha/2,n-p-1}\sqrt{
+    \frac{(1+{x}^\mathrm{T}({X}^\mathrm{T}X)^{-1}x)SS_\text{res}}{n-p-1}
+  }.
+\end{multline*}\]</span></p>
+<p>To demonstrate these prediction intervals, we once again consider the Chocolate-Nobel prize data for both the expected mean and for a new observation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dat<span class="sc">$</span>choco, dat<span class="sc">$</span>nobel,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"Chocolate Consumption (kg per capita)"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">"Nobel prizes per 10 million"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">las=</span><span class="dv">1</span>,<span class="co">#xlim=c(0,max(dat$choco)+1),</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="fu">max</span>(dat<span class="sc">$</span>nobel))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Label data</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span>dat<span class="sc">$</span>choco, <span class="at">y=</span>dat<span class="sc">$</span>nobel,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels=</span>dat<span class="sc">$</span>abbrev, </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">pos=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">0.7</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plot regression line</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lmDat,<span class="at">col=</span><span class="st">'blue'</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 95% confidence and prediction intervals</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">13</span>,<span class="fl">0.1</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>prDat  <span class="ot">=</span> <span class="fu">predict</span>(</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  lmDat,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">choco=</span>tt),</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval=</span><span class="st">'confidence'</span>,<span class="at">level=</span><span class="fl">0.95</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>prDat2 <span class="ot">=</span> <span class="fu">predict</span>(</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  lmDat,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">choco=</span>tt),</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval=</span><span class="st">'prediction'</span>,<span class="at">level=</span><span class="fl">0.95</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tt,prDat[,<span class="dv">2</span>],<span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tt,prDat[,<span class="dv">3</span>],<span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tt,prDat2[,<span class="dv">2</span>],<span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(tt,prDat2[,<span class="dv">3</span>],<span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>),<span class="fu">c</span>(<span class="fl">1.5</span>,<span class="dv">14</span>),</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"Expected Observation"</span>,<span class="st">"New Observation"</span>),</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">col=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>),<span class="at">pos=</span><span class="dv">4</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt1_ols_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="indicator-variables-and-anova" class="level2">
+<h2 class="anchored" data-anchor-id="indicator-variables-and-anova">Indicator Variables and ANOVA</h2>
+<section id="indicator-variables" class="level3">
+<h3 class="anchored" data-anchor-id="indicator-variables">Indicator variables</h3>
+<p>Thus far, we have considered models of the form <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 +\ldots+\beta_px_p + \varepsilon
+\]</span> where the regressors <span class="math inline">\(x_1,\ldots,x_p\in\mathbb{R}\)</span> can take on any real value. However, very often in practice, we have regressors that take on categorical values. For example, male vs female, employed vs unemployed, treatment vs placebo, Edmonton vs Calgary, etc. When there is a binary choice as in these examples, we can choose one category to correspond to zero and the other category to correspond to one.</p>
+<p>As an example, consider <span id="eq-indcLinReg"><span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \varepsilon
+\tag{5}\]</span></span> where <span class="math inline">\(x_1\in\mathbb{R}\)</span> and <span class="math inline">\(x_2\in\{0,1\}\)</span>. Then, we effectively have two models: <span class="math display">\[\begin{align*}
+  y &amp;= \beta_0 + \beta_1x_1 + 0 + \varepsilon\\
+  y &amp;= \beta_0 + \beta_1x_1 + \beta_2 + \varepsilon= (\beta_0+\beta_2) + \beta_2x_1 +\varepsilon.
+\end{align*}\]</span> What we have is two models with the same slope <span class="math inline">\(\beta_1\)</span> but with two different intercepts <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_0+\beta_2\)</span>, which are two parallel lines.</p>
+<div id="rem-indcVar" class="proof remark">
+<p><span class="proof-title"><em>Remark 4</em>. </span>A first thought is to merely split the data and train two separate models. However, we want to use the entire dataset at once specifically to estimate the common slope <span class="math inline">\(\beta_1\)</span> with as much accuracy as possible.</p>
+</div>
+<p>While the range of the regressors has changed, we will fit the least squares estimate to the model precisely as before. Now, considering the model in <a href="#eq-indcLinReg" class="quarto-xref">Equation&nbsp;5</a>, assume that we have <span class="math inline">\(m\)</span> samples with <span class="math inline">\(x_2=0\)</span> and <span class="math inline">\(n\)</span> samples with <span class="math inline">\(x_2=1\)</span>. Our design matrix takes on a new form: <span class="math display">\[
+  Y =
+  \begin{pmatrix}
+    Y_1 \\ \vdots \\ Y_m \\ Y_{m+1} \\ \vdots \\ Y_{m+n}
+  \end{pmatrix},~~~~
+  X =
+  \begin{pmatrix}
+    1 &amp; x_{1} &amp; 0 \\
+    \vdots &amp; \vdots &amp; \vdots \\
+    1 &amp; x_{m} &amp; 0 \\
+    1 &amp; x_{m+1} &amp; 1 \\
+    \vdots &amp; \vdots &amp; \vdots \\
+    1 &amp; x_{m+n} &amp; 1 \\
+  \end{pmatrix},~~~~
+  \beta =
+  \begin{pmatrix}
+    \beta_0 \\ \beta_1 \\ \beta_2
+  \end{pmatrix},~~~~
+  \varepsilon=
+  \begin{pmatrix}
+    \varepsilon_1 \\ \vdots \\ \varepsilon_{m+n}
+  \end{pmatrix}.
+\]</span> However, the least squares estimate is computed as before as <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span>. Furthermore, we can perform hypothesis tests on the fitted model such as <span class="math display">\[
+  H_0: \beta_2=0~~~~H_1:\beta_2\ne0,
+\]</span> which is equivalently asking whether or not the regression lines have the same intercept.</p>
+<p>Models can be expanded to include multiple indicator variables as long as the matrix <span class="math inline">\({X}^\mathrm{T}X\)</span> is still invertible. For example, let’s suppose we want to look at wages in Alberta with respect to age but partitioned for male vs female and for Edmonton vs Calgary. Then, the model would look like <span class="math display">\[
+  (\text{wage}) = \beta_0 + \beta_1(\text{age}) +
+  \beta_2(\text{Is male?}) + \beta_3(\text{Is from Edmonton?}).
+\]</span> In the silly case that our data only consisted of men from Calgary and women from Edmonton, then the final regressor is redundant and <span class="math inline">\({X}^\mathrm{T}X\)</span> will not be invertible. While this extreme case should not occur, it is possible to have an imbalance in the categories, which we will discuss later.</p>
+</section>
+<section id="anova" class="level3">
+<h3 class="anchored" data-anchor-id="anova">ANOVA</h3>
+<p>ANOVA, or the Analysis of Variance, is a slightly overloaded term in statistics. We already considered ANOVA tables when comparing nested models in the hypothesis tests. However, ANOVA can also be used in the setting of the so-called <a href="https://en.wikipedia.org/wiki/One-way_analysis_of_variance" class="external" target="_blank">One-Way Analysis of Variance</a>. In this case, we want to compare <span class="math inline">\(k\)</span> samples for equality of the means. For example, we take height measurements from randomly selected citizens from different countries and ask whether or not there is significant evidence to reject the claim that all nations have roughly the same height distribution.</p>
+<p>The reason for discussing ANOVA in these notes is that it can be written in a linear regression context as follows. Imagine that we have <span class="math inline">\(k\)</span> different groups of observations with sample sizes <span class="math inline">\(n_j\)</span>, <span class="math inline">\(j=1,\ldots,k\)</span> for each group. Let <span class="math inline">\(y_{i,j}\)</span> be the <span class="math inline">\(i\)</span>th observation from the <span class="math inline">\(j\)</span>th group where <span class="math inline">\(i\in\{1,\ldots,n_j\}\)</span> and <span class="math inline">\(j\in\{1,\ldots,k\}\)</span>. The model is <span class="math display">\[
+  y_{i,j} = \mu_j + \varepsilon_{i,j},
+\]</span> which is each observation is just some group mean, <span class="math inline">\(\mu_j\)</span>, with the addition of random noise.</p>
+<p>From here, one can show that the fitted values as just <span class="math inline">\(\hat{y}_{i,j} = n_{j}^{-1}\sum_{l=1}^{n_j} y_{l,j}\)</span>, which is the <span class="math inline">\(j\)</span>th sample mean. Then, an F-test can be performed similar to what we did above with F tests to test <span class="math display">\[
+  H_0: \mu_1=\ldots=\mu_k~~~
+  H_1: \exists j_1\ne j_2~s.t.~\mu_{j_1}\ne\mu_{j_2}.
+\]</span></p>
+<p>To reformulate the model to align with our F-test from before, we rewrite it as a linear regression with indicator variables for the regressors <span class="math display">\[
+  y = \beta_0 + \beta_1x_1 + \ldots + \beta_{k-1}x_{k-1} + \varepsilon_{i,j}
+\]</span> with <span class="math inline">\(\beta_0 = \mu_k\)</span> and <span class="math inline">\(\beta_j={\mu_j-\mu_k}\)</span> for <span class="math inline">\(j=1,\ldots,k-1\)</span>. Then, we can test for whether or not there exists at least one <span class="math inline">\(\beta_j\ne0\)</span> for <span class="math inline">\(j=1,\ldots,k-1\)</span>. Here, the degrees of freedom for the explained sum of squares is <span class="math inline">\(k-1\)</span> and the degrees of freedom for the residual sum of squares is <span class="math inline">\(N - (k-1) -1 = N-k\)</span> with <span class="math inline">\(N = \sum_{j=1}^k n_j\)</span>.<br>
+If all of the <span class="math inline">\(n_j\)</span> are equal, this reduces to <span class="math inline">\(k(n-1)\)</span>.</p>
+<p>In this case, the vector <span class="math inline">\(Y\)</span> and the design matrix <span class="math inline">\(X\)</span> will take on the form <span class="math display">\[
+  Y = \begin{pmatrix}
+    y_{1,1} \\ y_{2,1} \\ \vdots \\ y_{n_1,1} \\ y_{1,2} \\ \vdots \\
+    y_{n_k,k}
+  \end{pmatrix},~~
+  X = \begin{pmatrix}
+    1 &amp; 1  &amp; 0 &amp; \dots &amp; 0  \\
+    1 &amp; 1  &amp; 0 &amp; \dots &amp; 0  \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1 &amp; 1  &amp; 0 &amp; \dots &amp; 0  \\
+    1 &amp; 0  &amp; 1 &amp; \dots &amp; 0  \\
+    1 &amp; 0  &amp; 1 &amp; \dots &amp; 0  \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1 &amp; 0  &amp; 0 &amp; \dots &amp; 1  \\
+    1 &amp; 0  &amp; 0 &amp; \dots &amp; 1  \\
+    1 &amp; 0  &amp; 0 &amp; \dots &amp; 0  \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    1 &amp; 0  &amp; 0 &amp; \dots &amp; 0  \\
+    1 &amp; 0  &amp; 0 &amp; \dots &amp; 0
+  \end{pmatrix}.
+\]</span></p>
+</section>
+</section>
+<section id="data-example-exam-grades" class="level2">
+<h2 class="anchored" data-anchor-id="data-example-exam-grades">Data Example: Exam Grades</h2>
+<p>To illustrate the topics discussed in this chapter, we will consider a dataset of course grades for a linear regression class. This dataset consists of <span class="math inline">\(n=56\)</span> undergraduate students who are either in their 3rd year (22 students) or 4th year (33 students) of university studies. The year of study acts as a binary variable as discussed in the previous section. This dataset also has columns corresponding to the students overall mark on written homework assignments, online coding assignments, the midterm exam, and the final exam. In what follows, we will see what variables if any can be used to predict the final exam grade and, furthermore, if there is a difference between the final exam grades for the 3rd year and 4th year students.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in Data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>exams <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/statGrades.csv"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tell R that "year" is a categorical variable</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>exams<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(exams<span class="sc">$</span>year)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      year written    online  midterm   final
+1 4th Year  80.668  83.84127 70.00000 56.4948
+2 3rd Year  96.668 100.00000 50.00000 54.0000
+3 4th Year  90.000  93.73737 50.00000 43.5024
+4 3rd Year  98.000  98.57143 56.66667 62.9964
+5 3rd Year  46.000  48.72727 50.00000 43.5024
+6 4th Year  75.334  96.34921 93.33333 81.0000</code></pre>
+</div>
+</div>
+<p>When comparing two independent groups, we can use the classic two sample t test using <code>t.test()</code> in R. The default is to assume that the variances between the two groups are not equal, which is the so-called Welch’s t-test. Otherwise, we can tell the function to treat the variances as equal by setting <code>var.equal=T</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  final by year
+t = -0.42107, df = 43.775, p-value = 0.6758
+alternative hypothesis: true difference in means between group 3rd Year and group 4th Year is not equal to 0
+95 percent confidence interval:
+ -11.709616   7.662733
+sample estimates:
+mean in group 3rd Year mean in group 4th Year 
+              65.67292               67.69636 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal=</span>T</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  final by year
+t = -0.43015, df = 54, p-value = 0.6688
+alternative hypothesis: true difference in means between group 3rd Year and group 4th Year is not equal to 0
+95 percent confidence interval:
+ -11.454430   7.407547
+sample estimates:
+mean in group 3rd Year mean in group 4th Year 
+              65.67292               67.69636 </code></pre>
+</div>
+</div>
+<p>We can also view a two sample t test as a linear regression of the response variable (final exam grade) on the dummy variable (student year). The regression equation becomes <span class="math display">\[
+  (\text{final exam grade}) = \beta_0 + \beta_1(\text{student year}) + \varepsilon
+\]</span> What we can see from the output below is that this model is equivalent to the two sample t test assuming equal (homogeneous) variances among the two samples. In the end, there is no noticable difference between the performance of 3rd and 4th year students.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A two-sample test</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>md.year <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = final ~ year, data = exams)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-31.700 -14.444   1.318  12.550  36.322 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    65.673      3.611   18.19   &lt;2e-16 ***
+year4th Year    2.023      4.704    0.43    0.669    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 17.32 on 54 degrees of freedom
+Multiple R-squared:  0.003415,  Adjusted R-squared:  -0.01504 
+F-statistic: 0.185 on 1 and 54 DF,  p-value: 0.6688</code></pre>
+</div>
+</div>
+<p>However, the <code>lm()</code> function allows us to fit more complex models than just a two sample comparison. Here, we use the students performance on the written homework, the online coding homework, and the midterm exam as predictors of performance on the final exam. The result below is that the midterm mark is a strongly significant predictor of the final exam mark with an estimated coefficient of 0.953 and that the written assignment mark is a weak but possibly still relevant predictor of the final exam mark.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Linear Model</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>md.exams <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year<span class="sc">+</span>written<span class="sc">+</span>online<span class="sc">+</span>midterm,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.exams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = final ~ year + written + online + midterm, data = exams)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-20.2987  -7.0874  -0.8767   6.4742  31.3874 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -14.3982    12.6807  -1.135   0.2615    
+year4th Year   1.5523     3.0561   0.508   0.6137    
+written        0.3707     0.1962   1.889   0.0646 .  
+online        -0.2024     0.2143  -0.944   0.3494    
+midterm        0.9527     0.1113   8.558 1.97e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.24 on 51 degrees of freedom
+Multiple R-squared:  0.6032,    Adjusted R-squared:  0.5721 
+F-statistic: 19.39 on 4 and 51 DF,  p-value: 9.478e-10</code></pre>
+</div>
+</div>
+<p>We can also consider the simpler regression model that only takes the midterm mark into account as a predictor variable. The fitted model has a slope parameter of 0.938 and an intercept not significantly different from zero. This indicates that the student’s final exam mark was on average <span class="math inline">\(0.938\times(\text{midterm mark})\)</span>, or simply that students had slightly lower grades on average on the final exam compared to the midterm exam. The cyan coloured region indicates those who had a higher midterm mark than final exam mark.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>md.exams0 <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> midterm,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.exams0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = final ~ midterm, data = exams)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-16.758  -8.683  -2.942   7.620  31.621 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   0.8376     8.1986   0.102    0.919    
+midterm       0.9381     0.1144   8.201 4.68e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.58 on 54 degrees of freedom
+Multiple R-squared:  0.5547,    Adjusted R-squared:  0.5464 
+F-statistic: 67.25 on 1 and 54 DF,  p-value: 4.684e-11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  exams<span class="sc">$</span>midterm,exams<span class="sc">$</span>final,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"midterm mark"</span>,<span class="at">ylab=</span><span class="st">"final mark"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>,<span class="dv">200</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>,<span class="dv">0</span>),<span class="at">col =</span> <span class="st">'lightcyan'</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">border =</span> <span class="cn">NA</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">200</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>,<span class="dv">200</span>),<span class="at">col =</span> <span class="st">'white'</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">border =</span> <span class="cn">NA</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(md.exams0,<span class="at">col=</span><span class="st">'red'</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(exams<span class="sc">$</span>midterm,exams<span class="sc">$</span>final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt1_ols_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can now imagine a hypothetical student in their 4th year who got a 95% on the written assignemnts, 85% on the online assignemnts, and an 83% on the midterm exam. Using the <code>predict()</code> function in R, we get an expected final exam grade of 84.24%. Going further, a 95% prediction interval for a new value gives a very wide range from 60.3% to 108.17%. This is where the model believes the final exam grade will lie for our hypothetical student.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  md.exams,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata=</span><span class="fu">data.frame</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">year=</span><span class="st">"4th Year"</span>,<span class="at">written=</span><span class="dv">95</span>,<span class="at">online=</span><span class="dv">85</span>,<span class="at">midterm=</span><span class="dv">83</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">interval=</span><span class="st">"prediction"</span>,<span class="at">level=</span><span class="fl">0.95</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 84.24118 60.30866 108.1737</code></pre>
+</div>
+</div>
+<p>We can use the <code>anova()</code> function to compare nested models, which will perform a partial F-test. In this example, we can compare the model that only includes the <code>year</code> variable to a model that contains model <code>year</code> and <code>midterm</code> to a model that contains all four predictor variables.</p>
+<p>In the ANOVA table below, we have that comparing model 1 to model 2 results is a very significant p-value indicating that including <code>midterm</code> as a predictor results in a large decrease in the residual sum of squares (column 2 in the table below). Secondly, we compare model 2 to model 3 and get a weak but possibly significant p-value of 0.0597. This gives some weak evidence that including <code>written</code> and <code>online</code> assignment marks may further improve the fit of the model.</p>
+<p>Note that the degrees of freedom for the partial F-tests performed can be found in columns 1 and 3 in the ANOVA table. These are the degrees of freedom for the residual sum of sequares (column 1) and the explained sum of squares (column 3).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>md.exams1 <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year<span class="sc">+</span>midterm,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.year,md.exams1,md.exams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: final ~ year
+Model 2: final ~ year + midterm
+Model 3: final ~ year + written + online + midterm
+  Res.Df     RSS Df Sum of Sq       F    Pr(&gt;F)    
+1     54 16195.2                                   
+2     53  7200.8  1    8994.4 71.1454 3.058e-11 ***
+3     51  6447.5  2     753.3  2.9792   0.05974 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>If we incorrectly try to compare non-nested models, we get erroneous results in our ANOVA table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>md.exams2 <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  final <span class="sc">~</span> year<span class="sc">+</span>written<span class="sc">+</span>online,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exams</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.exams1,md.exams2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: final ~ year + midterm
+Model 2: final ~ year + written + online
+  Res.Df     RSS Df Sum of Sq F Pr(&gt;F)
+1     53  7200.8                      
+2     52 15706.6  1   -8505.8         </code></pre>
+</div>
+</div>
+<p>The general equation for a linear regression is <span class="math inline">\(Y=X\beta+\varepsilon\)</span>. To recover the design matrix <span class="math inline">\(X\)</span>, we can use the function <code>model.matrix()</code> in R.<br>
+Notice that the column corresponding to <code>year</code> is now encoded as a binary variable with a 1 indicating 4th year and a 0 indicating 3rd year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(md.exams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   (Intercept) year4th Year   written    online   midterm
+1            1            1  80.66800  83.84127  70.00000
+2            1            0  96.66800 100.00000  50.00000
+3            1            1  90.00000  93.73737  50.00000
+4            1            0  98.00000  98.57143  56.66667
+5            1            0  46.00000  48.72727  50.00000
+6            1            1  75.33400  96.34921  93.33333
+7            1            0  82.66600  89.77778 100.00000
+8            1            0  80.33400  96.34921  60.00000
+9            1            0  96.66600  96.34921  56.66667
+10           1            0  82.66600  87.46609  70.00000
+11           1            1  72.66667 100.00000  56.66667
+12           1            0  95.33600  98.57143  63.33333
+13           1            1  98.00000 100.00000  93.33333
+14           1            0  92.00000 100.00000  88.33333
+15           1            1  63.33200  74.66667  63.33333
+16           1            1  98.00200  98.57143  76.66667
+17           1            1  86.00000  85.73737  60.00000
+18           1            1 100.00000  97.77778  73.33333
+19           1            1  96.66600  98.57143  60.00000
+20           1            1 100.00000  93.10245  81.66667
+21           1            1  97.33400  98.57143  46.66667
+22           1            0  98.66600 100.00000  98.33333
+23           1            1  96.00000 100.00000  80.00000
+24           1            1  95.33400  97.77778  60.00000
+25           1            0  85.33400  94.53102  66.66667
+26           1            1  77.33267  93.10245  81.66667
+27           1            1  94.00000  97.14286  87.96667
+28           1            1  96.00000 100.00000  70.00000
+29           1            1  86.66600  93.14286  73.33333
+30           1            1  82.66400  88.92064  70.00000
+31           1            0  85.33400  91.55556  83.33333
+32           1            0  86.66533  94.34921  96.66667
+33           1            1  99.33400 100.00000  63.33333
+34           1            0  91.33400  95.95960  70.00000
+35           1            0  75.33400  93.73737  76.66667
+36           1            0  76.66600  87.06205  80.00000
+37           1            1  60.62733  92.69841  71.66667
+38           1            1  85.33400  92.34921  66.66667
+39           1            1  74.66800  79.79221  60.00000
+40           1            1  92.00000  98.00000  78.70000
+41           1            1  70.66400  88.34921  56.66667
+42           1            1  93.33400 100.00000  71.66667
+43           1            0  98.66800  85.44012  63.33333
+44           1            1  97.33400 100.00000  56.66667
+45           1            0  71.99800  93.77778  63.33333
+46           1            1  96.66600  95.77778  61.66667
+47           1            1  98.66600 100.00000  90.00000
+48           1            1   0.00000   0.00000  93.33333
+49           1            1  99.33400 100.00000  66.66667
+50           1            0  97.33400  98.57143  60.00000
+51           1            1  95.33400 100.00000  76.66667
+52           1            0  94.66733 100.00000  70.00000
+53           1            0  93.33200  98.57143  63.33333
+54           1            0  87.33200  95.77778  80.00000
+55           1            1  93.33400  96.00000  66.66667
+56           1            0  70.00000  81.77778  46.66667
+attr(,"assign")
+[1] 0 1 2 3 4
+attr(,"contrasts")
+attr(,"contrasts")$year
+[1] "contr.treatment"</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Messerli, F. H. (2012). Chocolate consumption, cognitive function, and Nobel laureates. New England Journal of Medicine, 367(16), 1562-1564.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
