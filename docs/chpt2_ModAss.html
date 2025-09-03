@@ -259,15 +259,18 @@ window.Quarto = {
 </header>
 
 
+<div class="hidden">
+
+</div>
 <section id="introduction" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
 <p>Thus far, we have considered linear regression given some key assumptions. Namely, for models of the form <span class="math display">\[
-  y = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \veps
-\]</span> we assume that the noise or errors <span class="math inline">\(\veps\)</span> have zero mean, constant finite variance, and are uncorrelated. Furthermore, in order to perform hypothesis tests–F test, t test, partial F-tests–and to construct confidence and prediction intervals as we did in the previous chapter, we further assumes that <span class="math inline">\(\veps\)</span> has a normal distribution.</p>
+  y = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \varepsilon
+\]</span> we assume that the noise or errors <span class="math inline">\(\varepsilon\)</span> have zero mean, constant finite variance, and are uncorrelated. Furthermore, in order to perform hypothesis tests–F test, t test, partial F-tests–and to construct confidence and prediction intervals as we did in the previous chapter, we further assumes that <span class="math inline">\(\varepsilon\)</span> has a normal distribution.</p>
 <p>In this chapter, we will consider deviations from these assumptions, which will lead to questions such as</p>
 <ol type="1">
-<li><p>What happens if the variance of <span class="math inline">\(\veps\)</span> is not constant?</p></li>
-<li><p>What happens if <span class="math inline">\(\veps\)</span> has heavier tails than those of a normal distribution?</p></li>
+<li><p>What happens if the variance of <span class="math inline">\(\varepsilon\)</span> is not constant?</p></li>
+<li><p>What happens if <span class="math inline">\(\varepsilon\)</span> has heavier tails than those of a normal distribution?</p></li>
 <li><p>What effect can outliers have on our model?</p></li>
 <li><p>How can we transform our data to correct for some of these deviations?</p></li>
 <li><p>What happens if the true model is not linear?</p></li>
@@ -275,15 +278,15 @@ window.Quarto = {
 </section>
 <section id="plotting-residuals" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="plotting-residuals"><span class="header-section-number">2.2</span> Plotting Residuals</h2>
-<p>In the last chapter, we constructed the residuals as follows. Assume we have a sample of <span class="math inline">\(n\)</span> observations <span class="math inline">\((Y_i,X_i)\)</span> where <span class="math inline">\(Y_i\in\real\)</span> and <span class="math inline">\(X_i\in\real^p\)</span> with <span class="math inline">\(p\)</span> being the number of regressors and <span class="math inline">\(p&lt;n\)</span>. The model, as before, is <span class="math display">\[
-  Y = X\beta + \veps
-\]</span> where <span class="math inline">\(Y\in\real^n\)</span>, <span class="math inline">\(X\in\real^{n\times (p+1)}\)</span>, <span class="math inline">\(\beta\in\real^{p+1}\)</span>, and <span class="math inline">\(\veps\in\real^n\)</span>. The least squares estimator is <span class="math inline">\(\hat{\beta} = (\TT{X}X)^{-1}\TT{X}Y\)</span> and the vector of residuals is thus <span class="math display">\[
-  r = (I-P)Y = (I-X(\TT{X}X)^{-1}\TT{X})Y.
+<p>In the last chapter, we constructed the residuals as follows. Assume we have a sample of <span class="math inline">\(n\)</span> observations <span class="math inline">\((Y_i,X_i)\)</span> where <span class="math inline">\(Y_i\in\mathbb{R}\)</span> and <span class="math inline">\(X_i\in\mathbb{R}^p\)</span> with <span class="math inline">\(p\)</span> being the number of regressors and <span class="math inline">\(p&lt;n\)</span>. The model, as before, is <span class="math display">\[
+  Y = X\beta + \varepsilon
+\]</span> where <span class="math inline">\(Y\in\mathbb{R}^n\)</span>, <span class="math inline">\(X\in\mathbb{R}^{n\times (p+1)}\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(\varepsilon\in\mathbb{R}^n\)</span>. The least squares estimator is <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> and the vector of residuals is thus <span class="math display">\[
+  r = (I-P)Y = (I-X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y.
 \]</span></p>
-<p>We can use the residuals to look for problems in our data with respect to deviations from the assumptions. But first, they should be normalized in some way. As we know from the previous chapter, the covariance of the residuals is <span class="math inline">\((I-P)\sigma^2\)</span> and that <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> is an unbiased estimator for the unknown variance <span class="math inline">\(\sigma^2\)</span>. This implies that while the errors <span class="math inline">\(\veps_i\)</span> are assumed to be uncorrelated, the residuals are, in fact, correlated. Explicitly, <span class="math display">\[
-  \var{r_i} = (1 - P_{i,i})\sigma^2,
+<p>We can use the residuals to look for problems in our data with respect to deviations from the assumptions. But first, they should be normalized in some way. As we know from the previous chapter, the covariance of the residuals is <span class="math inline">\((I-P)\sigma^2\)</span> and that <span class="math inline">\(SS_\text{res}/(n-p-1)\)</span> is an unbiased estimator for the unknown variance <span class="math inline">\(\sigma^2\)</span>. This implies that while the errors <span class="math inline">\(\varepsilon_i\)</span> are assumed to be uncorrelated, the residuals are, in fact, correlated. Explicitly, <span class="math display">\[
+  \mathrm{Var}\left(r_i\right) = (1 - P_{i,i})\sigma^2,
   \text{ and }
-  \cov{r_i}{r_j} = -P_{i,j}\sigma^2
+  \mathrm{cov}\left(r_i,r_j\right) = -P_{i,j}\sigma^2
   \text{ for } i\ne j
 \]</span> where <span class="math inline">\(P_{i,j}\)</span> is the <span class="math inline">\((i,j)\)</span>th entry of the matrix <span class="math inline">\(P\)</span>.<br>
 Hence, a standard normalization technique is to write <span class="math display">\[
@@ -357,8 +360,8 @@ F-statistic: 169.7 on 1 and 49 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="residuals-vs-fitted-values" class="level4" data-number="2.2.1.2">
 <h4 data-number="2.2.1.2" class="anchored" data-anchor-id="residuals-vs-fitted-values"><span class="header-section-number">2.2.1.2</span> Residuals vs Fitted Values</h4>
-<p>The residuals and the fitted values as necessarily uncorrelated. That is, <span class="math inline">\(\cov{r}{\hat{Y}}=0\)</span>. However, if <span class="math inline">\(\veps\)</span> is not normally distributed, then they may not be independent. Plotting the fitted values against the residuals can give useful diagnostic information about your data.</p>
-<p>The code below gives four examples of plots of the residuals against the fitted values. The first plot in the top left came from a simple linear regression model where all of the standard assumptions are met. The second plot in the top right came from a simple linear regression but with errors <span class="math inline">\(\veps_i \dist\distNormal{0}{\sigma^2_i}\)</span> where <span class="math inline">\(\sigma_i^2\)</span> was increasing in <span class="math inline">\(i\)</span>. Hence, the plot has an expanding look to it. The third plot in the bottom left came from a simple linear regression with the addition of a quadratic term. Fitting a model without the quadratic term still yielded significant test statistics, but failed to account for the nonlinear interaction between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The final plot in the bottom right came from a simple linear regression where the errors were correlated. Specifically, <span class="math inline">\(\cov{\veps_i}{\veps_j} = \min\{x_i,x_j\}\)</span>.</p>
+<p>The residuals and the fitted values as necessarily uncorrelated. That is, <span class="math inline">\(\mathrm{cov}\left(r,\hat{Y}\right)=0\)</span>. However, if <span class="math inline">\(\varepsilon\)</span> is not normally distributed, then they may not be independent. Plotting the fitted values against the residuals can give useful diagnostic information about your data.</p>
+<p>The code below gives four examples of plots of the residuals against the fitted values. The first plot in the top left came from a simple linear regression model where all of the standard assumptions are met. The second plot in the top right came from a simple linear regression but with errors <span class="math inline">\(\varepsilon_i \sim\mathcal{N}\left(0,\sigma^2_i\right)\)</span> where <span class="math inline">\(\sigma_i^2\)</span> was increasing in <span class="math inline">\(i\)</span>. Hence, the plot has an expanding look to it. The third plot in the bottom left came from a simple linear regression with the addition of a quadratic term. Fitting a model without the quadratic term still yielded significant test statistics, but failed to account for the nonlinear interaction between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. The final plot in the bottom right came from a simple linear regression where the errors were correlated. Specifically, <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = \min\{x_i,x_j\}\)</span>.</p>
 <blockquote class="blockquote">
 <p>Fun fact: This is actually the covariance of Brownian motion.</p>
 </blockquote>
@@ -429,7 +432,7 @@ F-statistic: 169.7 on 1 and 49 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h4 data-number="2.2.1.3" class="anchored" data-anchor-id="normal-q-q-plots"><span class="header-section-number">2.2.1.3</span> Normal Q-Q plots</h4>
 <p>Another type of plot that can offer insight into your data is the so-called Normal Q-Q plot. This tool plots the studentized residuals against the <em>quantiles</em> of a standard normal distribution.</p>
 <div id="def-quantile" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.1</strong></span> The quantile function is the inverse of the cumulative distribution function. That is, in the case of the normal distribution, let <span class="math inline">\(Z\dist\distNormal{0}{1}\)</span>. Then the CDF is <span class="math inline">\(\Phi(z) = \prob{ Z&lt; z } \in(0,1)\)</span> for <span class="math inline">\(z\in\real\)</span>. The quantile function is <span class="math inline">\(\Phi^{-1}(t)\in[-\infty,\infty]\)</span> for <span class="math inline">\(t\in[0,1]\)</span>. For more details, see <a href="https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot">QQ Plot</a></p>
+<p><span class="theorem-title"><strong>Definition 2.1</strong></span> The quantile function is the inverse of the cumulative distribution function. That is, in the case of the normal distribution, let <span class="math inline">\(Z\sim\mathcal{N}\left(0,1\right)\)</span>. Then the CDF is <span class="math inline">\(\Phi(z) = \mathrm{P}\left( Z&lt; z \right) \in(0,1)\)</span> for <span class="math inline">\(z\in\mathbb{R}\)</span>. The quantile function is <span class="math inline">\(\Phi^{-1}(t)\in[-\infty,\infty]\)</span> for <span class="math inline">\(t\in[0,1]\)</span>. For more details, see <a href="https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot">QQ Plot</a></p>
 </div>
 <p>For a normal Q-Q plot, let <span class="math inline">\(s_1,\ldots,s_n\)</span> be the <strong>ordered</strong> studentized residuals, so that <span class="math inline">\(s_1\le\ldots\le s_n\)</span>. The theoretical quantiles are denoted <span class="math inline">\(q_1,\ldots,q_n\)</span> where <span class="math inline">\(q_i = \Phi^{-1}( i/(n+1) )\)</span>. In <code>R</code>, a slightly different formula is used. The figures below compare various normal Q-Q plots. In the first, the errors are normally distributed and the ordered residuals roughly follow the red line. In the second, the heteroskedastic errors cause the black points to deviate from the red line. This is also seen in the third plot, which fits a linear model to quadratic data. The fourth plot considers correlated errors and the QQ-plot has black points very close to the red line.</p>
 <div id="rem-interpret" class="proof remark">
@@ -641,17 +644,17 @@ beers  0.2488772 0.02937367 1.00000000</code></pre>
 <p>Often, data does not follow all of the assumptions of the ordinary least squares regression model. However, it is often possible to transform data in order to correct for this deviations. We will consider such methods in the following subsections. One dissatisfying remark about such methods is that they often are applied <em>empirically</em>, which less euphemistically means in an add-hoc way. Sometimes there may be genuine information suggesting certain methods for transforming data. Other times, transforms are chosen because they seem to work.</p>
 <section id="variance-stabilizing" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="variance-stabilizing"><span class="header-section-number">2.3.1</span> Variance Stabilizing</h3>
-<p>One of the major requirements of the least squares model is that the variance of the errors is constant, which is that <span class="math inline">\(\var{y_i} = \var{\veps_i} = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>. Mainly, when <span class="math inline">\(\sigma^2\)</span> is non-constant in <span class="math inline">\(y\)</span>, problems can occur. Our goal is thus to find some transformation <span class="math inline">\(T(y)\)</span> so that <span class="math inline">\(\var{T(y_i)}\)</span> is constant for all <span class="math inline">\(i=1,\ldots,n\)</span>.</p>
+<p>One of the major requirements of the least squares model is that the variance of the errors is constant, which is that <span class="math inline">\(\mathrm{Var}\left(y_i\right) = \mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>. Mainly, when <span class="math inline">\(\sigma^2\)</span> is non-constant in <span class="math inline">\(y\)</span>, problems can occur. Our goal is thus to find some transformation <span class="math inline">\(T(y)\)</span> so that <span class="math inline">\(\mathrm{Var}\left(T(y_i)\right)\)</span> is constant for all <span class="math inline">\(i=1,\ldots,n\)</span>.</p>
 <p>Such a transformation <span class="math inline">\(T(\cdot)\)</span> can be determined through a tool known as the <em>delta method</em>, which is beyond the scope of these notes.<br>
-See Chapter 3, Asymptotic Statistics, A W van der Vaart or <a href="https://en.wikipedia.org/wiki/Delta_method">Delta Method</a> for more. However, we will consider a simplified version for our purposes. For simplicity of notation, we write <span class="math inline">\(\xv Y = \mu\)</span> instead of <span class="math inline">\(\xv Y = \beta_0 + \beta_1x_1 + \ldots + \beta_p x_p\)</span>. Furthermore, assume that <span class="math inline">\(T\)</span> is twice differentiable. Note that we only require the second derivative for a more pleasant exposition. Then, Taylor’s theorem says that <span class="math display">\[
+See Chapter 3, Asymptotic Statistics, A W van der Vaart or <a href="https://en.wikipedia.org/wiki/Delta_method">Delta Method</a> for more. However, we will consider a simplified version for our purposes. For simplicity of notation, we write <span class="math inline">\(\mathrm{E}Y = \mu\)</span> instead of <span class="math inline">\(\mathrm{E}Y = \beta_0 + \beta_1x_1 + \ldots + \beta_p x_p\)</span>. Furthermore, assume that <span class="math inline">\(T\)</span> is twice differentiable. Note that we only require the second derivative for a more pleasant exposition. Then, Taylor’s theorem says that <span class="math display">\[
   T(Y) = T(\mu) + T'(\mu)(Y-\mu) + \frac{T''(\xi)}{2}(Y-\mu)^2
 \]</span> for some <span class="math inline">\(\xi\)</span> between <span class="math inline">\(Y\)</span> and <span class="math inline">\(\mu\)</span>. We can, with a little hand-waving, ignore the higher order remainder term and just write <span class="math display">\[
   T(Y) \approx T(\mu) + T'(\mu)(Y-\mu),
 \]</span> which implies that <span class="math display">\[
-  \xv T(Y) \approx T(\mu)
+  \mathrm{E}T(Y) \approx T(\mu)
   ~~\text{ and }~~
-  \var{T(Y)} \approx T'(\mu)^2\var{Y}.
-\]</span> We want a transformation such that <span class="math inline">\(\var{T(Y)} = 1\)</span> is constant. Meanwhile, we assume that the variance of <span class="math inline">\(Y\)</span> is a function of the mean <span class="math inline">\(\mu\)</span>, which is <span class="math inline">\(\var{Y} = s(\mu)^2\)</span>. Hence, we need to solve <span class="math display">\[
+  \mathrm{Var}\left(T(Y)\right) \approx T'(\mu)^2\mathrm{Var}\left(Y\right).
+\]</span> We want a transformation such that <span class="math inline">\(\mathrm{Var}\left(T(Y)\right) = 1\)</span> is constant. Meanwhile, we assume that the variance of <span class="math inline">\(Y\)</span> is a function of the mean <span class="math inline">\(\mu\)</span>, which is <span class="math inline">\(\mathrm{Var}\left(Y\right) = s(\mu)^2\)</span>. Hence, we need to solve <span class="math display">\[
   1 = T'(\mu)^2 s(\mu)^2
   ~~\text{ or }~~
   T(\mu) = \int \frac{1}{s(\mu)}d\mu.
@@ -668,83 +671,83 @@ See Chapter 3, Asymptotic Statistics, A W van der Vaart or <a href="https://en.w
   \]</span> This is the square root transformation, which is applied to, for example, Poisson data. The coefficient of 2 in the above derivation can be dropped as we are not concerned with the scaling.</p>
 </div>
 <p>Given that we have found a suitable transform, we can then apply it to the data <span class="math inline">\(y_1,\ldots,y_n\)</span> to get a model of the form <span class="math display">\[
-  T(y) = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \veps
-\]</span> where the variance of <span class="math inline">\(\veps\)</span> is constant–i.e not a function of the regressors.</p>
+  T(y) = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p + \varepsilon
+\]</span> where the variance of <span class="math inline">\(\varepsilon\)</span> is constant–i.e not a function of the regressors.</p>
 </section>
 <section id="linearization" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="linearization"><span class="header-section-number">2.3.2</span> Linearization</h3>
 <p>Another key assumption is that the relationship between the regressors and response, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, is linear. If there is reason to believe that <span class="math display">\[
-  y = f( \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \veps )
+  y = f( \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon)
 \]</span> and that <span class="math inline">\(f(\cdot)\)</span> is invertible, then we can rewrite this model as <span class="math display">\[
-  y' = f^{-1}(y) = \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \veps
+  y' = f^{-1}(y) = \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon
 \]</span> and apply our usual linear regression tools.</p>
 <p>An example from the textbook, which is also quite common in practice, is to assume that <span class="math display">\[
-  y = c \ee^{ \beta_1 x_1 + \ldots + \beta_px_p + \veps }
+  y = c \mathrm{e}^{ \beta_1 x_1 + \ldots + \beta_px_p + \varepsilon}
 \]</span> and apply a logarithm to transform to <span class="math display">\[
-  y' = \log y =  \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \veps
-\]</span> where <span class="math inline">\(\beta_0 = \log c\)</span>. Furthermore, if <span class="math inline">\(\veps\)</span> has a normal distribution then <span class="math inline">\(\ee^\veps\)</span> has a log-normal distribution. This model is particularly useful when one is dealing with exponential growth in some population.</p>
+  y' = \log y =  \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p + \varepsilon
+\]</span> where <span class="math inline">\(\beta_0 = \log c\)</span>. Furthermore, if <span class="math inline">\(\varepsilon\)</span> has a normal distribution then <span class="math inline">\(\mathrm{e}^\varepsilon\)</span> has a log-normal distribution. This model is particularly useful when one is dealing with exponential growth in some population.</p>
 <div id="rem-linearization" class="proof remark">
 <p><span class="proof-title"><em>Remark 2.2</em>. </span>Linearization by applying a function to <span class="math inline">\(y\)</span> looks very similar to the variance stabilizing transforms of the previous section. In fact, such transforms have an effect on both the linearity and the variance of the model and should be used with care. Often non-linear methods are preferred.</p>
 </div>
 <p>Sometimes it is beneficial to transform the regressors, <span class="math inline">\(x\)</span>’s, as well. As we are not treating them as random variables, there are less problems to consider.<br>
 <span class="math display">\[
-  ~~~~~~y = \beta_0 + \beta_1 f(x) + \veps
+  ~~~~~~y = \beta_0 + \beta_1 f(x) + \varepsilon
   ~~\Rightarrow~~
-  y = \beta_0 + \beta_1 x' + \veps,~~ x = f^{-1}(x')
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = f^{-1}(x')
 \]</span> Examples include <span class="math display">\[\begin{align*}
-  y = \beta_0 + \beta_1 \log x + \veps
+  y = \beta_0 + \beta_1 \log x + \varepsilon
   ~~&amp;\Rightarrow~~
-  y = \beta_0 + \beta_1 x' + \veps,~~ x = \ee^{x'}\\
-  y = \beta_0 + \beta_1 x^2 + \veps
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = \mathrm{e}^{x'}\\
+  y = \beta_0 + \beta_1 x^2 + \varepsilon
   ~~&amp;\Rightarrow~~
-  y = \beta_0 + \beta_1 x' + \veps,~~ x = \sqrt{x'}
+  y = \beta_0 + \beta_1 x' + \varepsilon,~~ x = \sqrt{x'}
 \end{align*}\]</span> This second example can be alternatively dealt with by employing polynomial regression to be discussed in a subsequent section.</p>
 </section>
 <section id="box-cox-and-the-power-transform" class="level3" data-number="2.3.3">
 <h3 data-number="2.3.3" class="anchored" data-anchor-id="box-cox-and-the-power-transform"><span class="header-section-number">2.3.3</span> Box-Cox and the power transform</h3>
-<p>In short, Box-Cox is a family of transforms parametrized by some <span class="math inline">\(\lmb\in\real\)</span>, which can be optimized via maximum likelihood. Specifically, for <span class="math inline">\(y_i&gt;0\)</span>, we aim to choose the best transform of the form <span class="math display">\[
-  y_i \rightarrow y_i^{(\lmb)} =  \left\{\begin{array}{ll}
-    \frac{y_i^\lmb-1}{\lmb} &amp; \lmb\ne0\\
-    \log y_i &amp; \lmb=0
+<p>In short, Box-Cox is a family of transforms parametrized by some <span class="math inline">\(\lambda\in\mathbb{R}\)</span>, which can be optimized via maximum likelihood. Specifically, for <span class="math inline">\(y_i&gt;0\)</span>, we aim to choose the best transform of the form <span class="math display">\[
+  y_i \rightarrow y_i^{(\lambda)} =  \left\{\begin{array}{ll}
+    \frac{y_i^\lambda-1}{\lambda} &amp; \lambda\ne0\\
+    \log y_i &amp; \lambda=0
   \end{array}\right.
-\]</span> by maximizing the likelihood as we did in Chapter 1, but with parameters <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\sigma^2\)</span>, and <span class="math inline">\(\lmb\)</span>.</p>
+\]</span> by maximizing the likelihood as we did in Chapter 1, but with parameters <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\sigma^2\)</span>, and <span class="math inline">\(\lambda\)</span>.</p>
 <p>To do this, we assume that the transformed variables follow all of the usual least squares regression assumptions and hence have a joint normal distribution with <span class="math display">\[
-  f( Y^{(\lmb)} ) = (2\pi\sigma^2)^{-n/2}\exp\left(
+  f( Y^{(\lambda)} ) = (2\pi\sigma^2)^{-n/2}\exp\left(
     -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i - X_{i,\cdot}\beta)^2
   \right).
-\]</span> Transforming <span class="math inline">\(Y \rightarrow Y^{(\lmb)}\)</span> is a change of variables with Jacobian <span class="math display">\[
-  \prod_{i=1}^n\frac{dy_i}{dy_i}^{(\lmb)} = \prod_{i=1}^ny_i^{\lmb-1}.
+\]</span> Transforming <span class="math inline">\(Y \rightarrow Y^{(\lambda)}\)</span> is a change of variables with Jacobian <span class="math display">\[
+  \prod_{i=1}^n\frac{dy_i}{dy_i}^{(\lambda)} = \prod_{i=1}^ny_i^{\lambda-1}.
 \]</span> Hence, the likelihood function in terms of <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span> is <span class="math display">\[
-  L(\beta,\sigma^2,\lmb|y,X) =
+  L(\beta,\sigma^2,\lambda|y,X) =
   (2\pi\sigma^2)^{-n/2}\exp\left(
-    -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i^{\lmb} - X_{i,\cdot}\beta)^2
-  \right) \prod_{i=1}^n y_i^{\lmb-1}
+    -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i^{\lambda} - X_{i,\cdot}\beta)^2
+  \right) \prod_{i=1}^n y_i^{\lambda-1}
 \]</span> with log likelihood <span class="math display">\[
   \log L =
   -\frac{n}{2}\log( 2\pi\sigma^2 )
   -\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i - X_{i,\cdot}\beta)^2
-  + (\lmb-1)\sum_{i=1}^n \log y_i.
-\]</span> From here, the MLEs for <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\sigma^2\)</span> are solved for as before but are now in terms of the transformed <span class="math inline">\(Y^{(\lmb)}\)</span>. <span class="math display">\[\begin{align*}
-  \hat{\beta}    &amp;= (\TT{X}X)^{-1}\TT{X}Y^{(\lmb)}\\
+  + (\lambda-1)\sum_{i=1}^n \log y_i.
+\]</span> From here, the MLEs for <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\sigma^2\)</span> are solved for as before but are now in terms of the transformed <span class="math inline">\(Y^{(\lambda)}\)</span>. <span class="math display">\[\begin{align*}
+  \hat{\beta}    &amp;= ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y^{(\lambda)}\\
   \hat{\sigma}^2  
-  &amp;= \frac{1}{n}\sum_{i=1}^n(y_i^{(\lmb)}-X_{i,\cdot}\hat{\beta})^2
-   = \frac{SS_\text{res}^{(\lmb)}}{n}.
+  &amp;= \frac{1}{n}\sum_{i=1}^n(y_i^{(\lambda)}-X_{i,\cdot}\hat{\beta})^2
+   = \frac{SS_\text{res}^{(\lambda)}}{n}.
 \end{align*}\]</span> Plugging these into the log likelihood gives and replacing all of the constants with some <span class="math inline">\(C\)</span> gives <span class="math display">\[\begin{align*}
   \log L &amp;=
   -\frac{n}{2}\log( 2\pi\hat{\sigma}^2 )
-  -\frac{n}{2} + (\lmb-1)\sum_{i=1}^n \log y_i\\
+  -\frac{n}{2} + (\lambda-1)\sum_{i=1}^n \log y_i\\
   &amp;= C - \frac{n}{2}\log\hat{\sigma}^2 +
-     \log\left( (\prod y_i)^{\lmb-1}\right).
+     \log\left( (\prod y_i)^{\lambda-1}\right).
 \end{align*}\]</span> Defining the geometric mean of the <span class="math inline">\(y_i\)</span> to be <span class="math inline">\(\gamma = (\prod_{i=1}^n y_i)^{1/n}\)</span>, we have <span class="math display">\[\begin{align*}
   \log L  
   &amp;= C - \frac{n}{2}\log\hat{\sigma}^2 +
-     \frac{n}{2}\log\left( \gamma^{2(\lmb-1)}\right)\\
+     \frac{n}{2}\log\left( \gamma^{2(\lambda-1)}\right)\\
   &amp;= C - \frac{n}{2}\log\left(
-       \frac{\hat{\sigma}^2}{\gamma^{2(\lmb-1)}}
+       \frac{\hat{\sigma}^2}{\gamma^{2(\lambda-1)}}
      \right).
 \end{align*}\]</span> Considering the term inside the log, we have that it is just the residual sum of squares from the least squares regression <span class="math display">\[
-  \frac{Y^{(\lmb)}}{\gamma^{\lmb-1}} = X\theta + \veps
-\]</span> where <span class="math inline">\(\theta\in\real^{p+1}\)</span> is a transformed version of the original <span class="math inline">\(\beta\)</span>. Hence, we can choose <span class="math inline">\(\hat{\lmb}\)</span> by maximizing the log likelihood above, which is equivalent to minimizing the residual sum of squares for this new model. This can be calculated numerically in statistical programs like R.</p>
+  \frac{Y^{(\lambda)}}{\gamma^{\lambda-1}} = X\theta + \varepsilon
+\]</span> where <span class="math inline">\(\theta\in\mathbb{R}^{p+1}\)</span> is a transformed version of the original <span class="math inline">\(\beta\)</span>. Hence, we can choose <span class="math inline">\(\hat{\lambda}\)</span> by maximizing the log likelihood above, which is equivalent to minimizing the residual sum of squares for this new model. This can be calculated numerically in statistical programs like R.</p>
 </section>
 <section id="cars-data" class="level3" data-number="2.3.4">
 <h3 data-number="2.3.4" class="anchored" data-anchor-id="cars-data"><span class="header-section-number">2.3.4</span> Cars Data</h3>
@@ -764,7 +767,7 @@ See Chapter 3, Asymptotic Statistics, A W van der Vaart or <a href="https://en.w
 </div>
 </div>
 <p>We can first fit a simple regression to the data with <code>lm( dist~speed, data=cars)</code>. This results in a significant p-value, an <span class="math inline">\(R^2 = 0.651\)</span>, and an estimated model of <span class="math display">\[
-  (\text{dist}) = -17.6 + 3.9(\text{speed}) + \veps.
+  (\text{dist}) = -17.6 + 3.9(\text{speed}) + \varepsilon.
 \]</span> If we wanted to extrapolate a bit, we can use this model to predict the stopping distance for a speed of 50 mph, which is 179 feet.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>md.car.lin <span class="ot">=</span> <span class="fu">lm</span>( dist<span class="sc">~</span>speed, <span class="at">data=</span>cars)</span>
@@ -796,7 +799,7 @@ F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 </div>
 </div>
 <p>We could stop here and be happy with a significant fit. However, looking at the data, there seems to be a nonlinear relationship between speed and stopping distance. Hence, we could try to fit a model with the response being the square root of the stopping distance: <code>lm( sqrt(dist)~speed, data=cars)</code>. Doing so results in <span class="math display">\[
-  \sqrt{(\text{dist})} = 1.28 + 0.32(\text{speed}) + \veps.
+  \sqrt{(\text{dist})} = 1.28 + 0.32(\text{speed}) + \varepsilon.
 \]</span> In this case, we similarly get a significant p-value and a slightly higher <span class="math inline">\(R^2 = 0.709\)</span>. The prediction for the stopping distance for a speed of 50 mph is now the much higher 302 feet.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>md.car.sqrt <span class="ot">=</span> <span class="fu">lm</span>( <span class="fu">sqrt</span>(dist)<span class="sc">~</span>speed, <span class="at">data=</span>cars)</span>
@@ -830,7 +833,7 @@ F-statistic: 117.2 on 1 and 48 DF,  p-value: 1.773e-14</code></pre>
 </div>
 </div>
 <p>We can further apply a log-log transform with <code>lm( log(dist)~log(speed), data=cars)</code>. This results in an even higher <span class="math inline">\(R^2=0.733\)</span>. The fitted model is <span class="math display">\[
-  \log(y) = -0.73 + 1.6 \log(x) + \veps,
+  \log(y) = -0.73 + 1.6 \log(x) + \varepsilon,
 \]</span> and the predicted stopping distance for a car travelling at 50 mph is 254 feet. Note that the square root transform is modelling <span class="math inline">\(y \propto x^2\)</span> whereas the log-log transform is modelling <span class="math inline">\(y \propto x^{1.6}\)</span>, which is a slower rate of increase.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>md.car.log <span class="ot">=</span> <span class="fu">lm</span>( <span class="fu">log</span>(dist)<span class="sc">~</span><span class="fu">log</span>(speed), <span class="at">data=</span>cars)</span>
@@ -863,7 +866,7 @@ F-statistic: 131.9 on 1 and 48 DF,  p-value: 2.259e-15</code></pre>
 254.4037 </code></pre>
 </div>
 </div>
-<p>We can also let the data decide on the best transformation by using the Box-Cox transformation. In this case, we may want to test the hypothesis that the optimal power to transform with is 1/2; i.e.&nbsp;the square root transformation. The Box-Cox transform choose a power of <span class="math inline">\(\lmb=0.424\)</span>. However, the value 1/2 lies within the confidence interval for <span class="math inline">\(\lmb\)</span>. We may prefer to use the square root transform instead of the power 0.424, since the square root is more interpretable.</p>
+<p>We can also let the data decide on the best transformation by using the Box-Cox transformation. In this case, we may want to test the hypothesis that the optimal power to transform with is 1/2; i.e.&nbsp;the square root transformation. The Box-Cox transform choose a power of <span class="math inline">\(\lambda=0.424\)</span>. However, the value 1/2 lies within the confidence interval for <span class="math inline">\(\lambda\)</span>. We may prefer to use the square root transform instead of the power 0.424, since the square root is more interpretable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need the package MASS for boxcox</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
@@ -972,14 +975,14 @@ F-statistic:   119 on 1 and 48 DF,  p-value: 1.354e-14</code></pre>
 </section>
 <section id="polynomial-regression" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="polynomial-regression"><span class="header-section-number">2.4</span> Polynomial Regression</h2>
-<p><em>In the following subsections, we will only consider models with a single regressor</em> <span class="math inline">\(x\in\real\)</span> until the final part below where we will consider polynomials in multiple variables <span class="math inline">\(x_1,\ldots,x_p\)</span>.</p>
+<p><em>In the following subsections, we will only consider models with a single regressor</em> <span class="math inline">\(x\in\mathbb{R}\)</span> until the final part below where we will consider polynomials in multiple variables <span class="math inline">\(x_1,\ldots,x_p\)</span>.</p>
 <p>One of the examples of atypical residual behavior from above occurs when there is an unaccounted for quadratic term in the model such as trying to fit a model of the form <span class="math display">\[
-  y = \beta_0 + \beta_1x_1 +\veps
+  y = \beta_0 + \beta_1x_1 +\varepsilon
 \]</span> to data generated by <span class="math display">\[
-  y = \beta_0 + \beta_1x_1^2 + \veps.
+  y = \beta_0 + \beta_1x_1^2 + \varepsilon.
 \]</span> If this is suspected, we can look at the residuals and try to transform <span class="math inline">\(x\)</span>, such as <span class="math inline">\(x \rightarrow \sqrt{x}\)</span>, in order to put this back into the linear model framework. However, we can also just fit a polynomial model to our data.</p>
-<p>Consider the setting where we observe <span class="math inline">\(n\)</span> data pairs <span class="math inline">\((y_i,x_i)\in\real^2\)</span>. We can then attempt to fit a model of the form <span class="math display">\[
-  y = \beta_0 + \beta_1x + \beta_2x^2 + \ldots + \beta_px^p + \veps
+<p>Consider the setting where we observe <span class="math inline">\(n\)</span> data pairs <span class="math inline">\((y_i,x_i)\in\mathbb{R}^2\)</span>. We can then attempt to fit a model of the form <span class="math display">\[
+  y = \beta_0 + \beta_1x + \beta_2x^2 + \ldots + \beta_px^p + \varepsilon
 \]</span> to the observations. The <span class="math inline">\(n\times p\)</span> design matrix will look like <span class="math display">\[
   X = \begin{pmatrix}
     1 &amp; x_1 &amp; x_1^2 &amp; \ldots &amp; x_1^p \\
@@ -987,9 +990,9 @@ F-statistic:   119 on 1 and 48 DF,  p-value: 1.354e-14</code></pre>
     \vdots &amp; \vdots &amp; \vdots &amp;\ddots &amp; \vdots\\
     1 &amp; x_n &amp; x_n^2 &amp; \ldots &amp; x_n^p
   \end{pmatrix}
-\]</span> and the parameters can be estimated as usual: <span class="math inline">\(\hat{\beta} = (\TT{X}X)^{-1}\TT{X}Y\)</span>. This matrix arises in Linear Algebra as the <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix">Vandermonde matrix</a>.</p>
+\]</span> and the parameters can be estimated as usual: <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span>. This matrix arises in Linear Algebra as the <a href="https://en.wikipedia.org/wiki/Vandermonde_matrix">Vandermonde matrix</a>.</p>
 <div id="rem-linearIndep" class="proof remark">
-<p><span class="proof-title"><em>Remark 2.3</em>. </span>While the columns of <span class="math inline">\(X\)</span> are, in general, linearly independent, as <span class="math inline">\(p\)</span> gets larger, many problems can occur. In particular, the columns become near linearly dependent resulting in instability when computing <span class="math inline">\((\TT{X}X)^{-1}\)</span>.</p>
+<p><span class="proof-title"><em>Remark 2.3</em>. </span>While the columns of <span class="math inline">\(X\)</span> are, in general, linearly independent, as <span class="math inline">\(p\)</span> gets larger, many problems can occur. In particular, the columns become near linearly dependent resulting in instability when computing <span class="math inline">\(({X}^\mathrm{T}X)^{-1}\)</span>.</p>
 </div>
 <section id="model-problems" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="model-problems"><span class="header-section-number">2.4.1</span> Model Problems</h3>
@@ -998,8 +1001,8 @@ F-statistic:   119 on 1 and 48 DF,  p-value: 1.354e-14</code></pre>
 <h4 data-number="2.4.1.1" class="anchored" data-anchor-id="overfitting"><span class="header-section-number">2.4.1.1</span> Overfitting</h4>
 <p>As a general rule, the degree of the polynomial model should be kept as low as possible. High order polynomials can be misleading as they can often fit the data quite well. In fact, given <span class="math inline">\(n\)</span> data points, it is possible to fit an <span class="math inline">\(n-1\)</span> degree polynomial that passes through each data point. In this extreme case, all of the residuals would be zero, but we would never expect this to be the correct model for the data.</p>
 <p>Problems can occur even when <span class="math inline">\(p\)</span> is much smaller than <span class="math inline">\(n\)</span>. As an example, two models were fit to <span class="math inline">\(n=50\)</span> data points generated from the model <span class="math display">\[
-  y = 3x^2 + \veps
-\]</span> with <span class="math inline">\(\veps\dist\distNormal{0}{1}\)</span>. The first was a cubic model. The second was a degree 20 model. The first regression resulted in three significant regressors. Note that in these two cases, orthogonal polynomials were used to maintain numerical stability.</p>
+  y = 3x^2 + \varepsilon
+\]</span> with <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,1\right)\)</span>. The first was a cubic model. The second was a degree 20 model. The first regression resulted in three significant regressors. Note that in these two cases, orthogonal polynomials were used to maintain numerical stability.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate some regression data with</span></span>
@@ -1051,7 +1054,7 @@ poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
 <h4 data-number="2.4.1.2" class="anchored" data-anchor-id="extrapolating"><span class="header-section-number">2.4.1.2</span> Extrapolating</h4>
 <p>The overfitting from the previous section also indicates problems that can occur when extrapolating with polynomial models. When high degrees are present, the best fit curve can change directions quickly and even make impossible or illogical predictions.</p>
 <p>Beyond that, even when the fitted polynomial models all trend in the same general direction, polynomials of different degree will diverge quickly from one another. Consider a model where the data are generated from <span class="math display">\[
-  y = 2x + 3x^3 + \veps.
+  y = 2x + 3x^3 + \varepsilon.
 \]</span> All four models displayed below generated very significant F tests. However, each one will give very different answers to predicting the value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=5\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
@@ -1108,17 +1111,17 @@ poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
 <section id="hierarchy" class="level4" data-number="2.4.1.3">
 <h4 data-number="2.4.1.3" class="anchored" data-anchor-id="hierarchy"><span class="header-section-number">2.4.1.3</span> Hierarchy</h4>
 <p>An hierarchical polynomial model is one such that if it contains a term of degree <span class="math inline">\(k\)</span>, then it will contain all terms of order <span class="math inline">\(i=0,1\ldots,k-1\)</span> as well. In practice, it is not strictly necessary to do this. However, doing so will maintain invariance to linear shifts in the data.</p>
-<p>Consider the simple linear regression model <span class="math inline">\(y = \beta_0 + \beta_1 x + \veps\)</span>. If we were to shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
+<p>Consider the simple linear regression model <span class="math inline">\(y = \beta_0 + \beta_1 x + \varepsilon\)</span>. If we were to shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
   y
-  &amp;= \beta_0 + \beta_1 (x+a)+ \veps\\
-  &amp;= (\beta_0+a\beta_1) + \beta_1 x + \veps \\
-  &amp;= \beta_0' + \beta_1 x + \veps
+  &amp;= \beta_0 + \beta_1 (x+a)+ \varepsilon\\
+  &amp;= (\beta_0+a\beta_1) + \beta_1 x + \varepsilon\\
+  &amp;= \beta_0' + \beta_1 x + \varepsilon
 \end{align*}\]</span> and we still have the same model but with a modified intercept term.</p>
-<p>Now consider the polynomial regression model <span class="math inline">\(y = \beta_0 + \beta_2 x^2 + \veps\)</span>. If we were to similarly shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
+<p>Now consider the polynomial regression model <span class="math inline">\(y = \beta_0 + \beta_2 x^2 + \varepsilon\)</span>. If we were to similarly shift the values of <span class="math inline">\(x\)</span> by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[\begin{align*}
   y
-  &amp;= \beta_0 + \beta_2 (x+a)^2+ \veps\\
-  &amp;= (\beta_0+a^2\beta_2) + 2\beta_2ax + \beta_2 x^2 + \veps \\
-  &amp;= \beta_0' + \beta_1' x + \beta_2 x^2 + \veps.
+  &amp;= \beta_0 + \beta_2 (x+a)^2+ \varepsilon\\
+  &amp;= (\beta_0+a^2\beta_2) + 2\beta_2ax + \beta_2 x^2 + \varepsilon\\
+  &amp;= \beta_0' + \beta_1' x + \beta_2 x^2 + \varepsilon.
 \end{align*}\]</span> Now, our model has a linear term, that is <span class="math inline">\(\beta_1'x\)</span>, in it, which was not there before.</p>
 <p>In general, for a degree <span class="math inline">\(p\)</span> model, if <span class="math inline">\(x\)</span> is shifted by some constant <span class="math inline">\(a\)</span>, then <span class="math display">\[
   y = \beta_0 + \sum_{i=1}^p \beta_ix^i
@@ -1131,24 +1134,24 @@ poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="piecewise-polynomials"><span class="header-section-number">2.4.2</span> Piecewise Polynomials</h3>
 <p>While a single high degree polynomial can be fit very closely to the observed data, there exist the already discussed problems of overfitting and subsequent extrapolation. Hence, an alternative to capture the behaviour of highly nonlinear data is to apply a piecewise polynomial model, which is often referred to as a spline model.</p>
 <p>To begin, assume that the observed regressors take values in the interval <span class="math inline">\([a,b]\)</span>. Then, we partition the interval with <span class="math inline">\(k+1\)</span> by <span class="math inline">\(a=t_1 &lt; t_2 &lt; \ldots &lt; t_{k+1}=b\)</span>. The general spline model of order <span class="math inline">\(p\)</span> takes on the form <span id="eq-splineFormula"><span class="math display">\[
-  y = \sum_{j=1}^k \beta_{0,j}\Indc{x\ge t_j} +
+  y = \sum_{j=1}^k \beta_{0,j}\boldsymbol{1}\!\left[x\ge t_j\right] +
   \sum_{i=1}^p \sum_{j=1}^k \beta_{i,j}( x - t_j )^i_+
-\tag{2.1}\]</span></span> where <span class="math inline">\(\Indc{x&gt;t_j}\)</span> is the indicator function that takes on a value of <span class="math inline">\(0\)</span> when <span class="math inline">\(x&lt;t_j\)</span> and a value of <span class="math inline">\(1\)</span> otherwise, and where <span class="math inline">\(( x - t_j )^i_+ = ( x - t_j )^i\Indc{x&gt;t_j}\)</span>.</p>
+\tag{2.1}\]</span></span> where <span class="math inline">\(\boldsymbol{1}\!\left[x&gt;t_j\right]\)</span> is the indicator function that takes on a value of <span class="math inline">\(0\)</span> when <span class="math inline">\(x&lt;t_j\)</span> and a value of <span class="math inline">\(1\)</span> otherwise, and where <span class="math inline">\(( x - t_j )^i_+ = ( x - t_j )^i\boldsymbol{1}\!\left[x&gt;t_j\right]\)</span>.</p>
 <div class="{rem-splineStuff}">
 <p><a href="#eq-splineFormula" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> is equivalent to fitting a separate <span class="math inline">\(p\)</span>th order polynomial to the data in each interval <span class="math inline">\([t_j,t_{j+1}]\)</span>. While doing so does result in many parameters to estimate, it will allow us to perform hypothesis tests for continuity and differentiability of the data, which we will discuss in the next section.</p>
 </div>
 <p>Submodels of <a href="#eq-splineFormula" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> have a collection of interesting properties. If the coefficients <span class="math inline">\(\beta_{0,j}\)</span> are set to <span class="math inline">\(0\)</span>, then we will fit a model that ensures continuity at the knots. For example, the model <span class="math display">\[
   y = \beta_{0,1} + \sum_{j=1}^k \beta_{1,j}( x-t_j )_+
 \]</span> is a piecewise linear model with continuity at the knots. Conversely, a model of the form <span class="math display">\[
-  y = \sum_{j=1}^k \beta_{0,j} \Indc{ x\ge t_j }
+  y = \sum_{j=1}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right]
 \]</span> fits a piecewise constant model and can be used to look for change points in an otherwise constant process.</p>
 <p>In practice, spline models with only cubic terms are generally preferred as they have a high enough order to ensure a good amount of smoothness–i.e.&nbsp;the curves are twice continuously differentiable–but generally do not lead to overfitting of the data.</p>
 <section id="a-spline-example" class="level4" data-number="2.4.2.1">
 <h4 data-number="2.4.2.1" class="anchored" data-anchor-id="a-spline-example"><span class="header-section-number">2.4.2.1</span> A Spline Example</h4>
 <p><em>Note that there are R packages to fit spline models to data. However, in this example we will do it manually for pedagogical purposes.</em></p>
 <p>Consider a model of the form <span class="math display">\[
-  y = 2+3x-4x^5+x^7 + \veps
-\]</span> with <span class="math inline">\(\veps\dist\distNormal{0}{4}\)</span> with <span class="math inline">\(n=41\)</span> observations with regressor <span class="math inline">\(x\in[0,2]\)</span>. A degree 4 and degree 7 polynomial regression were fit to the data, and the results are displayed below. These deviate quickly from the true curve outside of the range of the data.</p>
+  y = 2+3x-4x^5+x^7 + \varepsilon
+\]</span> with <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,4\right)\)</span> with <span class="math inline">\(n=41\)</span> observations with regressor <span class="math inline">\(x\in[0,2]\)</span>. A degree 4 and degree 7 polynomial regression were fit to the data, and the results are displayed below. These deviate quickly from the true curve outside of the range of the data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">256</span>)</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Data from a degree-7 polynomial</span></span>
@@ -1251,7 +1254,7 @@ poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
 <section id="hypothesis-testing-for-spline-models" class="level4" data-number="2.4.2.2">
 <h4 data-number="2.4.2.2" class="anchored" data-anchor-id="hypothesis-testing-for-spline-models"><span class="header-section-number">2.4.2.2</span> Hypothesis testing for spline models</h4>
 <p>It is useful to consider what the hypothesis tests mean in the context of spline models. For example, consider fitting the piecewise constant model to some data: <span class="math display">\[
-  y = \sum_{j=1}^k \beta_{0,j} \Indc{ x\ge t_j }.
+  y = \sum_{j=1}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right].
 \]</span> The usual F-test will consider the hypotheses <span class="math display">\[
   H_0: \beta_{0,2}=\ldots=\beta_{0,k}=0~~~~~~
   H_1: \exists i\in\{2,3,\ldots,k\}~\text{s.t.}~\beta_{0,i}\ne0.
@@ -1262,7 +1265,7 @@ poly(xx, 20)2  8.025826  1.2448436  6.447256 2.748160e-06</code></pre>
    \sum_{j=1}^k \beta_{3,j}( x-t_j )^3_+\\
   &amp;\text{Model 2:}&amp; y&amp;= \beta_{0,1} +
    \textstyle
-   \sum_{j=2}^k \beta_{0,j} \Indc{ x\ge t_j }+
+   \sum_{j=2}^k \beta_{0,j} \boldsymbol{1}\!\left[ x\ge t_j \right]+
    \sum_{j=1}^k \beta_{3,j}( x-t_j )^3_+
 \end{align*}\]</span> The partial F-test between models 1 and 2 asks whether or not the addition of the piecewise constant terms adds any explanatory power to our model. Equivalently, it is testing for whether or not the model has any discontinuities in it. Similarly, first order terms can be used to test for differentiability.</p>
 <p>Instead of constructing a bigger model by adding polynomial terms of different orders, it is also possible to increase the number of knots in the model. Similar to all of the past examples, we will require that the new set of knots contains the old set–that is, <span class="math inline">\(\{t_1,\ldots,t_k\}\subset\{s_1,\ldots,s_m\}\)</span>.<br>
@@ -1270,14 +1273,14 @@ This requirement ensures that our models are nested and thus can be compared in 
 <p>In what we considered above, the spline models were comprised of polynomials with supports of the form <span class="math inline">\([t_j,\infty)\)</span> for knots <span class="math inline">\(t_1&lt;\ldots&lt;t_k\)</span>. However, there are many different families of splines with different desirable properties. Some such families are the B-splines, Non-uniform rational B-splines (NURBS), box splines, Bézier splines, and many others. Here we will briefly consider the family of B-splines due to their simplicity and popularity. Note that in the spline literature, sometimes the knots are referred to as control points.</p>
 <p>The ultimate goal of the of the B-splines is to construct a polynomial basis where the constituent polynomials have finite support. Specifically, for an interval <span class="math inline">\([a,b]\)</span> and knots <span class="math inline">\(a=t_1&lt;t_2&lt;\ldots&lt;t_k&lt;t_{k+1}=b\)</span>, the constant polynomials will have support on two knots such as <span class="math inline">\([t_1,t_2]\)</span>, the linear terms on three knots such as <span class="math inline">\([t_1,t_3]\)</span>, and so on up to degree <span class="math inline">\(p\)</span> terms, which require <span class="math inline">\(p+2\)</span> knots.</p>
 <p>B-splines can be defined recursively starting with the constant, or degree 0, terms: <span class="math display">\[
-  B_{j,0}(x) = \indc{ x\in[t_j,t_{j+1}] },
+  B_{j,0}(x) = \boldsymbol{1}_{ x\in[t_j,t_{j+1}] },
 \]</span> which takes a value of 1 on the interval <span class="math inline">\([t_j,t_{j+1}]\)</span> and is 0 elsewhere. From here, the higher order terms can be written as <span class="math display">\[
   B_{j,i}(x) =
   \left(\frac{x-t_j}{t_{j+i}-t_{j}}\right)B_{j,i-1}(x) +
   \left(\frac{t_{j+i+1}-x}{t_{j+i+1}-t_{j+1}}\right)B_{j+1,i-1}(x).
 \]</span> For example, with knots <span class="math inline">\(\{0,1,2,3\}\)</span>, we have <span class="math display">\[\begin{align*}
   &amp;\text{Constant:}&amp;
-  B_{j,0} &amp;= \indc{ x\in[j,j+1] }&amp;j&amp;=0,1,2\\
+  B_{j,0} &amp;= \boldsymbol{1}_{ x\in[j,j+1] }&amp;j&amp;=0,1,2\\
   &amp;\text{Linear:}&amp;
   B_{j,1} &amp;= \left\{
     \begin{array}{ll}
@@ -1330,13 +1333,13 @@ This requirement ensures that our models are nested and thus can be compared in 
 <p>Thus far in this section, we have considered only polynomial models with a single regressor. However, it is certainly possible to fit a polynomial model for more than one regressor such as <span class="math display">\[
   y = \beta_0 + \beta_{1}x_1 + \beta_{2}x_2
   + \beta_{11} x_1^2 + \beta_{12} x_1x_2 + \beta_{22}x_2^2 +
-  \veps.
+  \varepsilon.
 \]</span> Here we have linear and quadratic terms for <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> as well as an interaction term <span class="math inline">\(\beta_{12}x_1x_2\)</span>.</p>
 <p>Fitting such models to the data follows from what we did for single variable polynomials. In this case, the number of interaction terms can grow quite large in practice. With <span class="math inline">\(k\)</span> regressors, <span class="math inline">\(x_1,\ldots,x_k\)</span>, there will be <span class="math inline">\(k\choose p\)</span> interaction terms of degree <span class="math inline">\(p\)</span> assuming <span class="math inline">\(p&lt;k\)</span>. This leads to the topic of <a href="https://en.wikipedia.org/wiki/Response_surface_methodology">Response Surface Methodology</a>, which is a subtopic of the field of experimental design.</p>
 <p>We will not consider this topic further in these notes. However, it is worth noting that in <code>R</code>, it is possible to fit a linear regression with interaction terms such as <span class="math display">\[
   y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3 +
   \beta_{12}x_1x_2 + \beta_{13}x_1x_3 + \beta_{23}x_2x_3 +
-  \beta_{123}x_1x_2x_3 +\veps
+  \beta_{123}x_1x_2x_3 +\varepsilon
 \]</span> with the simple syntax <code>lm( y~x1*x2*x3 )</code> where the symbol <code>*</code> replaces the usual <code>+</code> from before.</p>
 </section>
 </section>
@@ -1349,7 +1352,7 @@ This requirement ensures that our models are nested and thus can be compared in 
 </div>
 <section id="the-hat-matrix" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="the-hat-matrix"><span class="header-section-number">2.5.1</span> The Hat Matrix</h3>
-<p>The projection or ``hat’’ matrix, <span class="math inline">\(P = X(\TT{X}X)^{-1}\TT{X}\)</span>, directly measures the influence of one point on another.<br>
+<p>The projection or ``hat’’ matrix, <span class="math inline">\(P = X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\)</span>, directly measures the influence of one point on another.<br>
 This is because under the usual model assumptions, the fitted values have a covariance matrix <span class="math inline">\(\text{var}(\hat{Y}) = \sigma^2P\)</span>. Hence, the <span class="math inline">\(i,j\)</span>th entry in <span class="math inline">\(P\)</span> is a measure of the covariance between the fitted values <span class="math inline">\(\hat{Y}_i\)</span> and <span class="math inline">\(\hat{Y}_j\)</span>.</p>
 <p>The function <code>influence.measures()</code> reports the diagonal entries of the matrix <span class="math inline">\(P\)</span>. Heuristically, any entries that are much larger than the rest will have a strong influence on the regression. More precisely, we know that for a linear model <span class="math display">\[
   y = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p,
@@ -1364,7 +1367,7 @@ Hence, <span class="math inline">\(\text{trace}(P)=p+1\)</span> where the trace 
 <p>Cook’s D or distance computes the distance between the vector of estimated parameters on all <span class="math inline">\(n\)</span> data points, <span class="math inline">\(\hat{\beta}\)</span>, and the vector of estimated parameters on <span class="math inline">\(n-1\)</span> data points, <span class="math inline">\(\hat{\beta}_{(i)}\)</span> where the <span class="math inline">\(i\)</span>th observation has been removed. Intuitively, if the <span class="math inline">\(i\)</span>th observation has a lot of influence on the estimation of <span class="math inline">\(\beta\)</span>, then the distance between <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\hat{\beta}_{(i)}\)</span> should be large.</p>
 <p>For a linear model with <span class="math inline">\(p+1\)</span> parameters and a sample size of <span class="math inline">\(n\)</span> observations, the usual form for Cook’s D is <span class="math display">\[
   D_i = \frac{
-    \TT{(\hat{\beta}_{(i)}-\hat{\beta})} \TT{X}X
+    {(\hat{\beta}_{(i)}-\hat{\beta})}^\mathrm{T} {X}^\mathrm{T}X
     {(\hat{\beta}_{(i)}-\hat{\beta})}/(p+1)
   }{SS_\text{res}/(n-p-1)}.
 \]</span> This is very similar to the confidence ellipsoid from the last chapter. However, this is not an usual F statistic, so we do not compute a p-value as we have done before. Instead, some heuristics are used to determine what a large value is. Some authors suggest looking for <span class="math inline">\(D_i\)</span> greater than <span class="math inline">\(1\)</span> or greater than <span class="math inline">\(4/n\)</span>. See <a href="https://en.wikipedia.org/wiki/Cook%27s_distance">Cook’s Distance</a>.</p>
@@ -1375,11 +1378,11 @@ Hence, <span class="math inline">\(\text{trace}(P)=p+1\)</span> where the trace 
 \]</span> where <span class="math inline">\(s_i\)</span> is the <span class="math inline">\(i\)</span>th studentized residual. Another form of this measure compares the distance between the usual fitted values on all of the data <span class="math inline">\(\hat{Y} = X\hat{\beta}\)</span> and the fitted values based on all but the <span class="math inline">\(i\)</span>th observation, <span class="math inline">\(\hat{Y}_{(i)} = X\hat{\beta}_{(i)}\)</span>.<br>
 That is, <span class="math display">\[
   D_i = \frac{
-    \TT{(\hat{Y}_{(i)}-\hat{Y})}(\hat{Y}_{(i)}-\hat{Y})/(p+1)
+    {(\hat{Y}_{(i)}-\hat{Y})}^\mathrm{T}(\hat{Y}_{(i)}-\hat{Y})/(p+1)
   }{
     SS_\text{res}/(n-p-1)
   }
-\]</span> Note that like <span class="math inline">\(\hat{Y}\)</span>, the vector <span class="math inline">\(\hat{Y}_{(i)}\in\real^n\)</span>.<br>
+\]</span> Note that like <span class="math inline">\(\hat{Y}\)</span>, the vector <span class="math inline">\(\hat{Y}_{(i)}\in\mathbb{R}^n\)</span>.<br>
 The <span class="math inline">\(i\)</span>th entry in the vector <span class="math inline">\(\hat{Y}_{(i)}\)</span> is the predicted value of <span class="math inline">\(y\)</span> given <span class="math inline">\(x_i\)</span>.</p>
 </section>
 <section id="dfbetas" class="level3" data-number="2.5.3">
@@ -1388,9 +1391,9 @@ The <span class="math inline">\(i\)</span>th entry in the vector <span class="ma
   \text{DFBETAS}_{i} =
   \frac{\hat{\beta} - \hat{\beta}_{(i)}
   }{
-    \sqrt{(\TT{X}X)_{i,i}^{-1}  SS_{\text{res}(i)}/(n-p-2) }
-  } \in \real^{p+1}
-\]</span> where <span class="math inline">\(SS_{\text{res}(i)}\)</span> is the sum of the squared residuals for the model fit after removing the <span class="math inline">\(i\)</span>th data point and where <span class="math inline">\((\TT{X}X)^{-1}_{i,i}\)</span> is the <span class="math inline">\(i\)</span>th diagonal entry of the matrix <span class="math inline">\((\TT{X}X)^{-1}\)</span>. The recommended heuristic is to consider the <span class="math inline">\(i\)</span>th observation as an influential point if the <span class="math inline">\(i,j\)</span>th entry of DFBETAS has a magnitude greater than <span class="math inline">\(2/\sqrt{n}\)</span>.</p>
+    \sqrt{({X}^\mathrm{T}X)_{i,i}^{-1}  SS_{\text{res}(i)}/(n-p-2) }
+  } \in \mathbb{R}^{p+1}
+\]</span> where <span class="math inline">\(SS_{\text{res}(i)}\)</span> is the sum of the squared residuals for the model fit after removing the <span class="math inline">\(i\)</span>th data point and where <span class="math inline">\(({X}^\mathrm{T}X)^{-1}_{i,i}\)</span> is the <span class="math inline">\(i\)</span>th diagonal entry of the matrix <span class="math inline">\(({X}^\mathrm{T}X)^{-1}\)</span>. The recommended heuristic is to consider the <span class="math inline">\(i\)</span>th observation as an influential point if the <span class="math inline">\(i,j\)</span>th entry of DFBETAS has a magnitude greater than <span class="math inline">\(2/\sqrt{n}\)</span>.</p>
 </section>
 <section id="dffits" class="level3" data-number="2.5.4">
 <h3 data-number="2.5.4" class="anchored" data-anchor-id="dffits"><span class="header-section-number">2.5.4</span> DFFITS</h3>
@@ -1398,20 +1401,20 @@ The <span class="math inline">\(i\)</span>th entry in the vector <span class="ma
   \text{DFFIT} =
   \frac{\hat{Y} - \hat{Y}_{(i)}
   }{
-    \sqrt{ (\TT{X}X)_{i,i}^{-1} SS_{\text{res}(i)}/(n-p-2) }
-  } \in \real^n.
+    \sqrt{ ({X}^\mathrm{T}X)_{i,i}^{-1} SS_{\text{res}(i)}/(n-p-2) }
+  } \in \mathbb{R}^n.
 \]</span> The claim is that DFFIT is effected by both leverage and prediction error. The heuristic is to investigate any observation with DFFIT greater in magnitude than <span class="math inline">\(2\sqrt{(p+1)/n}\)</span>.</p>
 </section>
 <section id="covariance-ratios" class="level3" data-number="2.5.5">
 <h3 data-number="2.5.5" class="anchored" data-anchor-id="covariance-ratios"><span class="header-section-number">2.5.5</span> Covariance Ratios</h3>
-<p>The covariance ratio whether the precision of the model increases or decreases when the <span class="math inline">\(i\)</span>th observation is included. This measure is based on the idea that a small value for <span class="math inline">\(\det\left[ (\TT{X}X)^{-1}SS_{\text{res}} \right]\)</span> indicates high precision in our model. Hence, the covariance ratio considers a ratio of determinants <span class="math display">\[\begin{multline*}
+<p>The covariance ratio whether the precision of the model increases or decreases when the <span class="math inline">\(i\)</span>th observation is included. This measure is based on the idea that a small value for <span class="math inline">\(\det\left[ ({X}^\mathrm{T}X)^{-1}SS_{\text{res}} \right]\)</span> indicates high precision in our model. Hence, the covariance ratio considers a ratio of determinants <span class="math display">\[\begin{multline*}
   \text{covratio}_i =
   \frac{
     \det\left[
-      (\TT{X}_{(i)}X_{(i)})^{-1}SS_{\text{res}(i)}/(n-p-2)
+      ({X}^\mathrm{T}_{(i)}X_{(i)})^{-1}SS_{\text{res}(i)}/(n-p-2)
     \right]
   }{
-    \det\left[ (\TT{X}X)^{-1}SS_{\text{res}}/(n-p-1) \right]
+    \det\left[ ({X}^\mathrm{T}X)^{-1}SS_{\text{res}}/(n-p-1) \right]
   } = \\ =
   \left(
     \frac{
@@ -1426,8 +1429,8 @@ The <span class="math inline">\(i\)</span>th entry in the vector <span class="ma
 <section id="influence-measures-an-example" class="level3" data-number="2.5.6">
 <h3 data-number="2.5.6" class="anchored" data-anchor-id="influence-measures-an-example"><span class="header-section-number">2.5.6</span> Influence Measures: An Example</h3>
 <p>To test these different measures, we create a dataset of <span class="math inline">\(n=50\)</span> observations from the model <span class="math display">\[
-  y = 3 + 2x + \veps
-\]</span> where <span class="math inline">\(\veps\dist\distNormal{0}{1}\)</span> and <span class="math inline">\(x\in[0,2]\)</span>. To this dataset, we add 2 anomalous points at <span class="math inline">\((4,8)\)</span> and at <span class="math inline">\((1,0)\)</span>. Thus, we fit a simple linear regression to the original 50 data points and also to the new set of 52 data points resulting in the red and blue lines, respectively.</p>
+  y = 3 + 2x + \varepsilon
+\]</span> where <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,1\right)\)</span> and <span class="math inline">\(x\in[0,2]\)</span>. To this dataset, we add 2 anomalous points at <span class="math inline">\((4,8)\)</span> and at <span class="math inline">\((1,0)\)</span>. Thus, we fit a simple linear regression to the original 50 data points and also to the new set of 52 data points resulting in the red and blue lines, respectively.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">216</span>)</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some data and fit a linear regression</span></span>
@@ -1520,15 +1523,15 @@ The <span class="math inline">\(i\)</span>th entry in the vector <span class="ma
 </section>
 <section id="weighted-least-squares" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="weighted-least-squares"><span class="header-section-number">2.6</span> Weighted Least Squares</h2>
-<p>A key assumption of the Gauss-Markov theorem is that <span class="math inline">\(\veps_i = \sigma^2\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>. What happens when <span class="math inline">\(\veps_i = \sigma_i^2\)</span>–i.e.&nbsp;when the variance can differ for each observation? Normalizing the errors <span class="math inline">\(\veps_i\)</span> can be done by <span class="math display">\[
-  \frac{\veps_i}{\sigma_i}  
+<p>A key assumption of the Gauss-Markov theorem is that <span class="math inline">\(\varepsilon_i = \sigma^2\)</span> for all <span class="math inline">\(i=1,\ldots,n\)</span>. What happens when <span class="math inline">\(\varepsilon_i = \sigma_i^2\)</span>–i.e.&nbsp;when the variance can differ for each observation? Normalizing the errors <span class="math inline">\(\varepsilon_i\)</span> can be done by <span class="math display">\[
+  \frac{\varepsilon_i}{\sigma_i}  
   = \frac{1}{\sigma_{i,i}}(Y_i - X_{i,\cdot}\beta)
-  \dist\distNormal{0}{1}.
+  \sim\mathcal{N}\left(0,1\right).
 \]</span> In Chapter 1, we computed the least squares estimator as the vector <span class="math inline">\(\hat{\beta}\)</span> such that <span class="math display">\[
-  \hat{\beta} = \argmin{\tilde{\beta}\in\real^{p+1}}
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
   \sum_{i=1}^n (Y_i - X_{i,\cdot}\tilde{\beta})^2
 \]</span> Now, we will solve the slighly modified equation <span class="math display">\[
-  \hat{\beta} = \argmin{\tilde{\beta}\in\real^{p+1}}
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
   \sum_{i=1}^n \frac{(Y_i - X_{i,\cdot}\tilde{\beta})^2}{\sigma^2_i}.
 \]</span> In this setting, dividing by <span class="math inline">\(\sigma_i^2\)</span> is the ``weight’’ that gives this method the name weighted least squares.</p>
 <p>Proceeding as in chapter 1, we take a derivative with respect to the <span class="math inline">\(j\)</span>th <span class="math inline">\(\tilde{\beta}_j\)</span> to get <span class="math display">\[\begin{align*}
@@ -1544,12 +1547,12 @@ The <span class="math inline">\(i\)</span>th entry in the vector <span class="ma
   2\sum_{i=1}^n {X_{i,\cdot}'\tilde{\beta}X_{i,j}'}
 \end{align*}\]</span> where <span class="math inline">\(Y_i' = Y_i/\sigma_i\)</span> and <span class="math inline">\(X_{i,j}' = X_{i,j}/\sigma_i\)</span>. Hence, the least squares estimator is as before <span class="math display">\[\begin{align*}
   \hat{\beta}
-  &amp;= (\TT{X'}X')^{-1}\TT{X'}Y'\\
-  &amp;= (\TT{X}WX)^{-1}\TT{X}WY
-\end{align*}\]</span> where <span class="math inline">\(W \in\real^{n\times n}\)</span> is the diagonal matrix with entries <span class="math inline">\(W_{i,i} = \sigma_{i}^2\)</span>.</p>
+  &amp;= ({X'}^\mathrm{T}X')^{-1}{X'}^\mathrm{T}Y'\\
+  &amp;= ({X}^\mathrm{T}WX)^{-1}{X}^\mathrm{T}WY
+\end{align*}\]</span> where <span class="math inline">\(W \in\mathbb{R}^{n\times n}\)</span> is the diagonal matrix with entries <span class="math inline">\(W_{i,i} = \sigma_{i}^2\)</span>.</p>
 <p>In practise, we do not know the values for <span class="math inline">\(\sigma_i^2\)</span>. Methods to find a good matrix of weights <span class="math inline">\(W\)</span> exist such as <a href="https://en.wikipedia.org/wiki/Iteratively_reweighted_least_squares">Iteratively Reweighted Least Squares</a> which is equivalent to finding the estimator <span class="math display">\[
-  \hat{\beta} = \argmin{\tilde{\beta}\in\real^{p+1}}
-  \sum_{i=1}^n \abs{Y_i - X_{i,\cdot}\tilde{\beta}}^q
+  \hat{\beta} = \underset{\tilde{\beta}\in\mathbb{R}^{p+1}}{\arg\min}
+  \sum_{i=1}^n \lvert Y_i - X_{i,\cdot}\tilde{\beta}\rvert^q
 \]</span> for some <span class="math inline">\(q\in[1,\infty)\)</span>.</p>
 
 
