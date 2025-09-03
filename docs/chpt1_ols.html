@@ -191,6 +191,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./chpt3_ModBuild.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -408,7 +414,32 @@ window.Quarto = {
 \]</span> Setting this equal to zero results in a critical point at <span class="math display">\[
   {X}^\mathrm{T}Y = {X}^\mathrm{T}X\hat{\beta}
 \]</span> or <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> assuming <span class="math inline">\({X}^\mathrm{T}X\)</span> is invertible. Revisiting the terminology in the above definitions sections gives the following table:</p>
-<p>|————————–|————————————————–| | Least Squares Estimator: | <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Fitted Values: | <span class="math inline">\(\hat{Y} = X\hat{\beta}=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> | | Residuals: | <span class="math inline">\(r = Y-\hat{Y} = (I_n - X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y\)</span> |</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Object</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Least Squares Estimator:</td>
+<td><span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span></td>
+</tr>
+<tr class="even">
+<td>Fitted Values:</td>
+<td><span class="math inline">\(\hat{Y} = X\hat{\beta}=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span></td>
+</tr>
+<tr class="odd">
+<td>Residuals:</td>
+<td><span class="math inline">\(r = Y-\hat{Y} = (I_n - X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T})Y\)</span></td>
+</tr>
+</tbody>
+</table>
 <p>In the case that <span class="math inline">\(n&gt;p\)</span> and that the columns of <span class="math inline">\(X\)</span> are linearly independent, the matrix <span class="math inline">\(P_X:=X({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}\)</span> is a rank <span class="math inline">\(p+1\)</span> projection matrix. Similarly, <span class="math inline">\(I_n-P_X\)</span> is the complementary rank <span class="math inline">\(n-p-1\)</span> projection matrix. Intuitively, this implies that the fitted values are the projection on the observed values onto a <span class="math inline">\(p\)</span>-dimensional subspace while the residuals arise from a projection onto the orthogonal subspace. As a result, it can be shown that <span class="math inline">\(\mathrm{cov}\left(\hat{Y},r\right) = 0\)</span>.</p>
 <p>Now that we have an explicit expression for the least squares estimator <span class="math inline">\(\hat{\beta}\)</span>, we can show that it is unbiased. <span class="math display">\[
   \mathrm{E}\hat{\beta} = \mathrm{E}\left(({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\right)
