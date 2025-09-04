@@ -198,5 +198,49 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Model Building</span>"
     ]
+  },
+  {
+    "objectID": "apen1_LinearAlgebra.html",
+    "href": "apen1_LinearAlgebra.html",
+    "title": "Appendix A — Linear Algebra",
+    "section": "",
+    "text": "A.1 Eigenvalues\nTo successfully understand linear regression, we will require some basic notations regrading the manipulation of vectors and matrices. First, we will denote a \\(n\\) dimensional vector as \\(Y\\in\\mathbb{R}^n\\) and an \\(n\\times p\\) matrix as \\(X\\in\\mathbb{R}^{n\\times p}\\).\nIn linear regression, we are ultimately faced with the problem of solving a linear system of equations. That is, let \\(A\\in\\mathbb{R}^{p\\times p}\\) be an invertible matrix, \\(z\\in\\mathbb{R}^p\\) a vector, and \\(b\\in\\mathbb{R}^p\\) another vector. If we know \\(A\\) and \\(b\\), then we want to solve the following system for \\(Z\\). \\[\n  \\left.\n  \\begin{array}{c}\n    a_{11}z_1 + \\ldots a_{1p}z_p = b_1\\\\\n    \\vdots\\\\\n    a_{p1}z_1 + \\ldots a_{pp}z_p = b_p\n  \\end{array}\n  \\right\\} \\Rightarrow Az = b.\n\\] This solution can be written as \\(z = A^{-1}b\\) assuming, again, that \\(A\\) is invertible. An invertible matrix must necessarilly be square; i.e. number of rows = number of columns.\nFor a matrix \\(X\\in\\mathbb{R}^{n\\times p}\\), its transpose is \\({X}^\\mathrm{T}\\in\\mathbb{R}^{p\\times n}\\). This matrix has \\(ij\\)th entry \\(({X}^\\mathrm{T})_{i,j} = X_{j,i}\\). If \\(X = {X}^\\mathrm{T}\\), then we say that \\(X\\) is symmetric. Symmetric matrices always have real-valued eigenvalues.\nA square matrix \\(A\\in\\mathbb{R}^{p\\times p}\\) is said to be positive definite if \\({x}^\\mathrm{T}Ax&gt;0\\) for all choices of vector \\(x\\in\\mathbb{R}^p\\) such that \\(x\\ne0\\). If we replace the \\(&gt;\\) with a \\(\\ge\\), then we say that \\(A\\) is positive semi-definite; i.e. \\({x}^\\mathrm{T}Ax\\ge0\\) for all choices of vector \\(x\\in\\mathbb{R}^p\\).\nA matrix is said to be idempotent if \\(A^2=A\\). Idempotent matrices define orthogonal projections in \\(\\mathbb{R}^p\\). These are of critical importance in linear regression as least squares regression is simply a projection in \\(\\mathbb{R}^n\\) of the observed output \\(Y\\) onto the column space of \\(X\\in\\mathbb{R}^{n\\times p}\\), which is the \\(p\\)-dimensional subspace spanned by the columns of \\(X\\).\nA very important aspect of a square matrix \\(A\\) is its eigenvalues. For a much more general discussion, see the Spectral Theorem. For our purposes, assume \\(A\\) is a symmetric matrix. Then, we can write \\(A = UD{U}^\\mathrm{T}\\) where \\(D\\) is the diagonal matrix of eigenvalues, and \\(U\\) is an orthogonal matrix; i.e. \\(U{U}^\\mathrm{T} = {U}^\\mathrm{T}U = I\\), the identity matrix. The eigenvalues will be denoted by \\(\\lambda_1,\\ldots,\\lambda_p \\in \\mathbb{R}\\).\nThere are some certain special cases we will need to consider:",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Linear Algebra</span>"
+    ]
+  },
+  {
+    "objectID": "apen1_LinearAlgebra.html#eigenvalues",
+    "href": "apen1_LinearAlgebra.html#eigenvalues",
+    "title": "Appendix A — Linear Algebra",
+    "section": "",
+    "text": "if all \\(\\lambda_i\\ne0\\), then \\(A\\) is invertible.\nif at least one \\(\\lambda_i=0\\), then \\(A\\) is singular.\nif all \\(\\lambda_i&gt;0\\), then \\(A\\) is positive definite.\nif all \\(\\lambda_i\\ge0\\), then \\(A\\) is positive semi-definite.\nif all \\(\\lambda_i&lt;0\\), then \\(A\\) is negative definite.\nif all \\(\\lambda_i\\le0\\), then \\(A\\) is negative semi-definite.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Linear Algebra</span>"
+    ]
+  },
+  {
+    "objectID": "apen1_LinearAlgebra.html#covariance-matrices",
+    "href": "apen1_LinearAlgebra.html#covariance-matrices",
+    "title": "Appendix A — Linear Algebra",
+    "section": "A.2 Covariance Matrices",
+    "text": "A.2 Covariance Matrices\nFor a random vector \\(X\\in\\mathbb{R}^n\\), its covariance matrix is the \\(n\\times n\\) matrix with \\(ij\\)th entry \\(\\mathrm{cov}\\left(X_i,X_j\\right)\\). Covariance matrices are necessarily symmetric and positive definite. Furthermore, any symmetric positive definite matrix can be thought of as a covariance matrix. Strictly speaking, we may have a covariance matrix that is positive semi-definite. In this case, we say that the covariance matrix is degenerate.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Linear Algebra</span>"
+    ]
+  },
+  {
+    "objectID": "apen1_LinearAlgebra.html#quick-list-of-facts",
+    "href": "apen1_LinearAlgebra.html#quick-list-of-facts",
+    "title": "Appendix A — Linear Algebra",
+    "section": "A.3 Quick List of Facts",
+    "text": "A.3 Quick List of Facts\n\nFor a matrix \\(A\\in\\mathbb{R}^{n\\times p}\\) with row \\(i\\) and column \\(j\\) entry denoted \\(a_{i,j}\\), then the transpose of \\(A\\) is \\({A}^\\mathrm{T}\\in\\mathbb{R}^{p\\times n}\\) with row \\(i\\) and column \\(j\\) entry \\(a_{j,i}\\). That is, the indices have swapped.\nFor matrices \\(A\\in\\mathbb{R}^{m\\times n}\\) and \\(B\\in\\mathbb{R}^{n\\times p}\\), we have that \\({(AB)}^\\mathrm{T} = {B}^\\mathrm{T}{A}^\\mathrm{T}\\)\nFor an invertible matrix \\(A\\in\\mathbb{R}^{n\\times n}\\), we have that \\({(A^{-1})}^\\mathrm{T} = ({A}^\\mathrm{T})^{-1}\\).\nA matrix \\(A\\) is square if the number of rows equals the number of columns. That is, \\(A\\in\\mathbb{R}^{n\\times n}\\).\nA square matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) is symmetric if \\(A={A}^\\mathrm{T}\\).\nA symmetric matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) necessarily has real eigenvalues.\nA symmetric matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) is positive definite if for all \\(x\\in\\mathbb{R}^n\\) with \\(x\\ne0\\), we have that \\({x}^\\mathrm{T}Ax&gt;0\\).\nA symmetric matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) is also positive definite if all of its eigenvalues are positive real valued.\nA symmetric matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) is positive semi-definite (also non-negative definite) if for all \\(x\\in\\mathbb{R}^n\\) with \\(x\\ne0\\), we have that \\({x}^\\mathrm{T}Ax\\ge0\\). Or alternatively, all of the eigenvalues are non-negative real valued.\nCovariance matrices are always positive semi-definite. If a covariance matrix has some zero valued eigenvalues, then it is called degenerate.\nIf \\(X,Y\\in\\mathbb{R}^{n}\\) are random vectors, then \\[\n    \\mathrm{cov}\\left(X,Y\\right) = \\mathrm{E}\\left( (X-\\mathrm{E}X){(Y-\\mathrm{E}Y)}^\\mathrm{T} \\right)\\in\\mathbb{R}^{n\\times n}.\n  \\]\nIf \\(X,Y\\in\\mathbb{R}^{n}\\) are random vectors and \\(A,B\\in\\mathbb{R}^{m\\times n}\\) are non-random real valued matrices, then \\[\n    \\mathrm{cov}\\left(AX,BY\\right) = A\\mathrm{cov}\\left(X,Y\\right){B}^\\mathrm{T}\\in\\mathbb{R}^{m\\times m}.\n  \\]\nIf \\(Y\\in\\mathbb{R}^n\\) is multivariate normal–i.e. \\(Y\\sim\\mathcal{N}\\left(\\mu,\\Sigma\\right)\\)–and \\(A\\in\\mathbb{R}^{m\\times n}\\) then \\(AY\\) is also multivariate normal with \\(AY\\sim\\mathcal{N}\\left(A\\mu,A\\Sigma{A}^\\mathrm{T}\\right)\\).\nA square matrix \\(A\\in\\mathbb{R}^{n\\times n}\\) is idempotent if \\(A^2 = A\\).",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Linear Algebra</span>"
+    ]
   }
 ]

@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Adam B Kashlak">
-<meta name="dcterms.date" content="2025-09-03">
 
-<title>STAT 378: Linear Regression Analysis</title>
+<title>Appendix A — Linear Algebra – STAT 378: Linear Regression Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chpt1_ols.html" rel="next">
+<link href="./references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -110,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -149,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apen1_LinearAlgebra.html" class="sidebar-item-text sidebar-link">
+  <a href="./apen1_LinearAlgebra.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
   </div>
 </li>
@@ -165,35 +192,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#eigenvalues" id="toc-eigenvalues" class="nav-link active" data-scroll-target="#eigenvalues"><span class="header-section-number">A.1</span> Eigenvalues</a></li>
+  <li><a href="#covariance-matrices" id="toc-covariance-matrices" class="nav-link" data-scroll-target="#covariance-matrices"><span class="header-section-number">A.2</span> Covariance Matrices</a></li>
+  <li><a href="#quick-list-of-facts" id="toc-quick-list-of-facts" class="nav-link" data-scroll-target="#quick-list-of-facts"><span class="header-section-number">A.3</span> Quick List of Facts</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">STAT 378: Linear Regression Analysis</h1>
+<h1 class="title">Appendix A — Linear Algebra</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Adam B Kashlak </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 3, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -203,24 +220,61 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<blockquote class="blockquote">
-<p>I never felt such a glow of loyalty and respect towards the sovereignty and magnificent sway of mathematical analysis as when his answer reached me confirming, by purely mathematical reasoning, my various and laborious statistical conclusions.</p>
-</blockquote>
-<p><em>Regression towards Mediocrity in Hereditary Stature</em><br>
-<em>Sir Francis Galton, FRS (1886)</em></p>
-<p>This collection of lecture notes is an updated version of my original lecture ntoes from 2017. They are now typeset in Quarto thanks to the suggestion of my former PhD student, <a href="https://katieburak.github.io/" class="external" target="_blank">Dr.&nbsp;Katie L Burak</a>, who is currently an assistant professor of teaching at the University of British Columbia.</p>
-<p>These revised and enhanced notes have some nice additions. Most notably, there is embedded <code>R</code> code and datasets within the text, which is (perhaps) the main point of using Quarto over my old LaTex notes. I have also taken it upon myself to add new sections and expand on those I find most interesting. This mostly occurs at the end of the notes with additional sections on advanced topics like logisitic regression, LASSO, and some Bayesian regression models.</p>
-<p>The material in these notes is now too much for a single semester course in linear regression. Of note, I personally plan to skip the sections on influential points in regression models as the formulae are both tedious and ad-hoc. Nevertheless, I did copy these bits into the new version of my notes for completeness sake.</p>
-<p><em>Adam B Kashlak</em><br>
-<em>Edmonton, Canada</em><br>
-<em>August 2025</em></p>
-<p>The following are lecture notes originally produced for an upper level undergraduate course on linear regression at the University of Alberta in the fall of 2017. Regression is one of the main, if not the primary, workhorses of statistical inference. Hence, I do hope you will find these notes useful in learning about regression.</p>
-<p>The goal is to begin with the standard development of ordinary least squares in the multiple regression setting, then to move onto a discussion of model assumptions and issues that can arise in practice, and finally to discuss some specific instances of generalized linear models (GLMs) without delving into GLMs in full generality. Of course, what follows is by no means a unique exposition but is mostly derived from three main sources: the text, <em>Linear Regression Analysis</em>, by Montgomery, Peck, and Vining; the course notes of Dr.&nbsp;Linglong Kong who lectured this same course in 2013; whatever remains inside my brain from supervising (TAing) undergraduate statistics courses at the University of Cambridge during my PhD years.</p>
-<p><em>Adam B Kashlak</em><br>
-<em>Edmonton, Canada</em><br>
-<em>August 2017</em></p>
+<div class="hidden">
+
+</div>
+<p>To successfully understand linear regression, we will require some basic notations regrading the manipulation of vectors and matrices. First, we will denote a <span class="math inline">\(n\)</span> dimensional vector as <span class="math inline">\(Y\in\mathbb{R}^n\)</span> and an <span class="math inline">\(n\times p\)</span> matrix as <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>.</p>
+<p>In linear regression, we are ultimately faced with the problem of solving a linear system of equations. That is, let <span class="math inline">\(A\in\mathbb{R}^{p\times p}\)</span> be an invertible matrix, <span class="math inline">\(z\in\mathbb{R}^p\)</span> a vector, and <span class="math inline">\(b\in\mathbb{R}^p\)</span> another vector. If we know <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span>, then we want to solve the following system for <span class="math inline">\(Z\)</span>. <span class="math display">\[
+  \left.
+  \begin{array}{c}
+    a_{11}z_1 + \ldots a_{1p}z_p = b_1\\
+    \vdots\\
+    a_{p1}z_1 + \ldots a_{pp}z_p = b_p
+  \end{array}
+  \right\} \Rightarrow Az = b.
+\]</span> This solution can be written as <span class="math inline">\(z = A^{-1}b\)</span> assuming, again, that <span class="math inline">\(A\)</span> is invertible. An invertible matrix must necessarilly be square; i.e.&nbsp;number of rows = number of columns.</p>
+<p>For a matrix <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>, its transpose is <span class="math inline">\({X}^\mathrm{T}\in\mathbb{R}^{p\times n}\)</span>. This matrix has <span class="math inline">\(ij\)</span>th entry <span class="math inline">\(({X}^\mathrm{T})_{i,j} = X_{j,i}\)</span>. If <span class="math inline">\(X = {X}^\mathrm{T}\)</span>, then we say that <span class="math inline">\(X\)</span> is symmetric. Symmetric matrices always have real-valued eigenvalues.</p>
+<p>A square matrix <span class="math inline">\(A\in\mathbb{R}^{p\times p}\)</span> is said to be <em>positive definite</em> if <span class="math inline">\({x}^\mathrm{T}Ax&gt;0\)</span> for all choices of vector <span class="math inline">\(x\in\mathbb{R}^p\)</span> such that <span class="math inline">\(x\ne0\)</span>. If we replace the <span class="math inline">\(&gt;\)</span> with a <span class="math inline">\(\ge\)</span>, then we say that <span class="math inline">\(A\)</span> is <em>positive semi-definite</em>; i.e.&nbsp;<span class="math inline">\({x}^\mathrm{T}Ax\ge0\)</span> for all choices of vector <span class="math inline">\(x\in\mathbb{R}^p\)</span>.</p>
+<p>A matrix is said to be <em>idempotent</em> if <span class="math inline">\(A^2=A\)</span>. Idempotent matrices define orthogonal projections in <span class="math inline">\(\mathbb{R}^p\)</span>. These are of critical importance in linear regression as least squares regression is simply a projection in <span class="math inline">\(\mathbb{R}^n\)</span> of the observed output <span class="math inline">\(Y\)</span> onto the column space of <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>, which is the <span class="math inline">\(p\)</span>-dimensional subspace spanned by the columns of <span class="math inline">\(X\)</span>.</p>
+<section id="eigenvalues" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="eigenvalues"><span class="header-section-number">A.1</span> Eigenvalues</h2>
+<p>A very important aspect of a square matrix <span class="math inline">\(A\)</span> is its eigenvalues. For a much more general discussion, see the <a href="https://en.wikipedia.org/wiki/Spectral_theorem">Spectral Theorem</a>. For our purposes, assume <span class="math inline">\(A\)</span> is a symmetric matrix. Then, we can write <span class="math inline">\(A = UD{U}^\mathrm{T}\)</span> where <span class="math inline">\(D\)</span> is the diagonal matrix of eigenvalues, and <span class="math inline">\(U\)</span> is an orthogonal matrix; i.e.&nbsp;<span class="math inline">\(U{U}^\mathrm{T} = {U}^\mathrm{T}U = I\)</span>, the identity matrix. The eigenvalues will be denoted by <span class="math inline">\(\lambda_1,\ldots,\lambda_p \in \mathbb{R}\)</span>.<br>
+There are some certain special cases we will need to consider:</p>
+<ul>
+<li>if all <span class="math inline">\(\lambda_i\ne0\)</span>, then <span class="math inline">\(A\)</span> is invertible.</li>
+<li>if at least one <span class="math inline">\(\lambda_i=0\)</span>, then <span class="math inline">\(A\)</span> is singular.</li>
+<li>if all <span class="math inline">\(\lambda_i&gt;0\)</span>, then <span class="math inline">\(A\)</span> is positive definite.</li>
+<li>if all <span class="math inline">\(\lambda_i\ge0\)</span>, then <span class="math inline">\(A\)</span> is positive semi-definite.</li>
+<li>if all <span class="math inline">\(\lambda_i&lt;0\)</span>, then <span class="math inline">\(A\)</span> is negative definite.</li>
+<li>if all <span class="math inline">\(\lambda_i\le0\)</span>, then <span class="math inline">\(A\)</span> is negative semi-definite.</li>
+</ul>
+</section>
+<section id="covariance-matrices" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="covariance-matrices"><span class="header-section-number">A.2</span> Covariance Matrices</h2>
+<p>For a random vector <span class="math inline">\(X\in\mathbb{R}^n\)</span>, its covariance matrix is the <span class="math inline">\(n\times n\)</span> matrix with <span class="math inline">\(ij\)</span>th entry <span class="math inline">\(\mathrm{cov}\left(X_i,X_j\right)\)</span>. Covariance matrices are necessarily symmetric and positive definite. Furthermore, any symmetric positive definite matrix can be thought of as a covariance matrix. Strictly speaking, we may have a covariance matrix that is positive <em>semi</em>-definite. In this case, we say that the covariance matrix is <em>degenerate</em>.</p>
+</section>
+<section id="quick-list-of-facts" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="quick-list-of-facts"><span class="header-section-number">A.3</span> Quick List of Facts</h2>
+<ol type="1">
+<li>For a matrix <span class="math inline">\(A\in\mathbb{R}^{n\times p}\)</span> with row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> entry denoted <span class="math inline">\(a_{i,j}\)</span>, then the transpose of <span class="math inline">\(A\)</span> is <span class="math inline">\({A}^\mathrm{T}\in\mathbb{R}^{p\times n}\)</span> with row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> entry <span class="math inline">\(a_{j,i}\)</span>. That is, the indices have swapped.</li>
+<li>For matrices <span class="math inline">\(A\in\mathbb{R}^{m\times n}\)</span> and <span class="math inline">\(B\in\mathbb{R}^{n\times p}\)</span>, we have that <span class="math inline">\({(AB)}^\mathrm{T} = {B}^\mathrm{T}{A}^\mathrm{T}\)</span></li>
+<li>For an invertible matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span>, we have that <span class="math inline">\({(A^{-1})}^\mathrm{T} = ({A}^\mathrm{T})^{-1}\)</span>.</li>
+<li>A matrix <span class="math inline">\(A\)</span> is <em>square</em> if the number of rows equals the number of columns. That is, <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span>.</li>
+<li>A square matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> is <em>symmetric</em> if <span class="math inline">\(A={A}^\mathrm{T}\)</span>.</li>
+<li>A symmetric matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> necessarily has real eigenvalues.</li>
+<li>A symmetric matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> is <em>positive definite</em> if for all <span class="math inline">\(x\in\mathbb{R}^n\)</span> with <span class="math inline">\(x\ne0\)</span>, we have that <span class="math inline">\({x}^\mathrm{T}Ax&gt;0\)</span>.</li>
+<li>A symmetric matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> is also positive definite if all of its eigenvalues are positive real valued.</li>
+<li>A symmetric matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> is <em>positive semi-definite</em> (also non-negative definite) if for all <span class="math inline">\(x\in\mathbb{R}^n\)</span> with <span class="math inline">\(x\ne0\)</span>, we have that <span class="math inline">\({x}^\mathrm{T}Ax\ge0\)</span>. Or alternatively, all of the eigenvalues are non-negative real valued.</li>
+<li>Covariance matrices are always positive semi-definite. If a covariance matrix has some zero valued eigenvalues, then it is called <em>degenerate</em>.</li>
+<li>If <span class="math inline">\(X,Y\in\mathbb{R}^{n}\)</span> are random vectors, then <span class="math display">\[
+    \mathrm{cov}\left(X,Y\right) = \mathrm{E}\left( (X-\mathrm{E}X){(Y-\mathrm{E}Y)}^\mathrm{T} \right)\in\mathbb{R}^{n\times n}.
+  \]</span></li>
+<li>If <span class="math inline">\(X,Y\in\mathbb{R}^{n}\)</span> are random vectors and <span class="math inline">\(A,B\in\mathbb{R}^{m\times n}\)</span> are non-random real valued matrices, then <span class="math display">\[
+    \mathrm{cov}\left(AX,BY\right) = A\mathrm{cov}\left(X,Y\right){B}^\mathrm{T}\in\mathbb{R}^{m\times m}.
+  \]</span></li>
+<li>If <span class="math inline">\(Y\in\mathbb{R}^n\)</span> is multivariate normal–i.e.&nbsp;<span class="math inline">\(Y\sim\mathcal{N}\left(\mu,\Sigma\right)\)</span>–and <span class="math inline">\(A\in\mathbb{R}^{m\times n}\)</span> then <span class="math inline">\(AY\)</span> is also multivariate normal with <span class="math inline">\(AY\sim\mathcal{N}\left(A\mu,A\Sigma{A}^\mathrm{T}\right)\)</span>.</li>
+<li>A square matrix <span class="math inline">\(A\in\mathbb{R}^{n\times n}\)</span> is <em>idempotent</em> if <span class="math inline">\(A^2 = A\)</span>.</li>
+</ol>
 
 
 </section>
@@ -627,11 +681,11 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chpt1_ols.html" class="pagination-link" aria-label="Ordinary Least Squares">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ordinary Least Squares</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
