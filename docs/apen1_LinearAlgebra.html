@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./apen2_ProbDist.html" rel="next">
 <link href="./references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -180,6 +181,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apen2_ProbDist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -192,9 +199,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#eigenvalues" id="toc-eigenvalues" class="nav-link active" data-scroll-target="#eigenvalues"><span class="header-section-number">A.1</span> Eigenvalues</a></li>
-  <li><a href="#covariance-matrices" id="toc-covariance-matrices" class="nav-link" data-scroll-target="#covariance-matrices"><span class="header-section-number">A.2</span> Covariance Matrices</a></li>
-  <li><a href="#quick-list-of-facts" id="toc-quick-list-of-facts" class="nav-link" data-scroll-target="#quick-list-of-facts"><span class="header-section-number">A.3</span> Quick List of Facts</a></li>
+  <li><a href="#vectors-and-matrices" id="toc-vectors-and-matrices" class="nav-link active" data-scroll-target="#vectors-and-matrices"><span class="header-section-number">A.1</span> Vectors and Matrices</a></li>
+  <li><a href="#eigenvalues" id="toc-eigenvalues" class="nav-link" data-scroll-target="#eigenvalues"><span class="header-section-number">A.2</span> Eigenvalues</a></li>
+  <li><a href="#covariance-matrices" id="toc-covariance-matrices" class="nav-link" data-scroll-target="#covariance-matrices"><span class="header-section-number">A.3</span> Covariance Matrices</a></li>
+  <li><a href="#quick-list-of-facts" id="toc-quick-list-of-facts" class="nav-link" data-scroll-target="#quick-list-of-facts"><span class="header-section-number">A.4</span> Quick List of Facts</a></li>
   </ul>
 </nav>
     </div>
@@ -223,6 +231,8 @@ window.Quarto = {
 <div class="hidden">
 
 </div>
+<section id="vectors-and-matrices" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="vectors-and-matrices"><span class="header-section-number">A.1</span> Vectors and Matrices</h2>
 <p>To successfully understand linear regression, we will require some basic notations regrading the manipulation of vectors and matrices. First, we will denote a <span class="math inline">\(n\)</span> dimensional vector as <span class="math inline">\(Y\in\mathbb{R}^n\)</span> and an <span class="math inline">\(n\times p\)</span> matrix as <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>.</p>
 <p>In linear regression, we are ultimately faced with the problem of solving a linear system of equations. That is, let <span class="math inline">\(A\in\mathbb{R}^{p\times p}\)</span> be an invertible matrix, <span class="math inline">\(z\in\mathbb{R}^p\)</span> a vector, and <span class="math inline">\(b\in\mathbb{R}^p\)</span> another vector. If we know <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span>, then we want to solve the following system for <span class="math inline">\(Z\)</span>. <span class="math display">\[
   \left.
@@ -236,8 +246,9 @@ window.Quarto = {
 <p>For a matrix <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>, its transpose is <span class="math inline">\({X}^\mathrm{T}\in\mathbb{R}^{p\times n}\)</span>. This matrix has <span class="math inline">\(ij\)</span>th entry <span class="math inline">\(({X}^\mathrm{T})_{i,j} = X_{j,i}\)</span>. If <span class="math inline">\(X = {X}^\mathrm{T}\)</span>, then we say that <span class="math inline">\(X\)</span> is symmetric. Symmetric matrices always have real-valued eigenvalues.</p>
 <p>A square matrix <span class="math inline">\(A\in\mathbb{R}^{p\times p}\)</span> is said to be <em>positive definite</em> if <span class="math inline">\({x}^\mathrm{T}Ax&gt;0\)</span> for all choices of vector <span class="math inline">\(x\in\mathbb{R}^p\)</span> such that <span class="math inline">\(x\ne0\)</span>. If we replace the <span class="math inline">\(&gt;\)</span> with a <span class="math inline">\(\ge\)</span>, then we say that <span class="math inline">\(A\)</span> is <em>positive semi-definite</em>; i.e.&nbsp;<span class="math inline">\({x}^\mathrm{T}Ax\ge0\)</span> for all choices of vector <span class="math inline">\(x\in\mathbb{R}^p\)</span>.</p>
 <p>A matrix is said to be <em>idempotent</em> if <span class="math inline">\(A^2=A\)</span>. Idempotent matrices define orthogonal projections in <span class="math inline">\(\mathbb{R}^p\)</span>. These are of critical importance in linear regression as least squares regression is simply a projection in <span class="math inline">\(\mathbb{R}^n\)</span> of the observed output <span class="math inline">\(Y\)</span> onto the column space of <span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>, which is the <span class="math inline">\(p\)</span>-dimensional subspace spanned by the columns of <span class="math inline">\(X\)</span>.</p>
-<section id="eigenvalues" class="level2" data-number="A.1">
-<h2 data-number="A.1" class="anchored" data-anchor-id="eigenvalues"><span class="header-section-number">A.1</span> Eigenvalues</h2>
+</section>
+<section id="eigenvalues" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="eigenvalues"><span class="header-section-number">A.2</span> Eigenvalues</h2>
 <p>A very important aspect of a square matrix <span class="math inline">\(A\)</span> is its eigenvalues. For a much more general discussion, see the <a href="https://en.wikipedia.org/wiki/Spectral_theorem">Spectral Theorem</a>. For our purposes, assume <span class="math inline">\(A\)</span> is a symmetric matrix. Then, we can write <span class="math inline">\(A = UD{U}^\mathrm{T}\)</span> where <span class="math inline">\(D\)</span> is the diagonal matrix of eigenvalues, and <span class="math inline">\(U\)</span> is an orthogonal matrix; i.e.&nbsp;<span class="math inline">\(U{U}^\mathrm{T} = {U}^\mathrm{T}U = I\)</span>, the identity matrix. The eigenvalues will be denoted by <span class="math inline">\(\lambda_1,\ldots,\lambda_p \in \mathbb{R}\)</span>.<br>
 There are some certain special cases we will need to consider:</p>
 <ul>
@@ -249,12 +260,12 @@ There are some certain special cases we will need to consider:</p>
 <li>if all <span class="math inline">\(\lambda_i\le0\)</span>, then <span class="math inline">\(A\)</span> is negative semi-definite.</li>
 </ul>
 </section>
-<section id="covariance-matrices" class="level2" data-number="A.2">
-<h2 data-number="A.2" class="anchored" data-anchor-id="covariance-matrices"><span class="header-section-number">A.2</span> Covariance Matrices</h2>
+<section id="covariance-matrices" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="covariance-matrices"><span class="header-section-number">A.3</span> Covariance Matrices</h2>
 <p>For a random vector <span class="math inline">\(X\in\mathbb{R}^n\)</span>, its covariance matrix is the <span class="math inline">\(n\times n\)</span> matrix with <span class="math inline">\(ij\)</span>th entry <span class="math inline">\(\mathrm{cov}\left(X_i,X_j\right)\)</span>. Covariance matrices are necessarily symmetric and positive definite. Furthermore, any symmetric positive definite matrix can be thought of as a covariance matrix. Strictly speaking, we may have a covariance matrix that is positive <em>semi</em>-definite. In this case, we say that the covariance matrix is <em>degenerate</em>.</p>
 </section>
-<section id="quick-list-of-facts" class="level2" data-number="A.3">
-<h2 data-number="A.3" class="anchored" data-anchor-id="quick-list-of-facts"><span class="header-section-number">A.3</span> Quick List of Facts</h2>
+<section id="quick-list-of-facts" class="level2" data-number="A.4">
+<h2 data-number="A.4" class="anchored" data-anchor-id="quick-list-of-facts"><span class="header-section-number">A.4</span> Quick List of Facts</h2>
 <ol type="1">
 <li>For a matrix <span class="math inline">\(A\in\mathbb{R}^{n\times p}\)</span> with row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> entry denoted <span class="math inline">\(a_{i,j}\)</span>, then the transpose of <span class="math inline">\(A\)</span> is <span class="math inline">\({A}^\mathrm{T}\in\mathbb{R}^{p\times n}\)</span> with row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> entry <span class="math inline">\(a_{j,i}\)</span>. That is, the indices have swapped.</li>
 <li>For matrices <span class="math inline">\(A\in\mathbb{R}^{m\times n}\)</span> and <span class="math inline">\(B\in\mathbb{R}^{n\times p}\)</span>, we have that <span class="math inline">\({(AB)}^\mathrm{T} = {B}^\mathrm{T}{A}^\mathrm{T}\)</span></li>
@@ -686,6 +697,9 @@ There are some certain special cases we will need to consider:</p>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./apen2_ProbDist.html" class="pagination-link" aria-label="Some Useful Probability Distributions">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

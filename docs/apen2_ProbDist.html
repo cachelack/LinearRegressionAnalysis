@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – STAT 378: Linear Regression Analysis</title>
+<title>Appendix B — Some Useful Probability Distributions – STAT 378: Linear Regression Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,8 +30,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./apen1_LinearAlgebra.html" rel="next">
-<link href="./chpt3_ModBuild.html" rel="prev">
+<link href="./apen1_LinearAlgebra.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -89,6 +69,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -101,7 +110,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apen2_ProbDist.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -152,7 +161,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -173,7 +182,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apen2_ProbDist.html" class="sidebar-item-text sidebar-link">
+  <a href="./apen2_ProbDist.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></span></a>
   </div>
 </li>
@@ -184,15 +193,25 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">B.1</span> Introduction</a></li>
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">B.2</span> Normal distribution</a></li>
+  <li><a href="#chi-squared-distribution" id="toc-chi-squared-distribution" class="nav-link" data-scroll-target="#chi-squared-distribution"><span class="header-section-number">B.3</span> Chi-Squared distribution</a></li>
+  <li><a href="#t-distribution" id="toc-t-distribution" class="nav-link" data-scroll-target="#t-distribution"><span class="header-section-number">B.4</span> t distribution</a></li>
+  <li><a href="#f-distribution" id="toc-f-distribution" class="nav-link" data-scroll-target="#f-distribution"><span class="header-section-number">B.5</span> F distribution</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apen1_LinearAlgebra.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apen2_ProbDist.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Appendix B — Some Useful Probability Distributions</h1>
 </div>
 
 
@@ -209,11 +228,65 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" role="list" style="display: none">
+<div class="hidden">
 
 </div>
+<section id="introduction" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">B.1</span> Introduction</h2>
+<p>The following is a short overview of some of the most common probability distributions encountered in the context of linear regression.</p>
+</section>
+<section id="normal-distribution" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">B.2</span> Normal distribution</h2>
+<p>The normal or Gaussian distribution is of principal importance in probability and statistics. In its univariate form, we say that <span class="math inline">\(X\sim\mathcal{N}\left(\mu,\sigma^2\right)\)</span> with mean <span class="math inline">\(\mu\in\mathbb{R}\)</span> and variance <span class="math inline">\(\sigma^2\in\mathbb{R}^+\)</span> if it has the following probability density function (pdf): <span class="math display">\[
+  f_{\mathcal{N}\left(\mu,\sigma^2\right)}(x) =
+  \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(
+    -\frac{1}{2\sigma^2}(x-\mu)^2
+  \right).
+\]</span> Such a random variable <span class="math inline">\(X\)</span> can be centred and scaled into a standardized form as <span class="math inline">\((X-\mu)/\sigma\sim\mathcal{N}\left(0,1\right)\)</span>. Furthermore, the normal distribution is very stable in the sense that the sum of a collection of independent normal random variables has a normal distribution as well as scaling a normal random variable by some real valued scalar.</p>
+<p>Part of its importance stems from the central limit theorem, which in its simplest form states that the standardized sum of a collection on independent random variables converges in distribution to a standard normal random variable. However, its worth noting that there are many other central limit theorems in existence.</p>
+<div id="thm-CLT" class="theorem">
+<p><span class="theorem-title"><strong>Theorem B.1 (Central Limit Theorem)</strong></span> Let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample of <span class="math inline">\(n\)</span> iid random variables with mean <span class="math inline">\(\mu\in\mathbb{R}\)</span> and finite variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>. Letting <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> be the sample mean, then <span class="math display">\[
+    \sqrt{n}( \bar{Y}-\mu )  \xrightarrow{\text{d}} \mathcal{N}\left(0,1\right)
+  \]</span> where <span class="math inline">\( \xrightarrow{\text{d}} \)</span> denotes convergence in distribution.</p>
+</div>
+<p>The normal distribution can be extended to the multivariate normal distribution for a vector <span class="math inline">\(X\in\mathbb{R}^p\)</span> where we write <span class="math inline">\(X\sim\mathcal{N}\left({\bf \mu},\Sigma\right)\)</span>. Here, <span class="math inline">\({\bf\mu}\in\mathbb{R}^p\)</span> is the mean vector while <span class="math inline">\(\Sigma\in\mathbb{R}^{p\times p}\)</span> is a <span class="math inline">\(p\times p\)</span> matrix that is symmetric and positive semi-definite. This distribution also has elliptical symmetry. The form of the pdf, assuming <span class="math inline">\(\Sigma\)</span> is positive definite, is <span class="math display">\[
+  f_{\mathcal{N}\left(\mu,\Sigma\right)}(x) =
+  \frac{1}{\sqrt{2\pi\det(\Sigma)}}\exp\left(
+    -\frac{1}{2}{(x-\mu)}^\mathrm{T}\Sigma^{-1}(x-\mu)
+  \right)
+\]</span> Otherwise, <span class="math inline">\(X\)</span> will have a degenerate normal distribution, which is still normal but supported on a subspace of dimension less than <span class="math inline">\(p\)</span>.</p>
+<p>The multivariate normal (MVN) distribution has some very nice characterizations. A vector <span class="math inline">\(X=(X_1,\ldots,X_p)\)</span> is MVN if and only if every linear combination of the <span class="math inline">\(X_i\)</span> is univariate normal. That is, for all <span class="math inline">\(a\in\mathbb{R}^p\)</span>, <span class="math inline">\(a\cdot X \sim\mathcal{N}\left(\tilde{\mu},\tilde{\sigma}^2\right)\)</span>. Hence, it is worth emphasizing that if <span class="math inline">\(X\)</span> is a vector that is marginally normal (i.e.&nbsp;every component <span class="math inline">\(X_i\)</span> is univariate normal), then the joint distribution is <strong>not</strong> necessarily multivariate normal.</p>
+<p>In general if two random variables <span class="math inline">\(X,Y\in\mathbb{R}\)</span> are independent, then we have that <span class="math inline">\(\mathrm{cov}\left(X,Y\right)=0\)</span>. However, the reverse implication is not necessarily true. One exception to this is that if <span class="math inline">\((X,Y)\)</span> is MVN then if <span class="math inline">\(\mathrm{cov}\left(X,Y\right)=0\)</span> then <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent.</p>
+</section>
+<section id="chi-squared-distribution" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="chi-squared-distribution"><span class="header-section-number">B.3</span> Chi-Squared distribution</h2>
+<p>The chi-squared distribution arises throughout the field of statistics usually in the context of goodness-of-fit testing. Let <span class="math inline">\(Z\sim\mathcal{N}\left(0,1\right)\)</span>, then <span class="math inline">\(Z\sim\chi^2\left(1\right)\)</span>, which is said to be chi-squared with one degree of freedom. Furthermore, chi-squared random variables are additive in the sense that if <span class="math inline">\(X\sim\chi^2\left(\nu\right)\)</span> and <span class="math inline">\(Y\sim\chi^2\left(\eta\right)\)</span> are independent, then <span class="math inline">\(X+Y\sim\chi^2\left(\nu+\eta\right)\)</span>.<br>
+A chi-squared random variable is supported on the positive real line and the pdf for <span class="math inline">\(X\sim\chi^2\left(\nu\right)\)</span> with <span class="math inline">\(\nu&gt;0\)</span> is <span class="math display">\[
+  f_{\chi^2\left(\nu\right)}(x) =
+  \frac{1}{2^{\nu/2}\Gamma(\nu/2)}x^{\nu/2-1}\mathrm{e}^{-x/2}
+\]</span> Its mean and variance are <span class="math inline">\(\nu\)</span> and <span class="math inline">\(2\nu\)</span>, respectively. Note that while very often the degrees of freedom parameter is a positive integer, it can take on any positive real value and still be valid. In fact, the chi-squared distribution is a specific type of the more general gamma distribution, which will not be discussed in these notes.</p>
+<p>This random variable is quite useful in the context of linear regression with respect to how it leads to the t and F distributions discussed in the following subsections. However, it also arises in many other areas of statistics including Wilks’ Theorem regarding the asymptotic distribution of the log likelihood ratio, goodness-of-fit in multinomial hypothesis testing, and testing for independence in a contingency table.</p>
+</section>
+<section id="t-distribution" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="t-distribution"><span class="header-section-number">B.4</span> t distribution</h2>
+<p>The t distribution is sometimes referred to as Student’s t distribution in recognition of its, at the time, anonymous progenitor William Sealy Gosset working at the Guinness brewery. It most notably arises in the context of estimation of a normal random variable when the variance is unknown as occurs frequently in these lecture notes.</p>
+<p>Let <span class="math inline">\(Z\sim\mathcal{N}\left(0,1\right)\)</span> and let <span class="math inline">\(V \sim\chi^2\left(\nu\right)\)</span> be independent random variables. Then, we say that <span class="math display">\[
+  T = \frac{Z}{\sqrt{V/\nu}} \sim t\left(\nu\right)
+\]</span> has a t distribution with <span class="math inline">\(\nu\)</span> degrees of freedom. Such a distribution can be thought of as a heavier tailed version of the standard normal distribution. In fact, <span class="math inline">\(t\left(1\right)\)</span> is the Cauchy distribution with pdf <span class="math display">\[
+  f_{t\left(1\right)}(x) = (\pi(1+x^2))^{-1}
+\]</span> while <span class="math inline">\(T\sim t\left(\nu\right)\)</span> converges to a standard normal distribution as <span class="math inline">\(\nu\rightarrow\infty\)</span>.</p>
+<p>A noteworthy property of a t distributed random variable is that it will only have moments up to but not including order <span class="math inline">\(\nu\)</span>.<br>
+That is, for <span class="math inline">\(T\sim t\left(\nu\right)\)</span>, <span class="math inline">\(\mathrm{E}T^k &lt; \infty\)</span> for <span class="math inline">\(k&lt;\nu\)</span>.<br>
+For <span class="math inline">\(k\ge\nu\)</span>, the moments do not exist.</p>
+</section>
+<section id="f-distribution" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="f-distribution"><span class="header-section-number">B.5</span> F distribution</h2>
+<p>The F distribution arises often in the context of linear regression when a comparison is made between two sources of variation. Let <span class="math inline">\(X\sim\chi^2\left(\nu\right)\)</span> and <span class="math inline">\(Y\sim\chi^2\left(\eta\right)\)</span> be independent random variables, then we write that <span class="math display">\[
+  F = \frac{X/\nu}{Y/\eta} \sim F\left(\nu,\eta\right)
+\]</span> has an F distribution with degrees of freedom <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\eta\)</span>. Due to this form of the distribution, if <span class="math inline">\(F\sim F\left(\nu,\eta\right)\)</span>, then <span class="math inline">\(F^{-1}\sim F\left(\eta,\nu\right)\)</span>. The F distribution is supported on the positive real line. The F and t distributions are related by the fact that if <span class="math inline">\(T\sim t\left(\nu\right)\)</span>, then <span class="math inline">\(T^2\sim F\left(1,\nu\right)\)</span>.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -617,14 +690,11 @@ div.csl-indent {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chpt3_ModBuild.html" class="pagination-link" aria-label="Model Building">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Building</span></span>
+      <a href="./apen1_LinearAlgebra.html" class="pagination-link" aria-label="Linear Algebra">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./apen1_LinearAlgebra.html" class="pagination-link" aria-label="Linear Algebra">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
