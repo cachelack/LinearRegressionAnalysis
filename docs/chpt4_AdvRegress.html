@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Advanced Regression Methods – STAT 378: Linear Regression Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./chpt3_ModBuild.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chpt4_AdvRegress.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Advanced Regression Methods</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">STAT 378: Linear Regression Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt1_ols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ordinary Least Squares</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt2_ModAss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Assumptions and Choices</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt3_ModBuild.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Building</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chpt4_AdvRegress.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Advanced Regression Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apen1_LinearAlgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apen2_ProbDist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Some Useful Probability Distributions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#generalized-linear-models" id="toc-generalized-linear-models" class="nav-link active" data-scroll-target="#generalized-linear-models"><span class="header-section-number">4.1</span> Generalized Linear Models</a>
+  <ul class="collapse">
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">4.1.1</span> Logistic Regression</a></li>
+  <li><a href="#wilks-theorem" id="toc-wilks-theorem" class="nav-link" data-scroll-target="#wilks-theorem"><span class="header-section-number">4.1.2</span> Wilks’ Theorem</a></li>
+  <li><a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression"><span class="header-section-number">4.1.3</span> Poisson Regression</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Advanced Regression Methods</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hidden">
+
+</div>
+<p>This final chapter is a brief survey of various methods that go beyond standard linear regression. In particular, we we look at generalized linear models and Bayesian regression.</p>
+<section id="generalized-linear-models" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="generalized-linear-models"><span class="header-section-number">4.1</span> Generalized Linear Models</h2>
+<p>A generalized linear model (GLM) extends the usual linear model to cases where the errors <span class="math inline">\(\varepsilon\)</span> have proposed distributions that are very different than the normal distribution. In this case, we assume that <span class="math inline">\(\varepsilon\)</span> comes from an <a href="https://en.wikipedia.org/wiki/Exponential_family">exponential family</a>, and the form of the model is <span class="math display">\[
+  g\left( \mathrm{E}y \right) =
+  \beta_0 + \beta_1x_1 +\ldots+ \beta_px_p.
+\]</span> Here, <span class="math inline">\(g(\cdot)\)</span> is referred to as the link function. As these are still parametric models, the parameters <span class="math inline">\(\beta_0,\ldots,\beta_p\)</span> are often solved for via maximum likelihood. These models can be fit in <code>R</code> via the <code>glm()</code> function. While such models can be studied in full generality, for this course, we will only consider two specific GLMs: the logistic regression and the Poisson regression.</p>
+<section id="logistic-regression" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">4.1.1</span> Logistic Regression</h3>
+<p>One of the most useful GLMs is the logistic regression. This is applied in the case of a binary response–i.e when <span class="math inline">\(y\in\{0,1\}\)</span>. This could, for example, be used for diagnosis of a disease where <span class="math inline">\(x_1,\ldots,x_p\)</span> are predictors and <span class="math inline">\(y\)</span> corresponds to the presence or absence of the disease.</p>
+<p>The usual setup is to treat the observed responses <span class="math inline">\(y_i\in\{0,1\}\)</span> as <span class="math inline">\(\mathrm{Bernoulli}\left(\pi_i\right)\)</span> random variables, which is <span class="math display">\[
+  \mathrm{P}\left(y_i=1\right)=\pi_i~\text{ and }~\mathrm{P}\left(y_i=0\right)=1-\pi_i.
+\]</span> This implies that the mean is <span class="math inline">\(\mathrm{E}{y_i}=\pi_i\)</span> and the variance is <span class="math inline">\(\mathrm{Var}\left(y_i\right) = \pi_i(1-\pi_i)\)</span>. Hence, the variance is a function of the mean, which violates the assumption of constant variance in the Gauss-Markov theorem.</p>
+<p>The goal is then to model <span class="math inline">\(\mathrm{E}{y_i}=\pi_i\)</span> as a function of <span class="math inline">\({x}^\mathrm{T}_i\beta\)</span>. While different link functions are possible—see, for example, <a href="https://en.wikipedia.org/wiki/Probit_model">probit regression</a>—the standard link function chosen is the logistic response function, sometimes referred to as the logit function, which is <span class="math display">\[
+  \mathrm{E}y_i = \pi_i =
+  \frac{\exp({x}^\mathrm{T}_i\beta)}{1+\exp({x}^\mathrm{T}_i\beta)}
+\]</span> and results in an S-shaped curve. Rearranging the equation results in <span class="math display">\[
+  \log\left( \frac{\pi_i}{1-\pi_i} \right)
+  = {x}^\mathrm{T}_i\beta = \beta_0 + \beta_1x_{i,1}+\ldots+\beta_px_{i,p}
+\]</span> where the ratio <span class="math inline">\(\pi_i/(1-\pi_i)\)</span> is the odds ratio or simply the odds. Furthermore, the entire response <span class="math inline">\(\log\left( {\pi_i}/({1-\pi_i}) \right)\)</span> is often referred to as the <em>log odds</em>.</p>
+<p>The estimator <span class="math inline">\(\hat{\beta}\)</span> can be computed numerically via maximum likelihood as we assume the underlying distribution of the data. Hence, we also get fitted values of the form <span class="math display">\[
+  \hat{y}_i = \hat{\pi}_i =
+  \frac{\exp{{x}^\mathrm{T}_i\hat{\beta}}}{1+\exp{{x}^\mathrm{T}_i\hat{\beta}}}.
+\]</span> However, as noted already, the variance is not constant. Hence, for residuals of the form <span class="math inline">\(y_i-\hat{\pi}_i\)</span> to be useful, we will need to normalize them. The <em>Pearson residual</em> for the logistic regression is <span class="math display">\[
+  r_i = \frac{y_i - \hat{\pi}_i}{\sqrt{\hat{\pi}_i(1-\hat{\pi}_i)}}.
+\]</span></p>
+<section id="binomial-responses" class="level4" data-number="4.1.1.1">
+<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="binomial-responses"><span class="header-section-number">4.1.1.1</span> Binomial responses</h4>
+<p>In some cases, multiple observations can be made for each value of predictors <span class="math inline">\(x\)</span>. For example, <span class="math inline">\(x_i\in\mathbb{R}^+\)</span> could correspond to a dosage of medication and <span class="math inline">\(y_i\in\{0,1,\ldots,m_i\}\)</span> could correspond to the number of the <span class="math inline">\(m_i\)</span> subjects treated with dosage <span class="math inline">\(x_i\)</span> that are cured of whatever ailment the medication was supposed to treat.</p>
+<p>In this setting, we can treat the observed values <span class="math inline">\(\pi_i = y_i/m_i\)</span>. Often when fitting a logistic regression model to binomial data, the data points are weighted with respect to the number of observations <span class="math inline">\(m_i\)</span> at each regressor <span class="math inline">\(x_i\)</span>. That is, if <span class="math inline">\(m_1\)</span> is very large and <span class="math inline">\(m_2\)</span> is small, then the estimation of <span class="math inline">\(\pi_1 = y_1/m_1\)</span> is more accurate–i.e.&nbsp;lower variance–than <span class="math inline">\(\pi_2 =y_2/m_2\)</span>.</p>
+</section>
+<section id="testing-model-fit" class="level4" data-number="4.1.1.2">
+<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="testing-model-fit"><span class="header-section-number">4.1.1.2</span> Testing model fit</h4>
+<p>Estimation of the parameters <span class="math inline">\(\beta\)</span> is achieved by finding the maximum likelihood estimator. The log likelihood in the logistic regression with Bernoulli data is <span class="math display">\[\begin{align*}
+  \log L(\beta)
+  &amp;= \log \prod_{i=1}^n \pi_i^{y_i}(1-\pi_i)^{1-y_i}\\
+  &amp;= \sum_{i=1}^n\left[
+    y_i\log\pi_i + (1-y_i)\log(1-\pi_i)
+  \right]\\
+  &amp;= \sum_{i=1}^n\left[
+    y_i\log\left(\frac{\pi_i}{1-\pi_i}\right) + \log(1-\pi_i)
+  \right]\\
+  &amp;= \sum_{i=1}^n\left[
+    y_i{x}^\mathrm{T}_i\beta - \log(1+\mathrm{e}^{{x}^\mathrm{T}_i\beta})
+  \right].
+\end{align*}\]</span> The MLE <span class="math inline">\(\hat{\beta}\)</span> is solved for numerically.</p>
+<p>Beyond finding the MLEs, the log likelihood is also used to test for the goodness-of-fit of the regression model. This comes from a result known as Wilks’ theorem.</p>
+</section>
+</section>
+<section id="wilks-theorem" class="level3 {thm-wilkds}" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="wilks-theorem"><span class="header-section-number">4.1.2</span> Wilks’ Theorem</h3>
+<p>For two statistical models with parameter spaces <span class="math inline">\(\Theta_0\)</span> and <span class="math inline">\(\Theta_1\)</span> such that <span class="math inline">\(\Theta_0\subset\Theta_1\)</span>—i.e.&nbsp;the models are nested—and likelihoods <span class="math inline">\(L_0(\theta)\)</span> and <span class="math inline">\(L_1(\theta)\)</span>, then -2 times the log likelihood ratio has an asymptotic chi-squared distribution with degrees of freedom equal to the difference in the dimensionality of the parameter spaces. That is, <span class="math display">\[
+    -2\log(LR) =
+    -2\log\left(
+      \frac{
+        \sup_{\theta\in\Theta_0}L_0(\theta)
+      }{
+        \sup_{\theta\in\Theta_1}L_1(\theta)
+      }
+    \right)  \xrightarrow{\text{d}} \chi^2\left(\lvert\Theta_1\rvert-\lvert\Theta_0\rvert\right).
+  \]</span></p>
+</section>
+<p>In the case of the logistic regression, we can use this result to construct an analogue to the F-test when the errors have a normal distribution. That is, we can compute the likelihood of the constant model <span id="eq-logitNull"><span class="math display">\[
+  \log\left(\frac{\pi_i}{1-\pi_i}\right) = \beta_0
+\tag{4.1}\]</span></span> and the likelihood of the full model <span id="eq-logitFull"><span class="math display">\[
+  \log\left(\frac{\pi_i}{1-\pi_i}\right) =
+  \beta_0 + \beta_1x_1 + \ldots + \beta_px_p.
+\tag{4.2}\]</span></span> and claim from Wilks’ theorem that <span class="math inline">\(-2\log(LR)\)</span> is approximately distributed <span class="math inline">\(\chi^2\left(p\right)\)</span> assuming the sample size is large enough.</p>
+<p>In <code>R</code>, the <code>glm()</code> function does not return a p-value as the <code>lm()</code> function does for the F test. Instead, it provides two values, the <em>null</em> and <em>residual deviances</em>, which are respectively <span class="math display">\[\begin{align*}
+  \text{null deviance}
+  &amp;= -2 \log\left(
+    \frac{L(\text{null model})}{L(\text{saturated model})}
+  \right), \text{ and}\\
+  \text{residual deviance}
+  &amp;= -2 \log\left(
+    \frac{L(\text{full model})}{L(\text{saturated model})}
+  \right).
+\end{align*}\]</span> Here, the null model is from <a href="#eq-logitNull" class="quarto-xref">Equation&nbsp;<span>4.1</span></a> and the full model is from <a href="#eq-logitFull" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>. The saturated model is the extreme model with <span class="math inline">\(p=n\)</span> parameters, which perfectly models the data. It is, in some sense, the largest possible model used as a baseline.</p>
+<p>In practice, the deviances can be thought of like the residual sum of squares from the ordinary linear regression setting. If the decrease is significant, then the regressors have predictive power over the response. Furthermore, <span class="math display">\[
+  (\text{null deviance})-(\text{residual deviance}) =
+  -2 \log\left(
+    \frac{L(\text{null model})}{L(\text{full model})}
+  \right),
+\]</span> which has an asymptotic <span class="math inline">\(\chi^2\left(p\right)\)</span> distribution. Such a goodness of fit test can be run in <code>R</code> using <code>anova( model, test="LRT" )</code>. Note that there are other goodness-of-fit tests possible for such models.</p>
+<section id="logistic-regression-an-example" class="level4" data-number="4.1.2.1">
+<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="logistic-regression-an-example"><span class="header-section-number">4.1.2.1</span> Logistic Regression: An Example</h4>
+<p>A sample of size <span class="math inline">\(n=21\)</span> was randomly generated with <span class="math inline">\(x_i\in[-1,1]\)</span> and <span class="math inline">\(y_i\)</span> such that <span class="math display">\[
+  y_i\sim\mathrm{Bernoulli}\left(
+    \frac{\mathrm{e}^{2x_i}}{1+\mathrm{e}^{2x_i}}
+  \right).
+\]</span> A logistic regression was fit to the data in <code>R</code> using the <code>glm()</code> function with the <code>family=binomial(logit)</code> argument to specify that the distribution is Bernoulli–i.e.&nbsp;binomial with <span class="math inline">\(n=1\)</span>–and that we want a logistic link function.</p>
+<p>The result from <code>summary()</code> is the model <span class="math display">\[
+  \log\left( \frac{\pi}{1-\pi} \right) =
+  -0.4 + 2.16 x
+\]</span> with a p-value of <span class="math inline">\(0.03\)</span> for <span class="math inline">\(\hat{\beta_1}=2.16\)</span>. A plot of the true and predicted curves is displayed below.</p>
+<p>We could consider the alternative case were <span class="math display">\[
+  y_i\sim\mathrm{Binomial}\left(m_i,
+    \frac{\mathrm{e}^{2x_i}}{1+\mathrm{e}^{2x_i}}
+  \right)
+\]</span> for some <span class="math inline">\(m_i\in\mathbb{Z}^+\)</span>, which is <span class="math inline">\(m_i\)</span> Bernoulli observations at each <span class="math inline">\(x_i\)</span>. In this case, we have a much larger dataset, which results in the better fitting curve displayed below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to add this ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="poisson-regression" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="poisson-regression"><span class="header-section-number">4.1.3</span> Poisson Regression</h3>
+<p>The Poisson regression is another very useful GLM to know, which models counts or occurrences of rare events. Examples include modelling the number of defects in a manufacturing line or predicting lightning strikes across a large swath of land.</p>
+<p>The Poisson distribution with parameter <span class="math inline">\(\lambda&gt;0\)</span> has PDF <span class="math inline">\(f(x) = \mathrm{e}^{-\lambda}\lambda^x/x!\)</span>. This can often be thought of as a limiting case of the the binomial distribution as <span class="math inline">\(n\rightarrow\infty\)</span> and <span class="math inline">\(p\rightarrow0\)</span> such that <span class="math inline">\(np\rightarrow\lambda\)</span>. If we want a linear model for a response variable <span class="math inline">\(y\)</span> such that <span class="math inline">\(y_i\)</span> has a <span class="math inline">\(\mathrm{Poisson}\left(\lambda_i\right)\)</span> distribution, then, similarly to the logistic regression, we apply a link function. In this case, one of the most common link functions used is the log. The resulting model is <span class="math display">\[
+  \log\mathrm{E}{y_i} = \beta_0 + \beta_1x_1 + \ldots + \beta_px_p
+\]</span> where <span class="math inline">\(\mathrm{E}{y_i} = \lambda_i\)</span>.</p>
+<p>Similarly to the logistic regression case–and to GLMS in general–the parameters <span class="math inline">\(\beta\)</span> are estimated via maximum likelihood based on the assumption that <span class="math inline">\(y\)</span> has a Poisson distribution. Furthermore, the deviances can be computed and a likelihood ratio test can be run to assess the fit of the model. The log likelihood for a Poisson regression is <span class="math display">\[\begin{align*}
+  \log L(\beta)
+  &amp;= \log \prod_{i=1}^n \frac{\mathrm{e}^{-\lambda_i}\lambda_i^{y_i}}{y_i!} \\
+  &amp;= \sum_{i=1}^n\left[
+    -\lambda_i + y_i\log\lambda_i - \log(y_i!)
+  \right]\\
+  &amp;= \sum_{i=1}^n\left[
+    -\mathrm{e}^{{x}^\mathrm{T}_i\beta} + y_i{x}^\mathrm{T}_i\beta - \log(y_i!)
+  \right]
+\end{align*}\]</span></p>
+<section id="poisson-regression-an-example" class="level4" data-number="4.1.3.1">
+<h4 data-number="4.1.3.1" class="anchored" data-anchor-id="poisson-regression-an-example"><span class="header-section-number">4.1.3.1</span> Poisson Regression: An Example</h4>
+<p>As an example, consider a sample of size <span class="math inline">\(n=21\)</span> generated randomly by <span class="math display">\[
+  y_i \sim\mathrm{Poisson}\left( \mathrm{e}^{2x_i} \right).
+\]</span> A Poisson regression with log link can be fit to the data using <code>R</code>’s <code>glm()</code> function with the argument <code>family=poisson(link=log)</code>.</p>
+<p>The result from <code>summary()</code> is <span class="math display">\[
+  \log(\lambda) = 0.16 + 1.95x
+\]</span> with a p-value of <span class="math inline">\(10^{-8}\)</span> for <span class="math inline">\(\hat{\beta_1}=1.95\)</span>. A plot of the true and predicted curves is displayed below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add more R code here!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chpt3_ModBuild.html" class="pagination-link" aria-label="Model Building">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Model Building</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
