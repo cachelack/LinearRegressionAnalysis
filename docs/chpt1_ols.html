@@ -304,12 +304,12 @@ window.Quarto = {
 <p>In this setting, <span class="math inline">\(Y\)</span> is usually considered to be a random variable while the <span class="math inline">\(x_i\)</span> are considered fixed. Hence, the expected value of <span class="math inline">\(Y\)</span> is in terms of the unknown function <span class="math inline">\(f\)</span> and the regressors: <span class="math display">\[
   \mathrm{E}\left(Y\middle|x_1,\ldots,x_p\right) = f(x_1,\ldots,x_p).
 \]</span> While <span class="math inline">\(f\)</span> can be considered to be in some very general classes of functions, we begin with the standard linear setting. Let <span class="math inline">\(\beta_0,\beta_1,\ldots,\beta_p\in\mathbb{R}\)</span>. Then, the <em>multiple regression model</em> is <span class="math display">\[
-  Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
-    = {\beta}^\mathrm{T} X
+  Y = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p + \varepsilon
+    = {\beta}^\mathrm{T} X + \varepsilon
 \]</span> where <span class="math inline">\(\beta = {(\beta_0,\ldots,\beta_p)}^\mathrm{T}\)</span> and <span class="math inline">\(X = {(1,x_1,\ldots,x_p)}^\mathrm{T}\)</span>. The <em>simple regression model</em> is a submodel of the above where <span class="math inline">\(p=1\)</span>, which is <span class="math display">\[
   Y = \beta_0 + \beta_1 x_1 + \varepsilon,
 \]</span> and will be treated concurrently with multiple regression.</p>
-<p>In the statistics setting, the parameter vector <span class="math inline">\(\beta\in\mathbb{R}^p\)</span> is unknown. The analyst observes multiple replications of regressor and response pairs, <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> where <span class="math inline">\(n\)</span> is the <em>sample size</em>, and wishes to choose a ``best’’ estimate for <span class="math inline">\(\beta\)</span> based on these <span class="math inline">\(n\)</span> observations. This setup can be concisely written in a vector-matrix form as <span id="eq-linearRegression"><span class="math display">\[
+<p>In the statistics setting, the parameter vector <span class="math inline">\(\beta\in\mathbb{R}^p\)</span> is unknown. The analyst observes multiple replications of regressor and response pairs, <span class="math inline">\((X_1,Y_1),\ldots,(X_n,Y_n)\)</span> where <span class="math inline">\(n\)</span> is the <em>sample size</em>, and wishes to choose a <em>best</em> estimate for <span class="math inline">\(\beta\)</span> based on these <span class="math inline">\(n\)</span> observations. This setup can be concisely written in a vector-matrix form as <span id="eq-linearRegression"><span class="math display">\[
   Y = X\beta + \varepsilon
 \tag{1.1}\]</span></span> where <span class="math display">\[
   Y =
@@ -331,7 +331,7 @@ window.Quarto = {
   \begin{pmatrix}
     \varepsilon_1 \\ \vdots \\ \varepsilon_n
   \end{pmatrix}.
-\]</span> Note that <span class="math inline">\(Y,\varepsilon\in\mathbb{R}^n\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(X\in\mathbb{R}^{n\times {p+1}}\)</span>.</p>
+\]</span> Note that <span class="math inline">\(Y,\varepsilon\in\mathbb{R}^n\)</span>, <span class="math inline">\(\beta\in\mathbb{R}^{p+1}\)</span>, and <span class="math inline">\(X\in\mathbb{R}^{n\times {(p+1)}}\)</span>.</p>
 <p>As <span class="math inline">\(Y\)</span> is a random variable, we can compute its mean vector and covariance matrix as follows: <span class="math display">\[
   \mathrm{E}Y = \mathrm{E}\left( X\beta +\varepsilon\right) = X\beta
 \]</span> and <span class="math display">\[
@@ -423,7 +423,7 @@ window.Quarto = {
 <p>It is perfectly reasonable to consider other criterion beyond minimizing the sum of squared residuals. However, this approach results in an estimator with many nice properties. Most notably is the Gauss-Markov theorem:</p>
 <div id="thm-gaussMarkov" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1.1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> and that for the errors, <span class="math inline">\(\mathrm{E}\varepsilon_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
-(This is sometimes referred to as the ``Best Linear Unbiased Estimator’’ or BLUE)</p>
+(This is sometimes referred to as the <em>Best Linear Unbiased Estimator</em> or BLUE)</p>
 </div>
 <p>Hence, it can be shown that the estimator is unbiased, <span class="math inline">\(\mathrm{E}\hat{\beta} = \beta\)</span>. Furthermore, as long as the model contains an intercept term <span class="math inline">\(\beta_0\)</span>, the constructed least squares line passes through the centre of the data in the sense that the sum of the residuals is zero, <span class="math inline">\(\sum_{i=1}^n r_i = 0\)</span> and that <span class="math inline">\(\bar{Y} = \hat{\beta}\bar{X}\)</span> where <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span> and where <span class="math inline">\(\bar{X}\)</span> is the vector of column means of the matrix <span class="math inline">\(X\)</span>.</p>
 <section id="derivation-of-the-ols-estimator" class="level3" data-number="1.2.1">

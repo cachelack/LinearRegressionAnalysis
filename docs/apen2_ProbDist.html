@@ -252,12 +252,12 @@ window.Quarto = {
 <p>Part of its importance stems from the central limit theorem, which in its simplest form states that the standardized sum of a collection on independent random variables converges in distribution to a standard normal random variable. However, its worth noting that there are many other central limit theorems in existence.</p>
 <div id="thm-CLT" class="theorem">
 <p><span class="theorem-title"><strong>Theorem B.1 (Central Limit Theorem)</strong></span> Let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample of <span class="math inline">\(n\)</span> iid random variables with mean <span class="math inline">\(\mu\in\mathbb{R}\)</span> and finite variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>. Letting <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> be the sample mean, then <span class="math display">\[
-    \sqrt{n}( \bar{Y}-\mu )  \xrightarrow{\text{d}} \mathcal{N}\left(0,1\right)
+    \sqrt{n}( \bar{Y}-\mu )  \xrightarrow{\text{d}} \mathcal{N}\left(0,\sigma^2\right)
   \]</span> where <span class="math inline">\( \xrightarrow{\text{d}} \)</span> denotes convergence in distribution.</p>
 </div>
 <p>The normal distribution can be extended to the multivariate normal distribution for a vector <span class="math inline">\(X\in\mathbb{R}^p\)</span> where we write <span class="math inline">\(X\sim\mathcal{N}\left({\bf \mu},\Sigma\right)\)</span>. Here, <span class="math inline">\({\bf\mu}\in\mathbb{R}^p\)</span> is the mean vector while <span class="math inline">\(\Sigma\in\mathbb{R}^{p\times p}\)</span> is a <span class="math inline">\(p\times p\)</span> matrix that is symmetric and positive semi-definite. This distribution also has elliptical symmetry. The form of the pdf, assuming <span class="math inline">\(\Sigma\)</span> is positive definite, is <span class="math display">\[
   f_{\mathcal{N}\left(\mu,\Sigma\right)}(x) =
-  \frac{1}{\sqrt{2\pi\det(\Sigma)}}\exp\left(
+  \frac{1}{(2\pi)^{p/2}\det(\Sigma)^{1/2}}\exp\left(
     -\frac{1}{2}{(x-\mu)}^\mathrm{T}\Sigma^{-1}(x-\mu)
   \right)
 \]</span> Otherwise, <span class="math inline">\(X\)</span> will have a degenerate normal distribution, which is still normal but supported on a subspace of dimension less than <span class="math inline">\(p\)</span>.</p>
