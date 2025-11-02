@@ -382,7 +382,7 @@ window.Quarto = {
 <p>The unknown vector <span class="math inline">\(\beta\)</span> is our <em>parameter</em> vector. Eventually, we will construct an <em>estimator</em> <span class="math inline">\(\hat{\beta}\)</span> from the observed data. Given such an estimator, the <em>fitted values</em> are <span class="math inline">\(\hat{Y} := X\hat{\beta}\)</span>. These values are what the model believes are the expected values at each regressor.</p>
 <p>Given the fitted values, the <em>residuals</em> are <span class="math inline">\(r = Y-\hat{Y}\)</span> which is a vector with entries <span class="math inline">\(r_i = Y_i - \hat{Y}_i\)</span>. This is the difference between the observed response and the expected response of our model. The residuals are of critical importance to testing how good our model is and will reappear in most subsequent sections.</p>
 <table class="caption-top table">
-<caption>The four variables in the linear regression model of <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> split between whether they are fixed or random variables and between whether or not the analyst knows their value.</caption>
+<caption>The four variables in the linear regression model of <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-linearRegression</span></a> split between whether they are fixed or random variables and between whether or not the analyst knows their value.</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -422,13 +422,13 @@ window.Quarto = {
 \]</span> Note that this is equivalent to choosing a <span class="math inline">\(\hat{\beta}\)</span> to minimize the sum of the squared residuals.</p>
 <p>It is perfectly reasonable to consider other criterion beyond minimizing the sum of squared residuals. However, this approach results in an estimator with many nice properties. Most notably is the Gauss-Markov theorem:</p>
 <div id="thm-gaussMarkov" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1.1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> and that for the errors, <span class="math inline">\(\mathrm{E}\varepsilon_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
+<p><span class="theorem-title"><strong>Theorem 1.1 (Gauss-Markov Theorem)</strong></span> Given the regression setting from <a href="#eq-linearRegression" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-linearRegression</span></a> and that for the errors, <span class="math inline">\(\mathrm{E}\varepsilon_i = 0\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, <span class="math inline">\(\mathrm{Var}\left(\varepsilon_i\right) = \sigma^2\)</span> for <span class="math inline">\(i=1,\ldots,n\)</span>, and <span class="math inline">\(\mathrm{cov}\left(\varepsilon_i,\varepsilon_j\right) = 0\)</span> for <span class="math inline">\(i\ne j\)</span>, then the least squares estimator results in the minimal variance over all linear unbiased estimators.<br>
 (This is sometimes referred to as the <em>Best Linear Unbiased Estimator</em> or BLUE)</p>
 </div>
 <p>Hence, it can be shown that the estimator is unbiased, <span class="math inline">\(\mathrm{E}\hat{\beta} = \beta\)</span>. Furthermore, as long as the model contains an intercept term <span class="math inline">\(\beta_0\)</span>, the constructed least squares line passes through the centre of the data in the sense that the sum of the residuals is zero, <span class="math inline">\(\sum_{i=1}^n r_i = 0\)</span> and that <span class="math inline">\(\bar{Y} = \hat{\beta}\bar{X}\)</span> where <span class="math inline">\(\bar{Y} = n^{-1}\sum_{i=1}^n Y_i\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span> and where <span class="math inline">\(\bar{X}\)</span> is the vector of column means of the matrix <span class="math inline">\(X\)</span>.</p>
 <section id="derivation-of-the-ols-estimator" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="derivation-of-the-ols-estimator"><span class="header-section-number">1.2.1</span> Derivation of the OLS estimator</h3>
-<p>The goal is to derive an explicit solution to <a href="#eq-leastSquares" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>. First, consider the following partial derivative: <span class="math display">\[\begin{align*}
+<p>The goal is to derive an explicit solution to <a href="#eq-leastSquares" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-leastSquares</span></a>. First, consider the following partial derivative: <span class="math display">\[\begin{align*}
   \frac{\partial}{\partial \hat{\beta}_k}
   \sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})^2
   &amp;= -2\sum_{i=1}^n(Y_i-X_{i,\cdot}\cdot\hat{\beta})X_{i,k}\\
@@ -445,8 +445,8 @@ window.Quarto = {
 \]</span> or <span class="math inline">\(\hat{\beta} = ({X}^\mathrm{T}X)^{-1}{X}^\mathrm{T}Y\)</span> assuming <span class="math inline">\({X}^\mathrm{T}X\)</span> is invertible. Revisiting the terminology in the above definitions sections gives the following table:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 34%">
-<col style="width: 65%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -606,7 +606,7 @@ F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
 H_0: \beta_1 = \ldots = \beta_p = 0, ~~~~~ H_1: \exists i\ge1~s.t.~\beta_i\ne0,
 \tag{1.3}\]</span></span> which is asking is there at least one <span class="math inline">\(\beta_i\)</span> that we can claim is non-zero and hence implies that the regressor <span class="math inline">\(x_i\)</span> has some nontrivial influence over <span class="math inline">\(y\)</span>.</p>
 <p>To test this hypothesis, we revisit the explained and residual sums of squares introduced in the Definitions section. Specifically, we already have that <span class="math inline">\(SS_\text{res}/\sigma^2 \sim\chi^2\left(n-p-1\right)\)</span> from above. Similarly, <span class="math inline">\(SS_\text{exp}/\sigma^2 \sim\chi^2\left(p\right)\)</span> under the null hypothesis where <span class="math inline">\(\beta_1=\ldots=\beta_p=0\)</span>, and hence any variation in those terms should be pure noise. Lastly, it can be demonstrated that <span class="math inline">\(SS_\text{res}\)</span> and <span class="math inline">\(SS_\text{exp}\)</span> are independent random variables, which intuitively follows from the orthogonality of the fitted values and the errors. Once again, this can be made precise via <a href="https://en.wikipedia.org/wiki/Cochran%27s_theorem" class="external" target="_blank">Cochran’s Theorem</a>.</p>
-<p>The usual test statistic for the hypothesis in <a href="#eq-hypftest" class="quarto-xref">Equation&nbsp;<span>1.3</span></a> is <span class="math display">\[
+<p>The usual test statistic for the hypothesis in <a href="#eq-hypftest" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-hypftest</span></a> is <span class="math display">\[
   \frac{SS_\text{exp}/p}{SS_\text{res}/(n-p-1)} \sim
   F\left(p,n-p-1\right),
 \]</span> which leads to an <em>F test</em>. If the test statistic is large, then the explained variation is larger than the noise resulting in a small p-value and a rejection of the null hypothesis.</p>
@@ -714,6 +714,13 @@ F-statistic: 44.24 on 1 and 15 DF,  p-value: 7.725e-06</code></pre>
 <h4 data-number="1.3.2.1" class="anchored" data-anchor-id="t-test-on-chocolate-nobel-data"><span class="header-section-number">1.3.2.1</span> t test on Chocolate-Nobel data</h4>
 <p>The R commands <code>lm()</code> and <code>summary()</code> will return a table of regression coefficients, t test statistics and p-values associated with each coefficient. For the Chocolate-Nobel prize data, the table looks like</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 34%">
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -775,7 +782,7 @@ F-statistic: 15.45 on 1 and 14 DF,  p-value: 0.001508</code></pre>
 \]</span> and want to know whether the final <span class="math inline">\(q\)</span> regressors add any significant explanation to our model given the other <span class="math inline">\(p-q\)</span>. For the above notation, <span class="math display">\[
   \beta_{i:j} = {(0,\ldots,0,\beta_i,\beta_{i+1},\ldots,\beta_j,0,\ldots,0)}^\mathrm{T}.
 \]</span></p>
-<p>To run the hypothesis test in <a href="#eq-hypPartftest" class="quarto-xref">Equation&nbsp;<span>1.4</span></a>, we would have to compute the least squares estimator in the partial model, <span class="math inline">\(\hat{\beta}_{1:p-q}\)</span>, and the standard least squares estimator in the full model, <span class="math inline">\(\hat{\beta}\)</span>. Then, we will have to compute the additional explained sum of squares gained from adding the <span class="math inline">\(q\)</span> extra regressors to our model, which is <span class="math display">\[
+<p>To run the hypothesis test in <a href="#eq-hypPartftest" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-hypPartftest</span></a>, we would have to compute the least squares estimator in the partial model, <span class="math inline">\(\hat{\beta}_{1:p-q}\)</span>, and the standard least squares estimator in the full model, <span class="math inline">\(\hat{\beta}\)</span>. Then, we will have to compute the additional explained sum of squares gained from adding the <span class="math inline">\(q\)</span> extra regressors to our model, which is <span class="math display">\[
   SS_\text{exp}(\beta_{p-q+1:p}|\beta_{1:p-q}) =
   SS_\text{exp}(\beta) - SS_\text{exp}(\beta_{1:p-q}),
 \]</span> the explained sum of squares from the full model minus the explained sum of squares from the partial model.</p>
@@ -950,7 +957,7 @@ To circumvent this, note that <span class="math display">\[
 <div id="rem-indcVar" class="proof remark">
 <p><span class="proof-title"><em>Remark 1.4</em>. </span>A first thought is to merely split the data and train two separate models. However, we want to use the entire dataset at once specifically to estimate the common slope <span class="math inline">\(\beta_1\)</span> with as much accuracy as possible.</p>
 </div>
-<p>While the range of the regressors has changed, we will fit the least squares estimate to the model precisely as before. Now, considering the model in <a href="#eq-indcLinReg" class="quarto-xref">Equation&nbsp;<span>1.5</span></a>, assume that we have <span class="math inline">\(m\)</span> samples with <span class="math inline">\(x_2=0\)</span> and <span class="math inline">\(n\)</span> samples with <span class="math inline">\(x_2=1\)</span>. Our design matrix takes on a new form: <span class="math display">\[
+<p>While the range of the regressors has changed, we will fit the least squares estimate to the model precisely as before. Now, considering the model in <a href="#eq-indcLinReg" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-indcLinReg</span></a>, assume that we have <span class="math inline">\(m\)</span> samples with <span class="math inline">\(x_2=0\)</span> and <span class="math inline">\(n\)</span> samples with <span class="math inline">\(x_2=1\)</span>. Our design matrix takes on a new form: <span class="math display">\[
   Y =
   \begin{pmatrix}
     Y_1 \\ \vdots \\ Y_m \\ Y_{m+1} \\ \vdots \\ Y_{m+n}
