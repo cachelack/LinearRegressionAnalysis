@@ -488,6 +488,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </div>
+<p>While we cannot solve for a closed form solution, we can numerically calculate the likelihood function for different choices of <span class="math inline">\(\beta\)</span>. This is done in the below R code with a blue line indicating the MLE found in the previous chunk of code.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># some candidate betas</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bet  <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)</span>
@@ -506,6 +507,28 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div>
 <figure class="figure">
 <p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another interesting property to note is that in logistic regression is that it does not work correctly if the data is perfectly separated by a hyperplane. This is in contrast to methods like support vector machines. The reason for logisitic regression’s failure is the fact that the MLE becomes maximized at infinity. We have another similar chunk of code below to plot this likelihood function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">=</span> <span class="fu">runif</span>(<span class="dv">50</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>yy <span class="ot">=</span> xx<span class="sc">&gt;</span><span class="dv">0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>bet  <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">100</span>,<span class="fl">0.1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>like <span class="ot">=</span> <span class="dv">0</span><span class="sc">*</span>bet;</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>( ii <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(bet) )</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    like[ii] <span class="ot">=</span> <span class="fu">sum</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       yy<span class="sc">*</span>xx<span class="sc">*</span>bet[ii] <span class="sc">-</span> <span class="fu">log</span>( <span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(xx<span class="sc">*</span>bet[ii]) )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    bet,like,<span class="at">type=</span><span class="st">'l'</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">xlab=</span><span class="st">"beta"</span>,<span class="at">ylab=</span><span class="st">"log Like"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"Plot of the log likelihood"</span>,<span class="at">lwd=</span><span class="dv">2</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -539,7 +562,321 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="state-of-the-union-dataset" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="state-of-the-union-dataset"><span class="header-section-number">4.1.4</span> State of the Union Dataset</h3>
-<p>The following dataset comes from one I collected myself in 2016 by text mining the state of the union letters &amp; addresses presented by the president of the Unites States since the founding of that country: <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00962.x">The Frequency of America in America</a>.</p>
+<p>The following dataset comes from one I collected myself in 2016 by text mining the state of the union letters &amp; addresses presented by the president of the Unites States since the founding of that country: <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2016.00962.x">The Frequency of America in America</a>. This dataset counts the number of times each president says the word “America” or “American” in their State of the Union addresses. The dataset is as follows. Note that it ends in 2017 after Trump’s first State of the Union. This data was mined from <a href="The American Presidency Project">https://www.presidency.ucsb.edu/</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in the data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sotu <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/sotu.txt"</span>,<span class="at">header =</span> T)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sotu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             indx AmerCnt  WCnt year
+1 Washington    1       5 16587 1796
+2 Adams         2       5  7149 1800
+3 Jefferson     3       5 20576 1808
+4 Madison       4      52 21622 1816
+5 Monroe        5      14 42059 1824
+6 Adams         6      26 30517 1828</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(sotu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           indx AmerCnt  WCnt year
+40 Regan     40     345 35968 1988
+41 Bush      41     181 17495 1992
+42 Clinton   42     591 59858 2000
+43 Bush      43     437 40029 2008
+44 Obama     44     569 53346 2016
+45 Trump     45      77  4984 2017</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  sotu<span class="sc">$</span>year, sotu<span class="sc">$</span>AmerCnt<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"year"</span>,<span class="at">ylab=</span><span class="st">"frequency"</span>,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Percentage of Words that are America"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can try to model these America counts as a binomial distribution with word count (<code>WCnt</code>) as the total number of trials. When we do a logistic regression like this, we use the <code>weight</code> argument to identify how many total trials occurred at each data point.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Logistic regression to frequencies</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>md.logit <span class="ot">=</span> <span class="fu">glm</span>( </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    (AmerCnt<span class="sc">/</span>WCnt)<span class="sc">~</span>year, <span class="at">data=</span>sotu, <span class="at">weight=</span>WCnt, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>) </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.logit);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = (AmerCnt/WCnt) ~ year, family = binomial(link = "logit"), 
+    data = sotu, weights = WCnt)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -3.674e+01  5.052e-01  -72.71   &lt;2e-16 ***
+year         1.603e-02  2.586e-04   62.00   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 4761.11  on 42  degrees of freedom
+Residual deviance:  542.39  on 41  degrees of freedom
+  (2 observations deleted due to missingness)
+AIC: 805.45
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  sotu<span class="sc">$</span>year, sotu<span class="sc">$</span>AmerCnt<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"year"</span>,<span class="at">ylab=</span><span class="st">"frequency"</span>,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Logistic Regression"</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( sotu<span class="sc">$</span>year[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">9</span>,<span class="sc">-</span><span class="dv">20</span>)],<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">predict</span>(md.logit))),<span class="at">col=</span><span class="st">"blue"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>While there is no global test included in the GLM summary, we can test the overall fit of our logistic regression model using <code>anova</code> in R. However, this function allows us to choose our test statistic being one of “Chisq”, “LRT”, “Rao”, “F” or “Cp”. The LRT is our likelihood ratio test, which is standard to use in GLMs. Meanwhile, the F-test is said to be “inappropriate” as we are not independently estimating the mean and variance in this model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.logit,<span class="at">test=</span><span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: (AmerCnt/WCnt)
+
+Terms added sequentially (first to last)
+
+     Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+NULL                    42     4761.1              
+year  1   4218.7        41      542.4 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.logit,<span class="at">test=</span><span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in anova.glm(md.logit, test = "F"): using F test with a 'binomial'
+family is inappropriate</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: (AmerCnt/WCnt)
+
+Terms added sequentially (first to last)
+
+     Df Deviance Resid. Df Resid. Dev      F    Pr(&gt;F)    
+NULL                    42     4761.1                     
+year  1   4218.7        41      542.4 4218.7 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>In the next lines of code, we switch from <code>binomial</code> to <code>quasibinomial</code>. This means that we are introducing a dispersion parameter, which allows for the variance to deviate from <span class="math inline">\(\pi(1-\pi)\)</span>. In this case, we have an under-dispersed logistic regression. Note that over-dispersion is typically more common in practice. Also, note that the hypothesis test distributions have changed from normal (z) to t. Furthermore, R is now okay with you using either the LRT or F test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>md.logit <span class="ot">=</span> <span class="fu">glm</span>( </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (AmerCnt<span class="sc">/</span>WCnt)<span class="sc">~</span>year, <span class="at">data=</span>sotu, <span class="at">family=</span><span class="fu">quasibinomial</span>(<span class="at">link=</span><span class="st">"logit"</span>) </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.logit);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = (AmerCnt/WCnt) ~ year, family = quasibinomial(link = "logit"), 
+    data = sotu)
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -36.748662   2.330116  -15.77   &lt;2e-16 ***
+year          0.016080   0.001187   13.54   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for quasibinomial family taken to be 0.0005740057)
+
+    Null deviance: 0.154674  on 42  degrees of freedom
+Residual deviance: 0.021324  on 41  degrees of freedom
+  (2 observations deleted due to missingness)
+AIC: NA
+
+Number of Fisher Scoring iterations: 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  sotu<span class="sc">$</span>year, sotu<span class="sc">$</span>AmerCnt<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"year"</span>,<span class="at">ylab=</span><span class="st">"frequency"</span>,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Logistic Regression with Dispersion"</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( sotu<span class="sc">$</span>year[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">9</span>,<span class="sc">-</span><span class="dv">20</span>)],<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">predict</span>(md.logit))),<span class="at">col=</span><span class="st">"blue"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.logit,<span class="at">test=</span><span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model: quasibinomial, link: logit
+
+Response: (AmerCnt/WCnt)
+
+Terms added sequentially (first to last)
+
+     Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+NULL                    42   0.154674              
+year  1  0.13335        41   0.021324 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(md.logit,<span class="at">test=</span><span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model: quasibinomial, link: logit
+
+Response: (AmerCnt/WCnt)
+
+Terms added sequentially (first to last)
+
+     Df Deviance Resid. Df Resid. Dev      F    Pr(&gt;F)    
+NULL                    42   0.154674                     
+year  1  0.13335        41   0.021324 232.32 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The estimated parameter for the <code>year</code> variable is 0.016, Which means that our fitted model looks like <span class="math display">\[
+  \log \text{odds} = -36.75 + 0.016(\text{year})
+\]</span> Instead of a logistic regression, we can recall that a Binomial<span class="math inline">\((n,p)\)</span> distribution with <span class="math inline">\(n\)</span> large and <span class="math inline">\(p\)</span> small is very close to a Poisson<span class="math inline">\((\lambda)\)</span> distribution with <span class="math inline">\(\lambda=np\)</span>. Hence, we can try to model this same data using a Poisson regression with a log link function. This is another type of log linear model we are fitting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Poisson regression to frequencies</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>md.pois <span class="ot">=</span> <span class="fu">glm</span>( </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    AmerCnt<span class="sc">~</span>year<span class="sc">+</span>WCnt, <span class="at">data=</span>sotu, <span class="at">family=</span><span class="fu">poisson</span>(<span class="at">link=</span><span class="st">"log"</span>) </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.pois);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = AmerCnt ~ year + WCnt, family = poisson(link = "log"), 
+    data = sotu)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -2.648e+01  5.456e-01  -48.54   &lt;2e-16 ***
+year         1.580e-02  2.758e-04   57.31   &lt;2e-16 ***
+WCnt         1.590e-05  3.790e-07   41.94   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 5687.13  on 44  degrees of freedom
+Residual deviance:  919.57  on 42  degrees of freedom
+AIC: 1184.8
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<p>However, now we have an overdispersed Poisson regression, so we fit that model next. Note that the estimated parameters have not changed, but the test statistics and null distributions have. Albeit, they are all still significant.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot raw counts</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    sotu<span class="sc">$</span>year,sotu<span class="sc">$</span>AmerCnt<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">"Year"</span>,<span class="at">ylab=</span><span class="st">"Frequency of the word America"</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"Poisson Regression on Counts"</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Poisson regression to frequencies</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>md.pois <span class="ot">=</span> <span class="fu">glm</span>( </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    AmerCnt<span class="sc">~</span>year<span class="sc">+</span>WCnt, <span class="at">data=</span>sotu, <span class="at">family=</span><span class="fu">quasipoisson</span>(<span class="at">link=</span><span class="st">"log"</span>) </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.pois);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = AmerCnt ~ year + WCnt, family = quasipoisson(link = "log"), 
+    data = sotu)
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2.648e+01  2.469e+00 -10.727 1.32e-13 ***
+year         1.580e-02  1.248e-03  12.666 6.20e-16 ***
+WCnt         1.590e-05  1.715e-06   9.269 1.03e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for quasipoisson family taken to be 20.47391)
+
+    Null deviance: 5687.13  on 44  degrees of freedom
+Residual deviance:  919.57  on 42  degrees of freedom
+AIC: NA
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( sotu<span class="sc">$</span>year,<span class="fu">exp</span>(<span class="fu">predict</span>(md.pois))<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,<span class="at">col=</span><span class="st">"blue"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The estimated parameter for the <code>year</code> variable is now 0.0158. Now the fitted model is <span class="math display">\[
+  \log \text{counts} =
+  -26.48 + 0.0158(\text{year}) + 0.0000159(\text{words})
+\]</span> But we can go even further as the Poisson<span class="math inline">\((\lambda)\)</span> distribution is approximately normal after properly scaling it for the central limit theorem. Hence, we can fit yet another log linear model using the normal distribution as we did in all the previous chapters of these notes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit log transformed linear model</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>md.log <span class="ot">=</span> <span class="fu">lm</span>( </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(AmerCnt<span class="sc">/</span>WCnt)<span class="sc">~</span>year, <span class="at">data=</span>sotu,<span class="at">subset=</span><span class="sc">-</span><span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">20</span>) </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(md.log);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(AmerCnt/WCnt) ~ year, data = sotu, subset = -c(9, 
+    20))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.38176 -0.31175  0.02739  0.29912  1.49995 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -34.841650   2.319339  -15.02  &lt; 2e-16 ***
+year          0.015039   0.001218   12.35  2.1e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5097 on 41 degrees of freedom
+Multiple R-squared:  0.7882,    Adjusted R-squared:  0.783 
+F-statistic: 152.6 on 1 and 41 DF,  p-value: 2.104e-15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot log frequencies with a Gaussian model</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    sotu<span class="sc">$</span>year,sotu<span class="sc">$</span>AmerCnt<span class="sc">/</span>sotu<span class="sc">$</span>WCnt,<span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab=</span><span class="st">"Year"</span>,<span class="at">ylab=</span><span class="st">"Frequency of the word America"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"Percentage of America with a log linear Gaussian model"</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( sotu<span class="sc">$</span>year[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">9</span>,<span class="sc">-</span><span class="dv">20</span>)],<span class="fu">exp</span>(<span class="fu">predict</span>(md.log)),<span class="at">col=</span><span class="st">"blue"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="neural-networks" class="level2" data-number="4.2">
@@ -550,11 +887,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <section id="smoothing-splines" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="smoothing-splines"><span class="header-section-number">4.3.1</span> Smoothing Splines</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hypoDat <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/hypoHalf.csv"</span>,)[,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>DIV <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(hypoDat<span class="sc">$</span>DIV)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(hypoDat<span class="sc">$</span>date)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>ageGroup <span class="ot">&lt;-</span> <span class="fu">as.ordered</span>(hypoDat<span class="sc">$</span>ageGroup)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hypoDat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>hypoDat <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/hypoHalf.csv"</span>,)[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>DIV <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(hypoDat<span class="sc">$</span>DIV)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(hypoDat<span class="sc">$</span>date)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>hypoDat<span class="sc">$</span>ageGroup <span class="ot">&lt;-</span> <span class="fu">as.ordered</span>(hypoDat<span class="sc">$</span>ageGroup)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hypoDat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    DIV     time date    sex ageGroup      age
 1 M3039 89.35000    1   male     3039 31.08459
@@ -564,37 +901,37 @@ Number of Fisher Scoring iterations: 4</code></pre>
 5 F3039 92.06667    1 female     3039 31.11756
 6 M3039 93.23333    1   male     3039 36.22344</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">=</span> <span class="fu">sort</span>( hypoDat<span class="sc">$</span>age )</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">=</span> <span class="fu">order</span>(hypoDat<span class="sc">$</span>age )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>xx  <span class="ot">=</span> <span class="fu">sort</span>( hypoDat<span class="sc">$</span>age )</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">=</span> <span class="fu">order</span>(hypoDat<span class="sc">$</span>age )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can also use the R function <code>smooth.spline()</code> to fit a cubic smoothing spline to the data. The results are below where we vary the choice of smoothing parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ss.a <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">0.8</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ss.b <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">1.0</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ss.c <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">1.2</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  hypoDat<span class="sc">$</span>age, hypoDat<span class="sc">$</span>time, <span class="at">las=</span><span class="dv">1</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">"time (minutes)"</span>,<span class="at">xlab=</span><span class="st">"age (years)"</span>,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Hypo Half Finishing Times by Age"</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.a, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span> )</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.b, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">3</span> )</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.c, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">4</span> )</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"par=0.8"</span>,<span class="st">"par=1.0"</span>,<span class="st">"par=1.2"</span>),</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ss.a <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">0.8</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>ss.b <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">1.0</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>ss.c <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> xx, <span class="at">y =</span> hypoDat<span class="sc">$</span>time[ord],<span class="at">spar=</span><span class="fl">1.2</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  hypoDat<span class="sc">$</span>age, hypoDat<span class="sc">$</span>time, <span class="at">las=</span><span class="dv">1</span>,</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">"time (minutes)"</span>,<span class="at">xlab=</span><span class="st">"age (years)"</span>,</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Hypo Half Finishing Times by Age"</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.a, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span> )</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.b, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">3</span> )</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>( ss.c, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">4</span> )</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"topleft"</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"par=0.8"</span>,<span class="st">"par=1.0"</span>,<span class="st">"par=1.2"</span>),</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="chpt4_AdvRegress_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
